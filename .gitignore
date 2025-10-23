@@ -1,4 +1,7 @@
-echo "hypr-backup-default/" >> .gitignore
-echo "hypr-backup-user/" >> .gitignore
-git add .gitignore
-git commit -m "Ignore Hyprland backup folders"
+#echo "hypr-backup-default/" >> .gitignore
+#echo "hypr-backup-user/" >> .gitignore
+#git add .gitignore
+#git commit -m "Ignore Hyprland backup folders"
+
+hypr-backup-default/
+hypr-backup-user/  
