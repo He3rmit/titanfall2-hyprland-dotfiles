@@ -1,10 +1,13 @@
 #!/bin/bash
 
 WALLPAPERS=(
-    "/home/username/Videos/wallpaper1.mp4"
-    "/home/username/Videos/wallpaper2.mp4"
-    "/home/username/Videos/wallpaper3.mp4"
+    "/home/rex/dotfiles/.config/wallpapers/wallpaper-samples/jack-cooper-bt-7274-titanfall-2-moewalls-com.mp4"
+    "/home/rex/dotfiles/.config/wallpapers/wallpaper-samples/pulse-blade-pilot-titanfall-2-moewalls-com.mp4"
+    "/home/rex/dotfiles/.config/wallpapers/wallpaper-samples/titanfall-2-moewalls-com.mp4"
 )
+
+WALLPAPERS=($(shuf -e "${WALLPAPERS[@]}"))
+
 
 while true; do
     for w in "${WALLPAPERS[@]}"; do
@@ -15,7 +18,6 @@ while true; do
         mpvpaper --loop --scale=cover "$w" &
 
         # Wait for video duration or desired interval (e.g., 60s)
-        sleep 60
+        sleep 3600
     done
 done
-
