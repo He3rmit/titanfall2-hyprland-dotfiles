@@ -1,38 +1,41 @@
-2#!/usr/bin/env bash
+#!/usr/bin/env bash
 
-# --- Config ---
-LAPTOP="eDP-1"          # your laptop output
-WATCH_INTERVAL=2         # seconds between checking outputs
+LAPTOP="eDP-1"
+EXTERNAL="HDMI-A-1"
+STATE_FILE="/tmp/hypr-display-state"
 
-# Function to get connected outputs
-get_connected_outputs() {
-    hyprctl devices | grep "Output " | grep "Connected" | awk '{print $2}'
-}
+# Read last mode or default to 0
+STATE=$(cat "$STATE_FILE" 2>/dev/null || echo 0)
 
-# Function to get resolution of an output
-get_resolution() {
-    local OUTPUT=$1
-    hyprctl devices | grep -A1 "$OUTPUT" | grep "Mode" | awk '{print $2 "x" $3}' | head -n1
-}
+# Modes:
+# 0 - laptop only
+# 1 - external only
+# 2 - extend
+# 3 - mirror
 
-# Function to mirror external monitors
-mirror_external() {
-    local LAP_RES=$(get_resolution "$LAPTOP")
-    local CONNECTED=$(get_connected_outputs)
+next_mode=$(( (STATE + 1) % 4 ))
 
-    for OUT in $CONNECTED; do
-        if [ "$OUT" != "$LAPTOP" ]; then
-            echo "Mirroring $OUT to $LAPTOP..."
-            # Set external monitor to laptop's resolution and position
-            hyprctl dispatch output "$OUT,mode=$LAP_RES,pos=0,0,scale=1,transform=normal"
-        fi
-    done
-    # Reload Hyprland to apply changes
-    hyprctl reload
-}
+case $next_mode in
+    0)
+        echo "Laptop only"
+        hyprctl dispatch output "$LAPTOP,enable,mode=1920x1080@60,pos=0,0"
+        hyprctl dispatch output "$EXTERNAL,disable"
+        ;;
+    1)
+        echo "External only"
+        hyprctl dispatch output "$LAPTOP,disable"
+        hyprctl dispatch output "$EXTERNAL,enable,mode=1920x1080@60,pos=0,0"
+        ;;
+    2)
+        echo "Extend right"
+        hyprctl dispatch output "$LAPTOP,enable,mode=1920x1080@60,pos=0,0"
+        hyprctl dispatch output "$EXTERNAL,enable,mode=1920x1080@60,pos=1920,0"
+        ;;
+    3)
+        echo "Mirror mode"
+        hyprctl dispatch output "$LAPTOP,enable,mode=1920x1080@60,pos=0,0"
+        hyprctl dispatch output "$EXTERNAL,enable,mode=1920x1080@60,pos=0,0"
+        ;;
+esac
 
-# --- Main loop ---
-while true; do
-    mirror_external
-    sleep $WATCH_INTERVAL
-done
+echo "$next_mode" > "$STATE_FILE"
