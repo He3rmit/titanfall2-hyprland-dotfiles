@@ -1,13 +1,13 @@
 {
   "$schema": "/etc/xdg/swaync/configSchema.json",
   "ignore-gtk-theme": true,
+  "show-critical-on-dnd": true,
   "positionX": "right",
   "positionY": "top",
   "layer": "overlay",
   "control-center-layer": "top",
   "layer-shell": true,
   "layer-shell-cover-screen": true,
-  "cssPriority": "highest",
   "control-center-margin-top": 0,
   "control-center-margin-bottom": 0,
   "control-center-margin-right": 0,
@@ -47,7 +47,7 @@
     "example-name": {
       "state": "muted",
       "urgency": "Low",
-      "app-name": "Spotify",
+      "app-name": "Spotify"
     }
   },
   "widgets": [
