@@ -1,20 +1,18 @@
 #!/usr/bin/env bash
-# volume.sh — system volume OSD with DND-proof notifications
-
+# ~/.config/swaync/scripts/volume.sh
 WPCTL="/usr/bin/wpctl"
 NOTIFY="/usr/bin/notify-send"
 ID_FILE="/tmp/volume_notif_id"
 STEP="5%"
 
 case "$1" in
-  up)     $WPCTL set-volume @DEFAULT_AUDIO_SINK@ "$STEP"+ ;;
-  down)   $WPCTL set-volume @DEFAULT_AUDIO_SINK@ "$STEP"- ;;
+  up)    $WPCTL set-volume @DEFAULT_AUDIO_SINK@ "$STEP"+ ;;
+  down)  $WPCTL set-volume @DEFAULT_AUDIO_SINK@ "$STEP"- ;;
   toggle) $WPCTL set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
   *) echo "Usage: $0 {up|down|toggle}" >&2; exit 1 ;;
 esac
 
 sleep 0.08
-
 OUT=$($WPCTL get-volume @DEFAULT_AUDIO_SINK@ 2>/dev/null)
 
 if echo "$OUT" | grep -qi "MUTED"; then
@@ -31,18 +29,18 @@ else
 fi
 
 OLD_ID=0
-[ -f "$ID_FILE" ] && OLD_ID=$(cat "$ID_FILE" 2>/dev/null || echo 0)
+if [ -f "$ID_FILE" ]; then OLD_ID=$(cat "$ID_FILE" 2>/dev/null || echo 0); fi
 
-if [ "$MUTED" = true ]; then
+if [ "$MUTED" = "true" ]; then
     ICON="audio-volume-muted-symbolic"
-    MSG="Muted"
+    MSG="Volume muted"
     HINT_VAL=0
 else
     ICON="audio-volume-high-symbolic"
-    MSG="${VOL_PERC}%"
+    MSG="Volume: ${VOL_PERC}%"
     HINT_VAL=$VOL_PERC
 fi
 
-NEW_ID=$($NOTIFY -p -t 1000 -r "$OLD_ID" -u critical -i "$ICON" -h int:value:"$HINT_VAL" "Volume" "$MSG")
-[ -z "$NEW_ID" ] && NEW_ID=$OLD_ID
+NEW_ID=$($NOTIFY -p -t 1000 -r "$OLD_ID" -u low -i "$ICON" -h int:value:"$HINT_VAL" "Volume" "$MSG")
+if [ -z "$NEW_ID" ]; then NEW_ID=$OLD_ID; fi
 echo "$NEW_ID" > "$ID_FILE"
