@@ -1,56 +1,60 @@
 #!/usr/bin/env bash
-# mic.sh — dynamic microphone control for Tiger Lake-LP onboard mic
+# ~/.config/swaync/scripts/mic.sh
+WPCTL="/usr/bin/wpctl"
+NOTIFY="/usr/bin/notify-send"
+STEP="5%"
+TIMEOUT=1200  # milliseconds
+CACHE="/tmp/current_mic_id"
 
-ICON_MIC_MUTED="microphone-sensitivity-muted-symbolic"
-ICON_MIC_ACTIVE="microphone-sensitivity-high-symbolic"
-ID_FILE="/tmp/mic_notif_id"
+notify() {
+    $NOTIFY -t "$TIMEOUT" -u low "🎙️ Microphone" "$1"
+}
 
-SOURCE="70"
-if ! wpctl get-volume $SOURCE &>/dev/null; then
-    SOURCE="alsa_input.pci-0000_00_1f.3-platform-skl_hda_dsp_generic.pro-input-6"
+# Detect or reuse cached mic ID
+if [ -f "$CACHE" ]; then
+    MIC_SOURCE=$(cat "$CACHE")
+else
+    MIC_SOURCE=$(wpctl status | awk '
+        /Sources:/, /Filters:/ {
+            if ($2 ~ /^[0-9]+\.$/ && $0 !~ /Easy Effects|Virtual|Monitor/) {
+                gsub(/\./,"",$2);
+                print $2;
+                exit;
+            }
+        }')
+    echo "$MIC_SOURCE" > "$CACHE"
 fi
 
-# --- perform action ---
+# If still empty, try fallback
+if [ -z "$MIC_SOURCE" ]; then
+    notify "❌ No active microphone found."
+    exit 1
+fi
+
 case "$1" in
-  toggle) wpctl set-mute $SOURCE toggle ;;
-  up)     wpctl set-volume $SOURCE 5%+   ;;
-  down)   wpctl set-volume $SOURCE 5%-   ;;
-  *) echo "Usage: $0 {toggle|up|down}" >&2; exit 1 ;;
+    up)
+        $WPCTL set-volume "$MIC_SOURCE" "$STEP"+ --limit 1.0 ;;
+    down)
+        $WPCTL set-volume "$MIC_SOURCE" "$STEP"- ;;
+    toggle)
+        $WPCTL set-mute "$MIC_SOURCE" toggle ;;
+    *)
+        notify "Usage: mic.sh [up|down|toggle]"
+        exit 1 ;;
 esac
 
-sleep 0.08
+sleep 0.06
 
-# --- read current state ---
-OUT=$(wpctl get-volume $SOURCE)
-if echo "$OUT" | grep -q "MUTED"; then
-    MUTED=true
-else
-    MUTED=false
+VOL_INFO=$($WPCTL get-volume "$MIC_SOURCE" 2>/dev/null)
+if [ -z "$VOL_INFO" ]; then
+    rm -f "$CACHE"
+    notify "❌ Microphone became unavailable. Try again."
+    exit 1
 fi
 
-# extract 0.0–1.0 value
-NUM=$(echo "$OUT" | grep -oP '[0-9.]+(?=$)')
-if [[ "$NUM" == *.* ]]; then
-    VOL_PERC=$(awk "BEGIN{printf \"%d\", $NUM*100}")
+if echo "$VOL_INFO" | grep -q "MUTED"; then
+    notify "🔇 Microphone muted"
 else
-    VOL_PERC=$NUM
+    VOL=$(echo "$VOL_INFO" | awk '{printf "%d", $2*100}')
+    notify "🎙️ Volume: ${VOL}%"
 fi
-
-# --- load previous notif id ---
-OLD_ID=0
-[ -f "$ID_FILE" ] && OLD_ID=$(cat "$ID_FILE" 2>/dev/null || echo 0)
-
-# --- send notification ---
-if [ "$MUTED" = true ]; then
-    ICON="$ICON_MIC_MUTED"
-    MSG="Muted"
-    VAL=0
-else
-    ICON="$ICON_MIC_ACTIVE"
-    MSG="Active — ${VOL_PERC}%"
-    VAL=$VOL_PERC
-fi
-
-NEW_ID=$(notify-send -p -t 1000 -r "$OLD_ID" -u critical -i "$ICON" -h int:value:"$VAL" "Microphone" "$MSG")
-[ -z "$NEW_ID" ] && NEW_ID=$OLD_ID
-echo "$NEW_ID" > "$ID_FILE"
