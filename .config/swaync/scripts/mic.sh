@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 # ~/.config/swaync/scripts/mic.sh
-# Usage: mic.sh up|down|toggle
-
 WPCTL="/usr/bin/wpctl"
 NOTIFY="/usr/bin/notify-send"
 ID_FILE="/tmp/mic_notif_id"
@@ -13,17 +11,16 @@ if [ ! -x "$WPCTL" ]; then
 fi
 
 case "$1" in
-  up)      $WPCTL set-volume @DEFAULT_AUDIO_SOURCE@ "$STEP"+ ;;
-  down)    $WPCTL set-volume @DEFAULT_AUDIO_SOURCE@ "$STEP"- ;;
-  toggle)  $WPCTL set-mute @DEFAULT_AUDIO_SOURCE@ toggle ;;
-  *)       echo "Usage: $0 {up|down|toggle}" >&2; exit 1 ;;
+  up)    $WPCTL set-volume @DEFAULT_AUDIO_SOURCE@ "$STEP"+ ;;
+  down)  $WPCTL set-volume @DEFAULT_AUDIO_SOURCE@ "$STEP"- ;;
+  toggle) $WPCTL set-mute @DEFAULT_AUDIO_SOURCE@ toggle ;;
+  *) echo "Usage: $0 {up|down|toggle}" >&2; exit 1 ;;
 esac
 
 sleep 0.06
-
 OUT=$($WPCTL get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null)
 if [ -z "$OUT" ]; then
-  $NOTIFY -u critical "Mic" "Unable to read microphone state (wpctl returned nothing)."
+  $NOTIFY -u critical "Mic" "Unable to read microphone state."
   exit 1
 fi
 
@@ -32,7 +29,11 @@ if echo "$OUT" | grep -qi "MUTED"; then
   MUTED=true
 else
   MUTED=false
-  VOL_PERC=$(echo "$OUT" | awk '{ for(i=1;i<=NF;i++){ if($i ~ /[0-9]+%/){ gsub(/[^0-9]/,"",$i); print $i; exit } } }')
+  VOL_PERC=$(echo "$OUT" | awk '{
+    for(i=1;i<=NF;i++){
+      if($i ~ /[0-9]+%/){ gsub(/[^0-9]/,"",$i); print $i; exit }
+    }
+  }')
   if [ -z "$VOL_PERC" ]; then
     VOL_PERC=$(echo "$OUT" | awk '{ for(i=1;i<=NF;i++) if($i ~ /[0-9]+\.[0-9]+/){ printf "%d", $i*100; exit } }')
   fi
@@ -52,9 +53,7 @@ else
   HINT_VAL=$VOL_PERC
 fi
 
-NEW_ID=$($NOTIFY -p -t 1200 -r "$OLD_ID" -u low -i "$ICON" \
-  -h int:value:"$HINT_VAL" "Microphone" "$MSG")
-
+NEW_ID=$($NOTIFY -p -t 1200 -r "$OLD_ID" -u low -i "$ICON" -h int:value:"$HINT_VAL" "Microphone" "$MSG")
 if [ -z "$NEW_ID" ]; then NEW_ID=$OLD_ID; fi
 echo "$NEW_ID" > "$ID_FILE"
 exit 0
