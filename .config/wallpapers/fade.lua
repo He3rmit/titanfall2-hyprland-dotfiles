@@ -1,30 +1,35 @@
--- fade.lua for mpv (3 second dissolve)
+-- fade.lua - simple crossfade for mpvpaper
+-- configurable fade duration in seconds
+FADE_DURATION = 1.5  -- default fade duration
+
+-- allow override via mpv script-opts
+local opts = require 'mp.options'
+opts.read_options(nil, FADE_DURATION)
+
 local mp = require 'mp'
-local timer = nil
 
-local function set_opacity(v)
-    if v < 0 then v = 0 end
-    if v > 1 then v = 1 end
-    mp.set_property("options/opacity", tostring(v))
-end
-
-local function run_fade(target, duration)
-    if timer then timer:kill() end
-    local steps = 50
-    local step_time = duration / steps
-    local start = tonumber(mp.get_property("options/opacity")) or 1.0
-    local delta = (target - start) / steps
-    local i = 0
-    timer = mp.add_periodic_timer(step_time, function()
-        i = i + 1
-        local v = start + delta * i
-        set_opacity(v)
-        if i >= steps then
+function fade_in()
+    mp.set_property_native("opacity", 0)
+    mp.add_periodic_timer(0.01, function(timer)
+        local op = mp.get_property_number("opacity", 0)
+        op = math.min(op + 0.01 / FADE_DURATION, 1)
+        mp.set_property_native("opacity", op)
+        if op >= 1 then
             timer:kill()
-            timer = nil
         end
     end)
 end
 
-mp.register_script_message("fade_out", function() run_fade(0.0, 3.0) end)
-mp.register_script_message("fade_in",  function() run_fade(1.0, 3.0) end)
+function fade_out()
+    mp.add_periodic_timer(0.01, function(timer)
+        local op = mp.get_property_number("opacity", 1)
+        op = math.max(op - 0.01 / FADE_DURATION, 0)
+        mp.set_property_native("opacity", op)
+        if op <= 0 then
+            timer:kill()
+        end
+    end)
+end
+
+mp.register_script_message("fade_in", fade_in)
+mp.register_script_message("fade_out", fade_out)
