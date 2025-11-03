@@ -3,5 +3,4 @@
 #git add .gitignore
 #git commit -m "Ignore Hyprland backup folders"
 
-hypr-backup-default/
-hypr-backup-user/  
+#gitignore incase of errors

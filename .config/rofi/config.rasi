@@ -1,0 +1,11 @@
+configuration {
+    font: "Orbitron 11";
+    show-icons: true;
+    icon-theme: "Papirus-Dark";
+    display-drun: "  Launch";
+    drun-display-format: "{name}";
+    location: center;
+    fullscreen: false;
+    hide-scrollbar: true;
+    theme: "titanfall2";
+}

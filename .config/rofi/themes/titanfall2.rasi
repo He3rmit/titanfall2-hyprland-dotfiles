@@ -1,0 +1,82 @@
+/**
+ * Titanfall 2 HUD Theme for Rofi
+ * Author: [You]
+ * Aims for a sci-fi pilot interface feel — cyan accents, glass panels, clean mono font.
+ **/
+
+* {
+    background-color: transparent;
+    text-color: #00e0ff;
+    border: 0px;
+    font: "Orbitron 11";
+}
+
+window {
+    transparency: "real";
+    background-color: rgba(10, 15, 20, 0.8);
+    border: 2px solid rgba(0, 224, 255, 0.4);
+    border-radius: 12px;
+    padding: 20px;
+    width: 40%;
+    location: center;
+}
+
+mainbox {
+    spacing: 10px;
+    children: [inputbar, listview];
+}
+
+inputbar {
+    background-color: rgba(0, 20, 30, 0.85);
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 8px;
+    padding: 6px 10px;
+    margin: 0 0 10px 0;
+    text-color: #00e0ff;
+}
+
+listview {
+    lines: 8;
+    spacing: 6px;
+    scrollbar: false;
+}
+
+element {
+    background-color: rgba(10, 15, 20, 0.6);
+    border: 1px solid rgba(0, 224, 255, 0.15);
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+
+element selected {
+    background-color: rgba(0, 30, 45, 0.8);
+    border-color: rgba(0, 224, 255, 0.4);
+    text-color: #00e0ff;
+    box-shadow: 0 0 8px rgba(0, 224, 255, 0.4);
+}
+
+element-text {
+    vertical-align: 0.5;
+    horizontal-align: 0.0;
+    highlight: bold #00e0ff;
+}
+
+entry {
+    placeholder: "Type to search...";
+    background-color: rgba(0, 15, 25, 0.9);
+    border-radius: 8px;
+    text-color: #00e0ff;
+}
+
+message {
+    background-color: transparent;
+    border: 0;
+}
+
+error-message {
+    background-color: rgba(20, 0, 0, 0.7);
+    text-color: #ff3b3b;
+    border: 1px solid rgba(255, 60, 60, 0.4);
+    border-radius: 6px;
+    padding: 6px 10px;
+}
