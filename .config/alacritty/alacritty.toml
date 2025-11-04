@@ -3,14 +3,14 @@
 
 [window]
 # Window opacity (0.0 fully transparent, 1.0 opaque)
-opacity = 0.85
+opacity = 0.88
 
 # Padding around terminal content
 padding.x = 5
 padding.y = 5
 
 # Window decorations: "none", "full", or "transparent"
-decorations = "transparent"
+decorations = "full"
 
 [font]
 # Font family and size

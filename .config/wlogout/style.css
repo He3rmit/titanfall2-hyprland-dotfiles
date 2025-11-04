@@ -1,0 +1,68 @@
+window {
+    background-color: rgba(10, 10, 10, 0.85);
+    color: #e0e0e0;
+    font-family: "Orbitron", "Eurostile", sans-serif;
+    font-size: 16px;
+    border-radius: 12px;
+}
+
+button {
+    background-color: rgba(40, 40, 40, 0.9);
+    border: 2px solid #00bcd4;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 20px 40px;
+    font-size: 18px;
+    color: #ffffff;
+    transition: 200ms ease-in-out;
+    background-repeat: no-repeat;
+    
+
+}
+
+button:hover {
+    background-color: #00bcd4;
+    color: #000000;
+}
+
+button:focus {
+    border-color: #29b6f6;
+    box-shadow: 0 0 10px #29b6f6;
+}
+
+#lock {
+    border-color: #2196f3;
+    background-image: url("icon/Ion.png");
+    background-position: center;
+    
+}
+
+#hibernate {
+    border-color: #9c27b0;
+    background-image: url("icon/Northstar.png");
+    background-position: center;
+}
+
+#logout {
+    border-color: #4caf50;
+    background-image: url("icon/Monarch.png");
+    background-position: center;
+}
+
+#shutdown {
+    border-color: #f44336;
+    background-image: url("icon/Ronin.png");
+    background-position: center;
+}
+
+#suspend {
+    border-color: #ffc107;
+    background-image: url("icon/Legion.png");
+    background-position: center;
+}
+
+#reboot {
+    border-color: #ff9800;
+    background-image: url("icon/Scorch.png");
+    background-position: center;
+}
