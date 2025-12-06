@@ -40,4 +40,4 @@ alias tarnow='shutdown -h now'
 alias unlock='sudo rm /var/lib/pacman/db.lck'
 
 # 7. 🎨 Optional Fetch
-# neofetch
+fastfetch
