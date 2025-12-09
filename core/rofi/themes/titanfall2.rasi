@@ -1,82 +1,83 @@
 /**
- * Titanfall 2 HUD Theme for Rofi
- * Author: [You]
- * Aims for a sci-fi pilot interface feel — cyan accents, glass panels, clean mono font.
+ * Titanfall 2 HUD Theme - Crash Free & Image Ready
  **/
 
 * {
     background-color: transparent;
-    text-color: #090a0aff;
+    text-color: #e0e0e0; /* Visible Light Grey Text */
     border: 0px;
-    font: "Orbitron 11";
+    font: "Orbitron 11"; 
 }
 
 window {
     transparency: "real";
-    background-color: rgba(10, 15, 20, 0.8);
+    background-color: rgba(10, 15, 20, 0.98);
     border: 2px;
+    border-color: rgba(0, 174, 239, 0.6);
     border-radius: 12px;
     padding: 20px;
-    width: 40%;
+    width: 600px;
     location: center;
 }
 
 mainbox {
-    spacing: 10px;
+    spacing: 15px;
     children: [inputbar, listview];
 }
 
 inputbar {
-    background-color: rgba(0, 20, 30, 0.85);
+    background-color: rgba(0, 20, 30, 0.9);
     border: 1px;
+    border-color: rgba(0, 224, 255, 0.4);
     border-radius: 8px;
-    padding: 6px 10px;
+    padding: 10px 14px;
     margin: 0 0 10px 0;
+    children: [prompt, entry];
+}
+
+prompt {
+    text-color: #00e0ff;
+    padding: 0 10px 0 0;
+}
+
+entry {
+    placeholder: "Search Clipboard...";
+    placeholder-color: rgba(0, 224, 255, 0.3);
     text-color: #00e0ff;
 }
 
 listview {
-    lines: 8;
-    spacing: 6px;
+    lines: 7;
+    columns: 1;
+    spacing: 5px;
     scrollbar: false;
 }
 
 element {
-    background-color: rgba(10, 15, 20, 0.6);
+    background-color: rgba(20, 25, 30, 0.6);
     border: 1px;
+    border-color: rgba(0, 255, 255, 0.1);
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 8px 10px;
 }
 
 element selected {
-    background-color: rgba(0, 30, 45, 0.8);
-    border-color: rgba(0, 224, 255, 0.4);
+    background-color: rgba(0, 45, 60, 0.9);
+    border: 1px;
+    border-color: #00e0ff;
     text-color: #00e0ff;
-    box-shadow: 0 0 8px;
+    /* REMOVED box-shadow to stop the parsing crash */
 }
 
 element-text {
     vertical-align: 0.5;
-    horizontal-align: 0.0;
+    text-color: inherit;
     highlight: bold #00e0ff;
 }
 
-entry {
-    placeholder: "Type to search...";
-    background-color: rgba(0, 15, 25, 0.9);
-    border-radius: 8px;
-    text-color: #00e0ff;
-}
-
-message {
+/* 🖼️ ENABLE ICONS (64px for thumbnails) */
+element-icon {
+    size: 64px;
+    padding: 0 15px 0 0;
     background-color: transparent;
-    border: 0;
-}
-
-error-message {
-    background-color: rgba(20, 0, 0, 0.7);
-    text-color: #ff3b3b;
-    border: 1px;
-    border-radius: 6px;
-    padding: 6px 10px;
 }
