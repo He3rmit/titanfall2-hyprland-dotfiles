@@ -3,8 +3,8 @@
   "positionX": "right",
   "positionY": "top",
   "control-center-width": 400,
-  "widgets": ["title", "buttons-grid", "mpris", "notifications"],
-  "widget-config": {
+  "widgets": ["title", "buttons-grid", "volume" , "backlight" , "mpris", "notifications"],
+  "widget-config":  {
     "title": { "text": "PILOT HUD", "clear-all-button": true },
     "buttons-grid": {
       "buttons-per-row": 5,
@@ -35,5 +35,16 @@
         }
       ]
     }
-  }
+    
+  ,"volume": {
+    "label" : "󰕾",
+    "show-per-app": true,
+    "show-per-app-icon": true,
+    "show-per-app-label": false
+  },
+  "backlight": {
+    "label": "󰃠",
+    "device": "intel_backlight"
+  } 
+    }
 }

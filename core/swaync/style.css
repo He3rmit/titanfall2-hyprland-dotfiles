@@ -53,3 +53,31 @@
 .widget-buttons-grid > box > button > label {
   font-size: 1.6rem;
 }
+
+/* Slider styling */
+.widget-volume, .widget-backlight {
+  background-color: rgba(26, 27, 38, 0.5);
+  padding: 8px;
+  margin: 8px;
+  border-radius: 12px;
+  border: 1px solid rgba(66, 97, 255, 0.2);
+}
+
+/* The actual slider bar */
+scale {
+  margin: 0 10px;
+}
+
+highlight {
+  background-color: #4261ff; /* Pilot Blue */
+  border-radius: 10px;
+}
+
+/* The slider "knob" (Pilot Helmet) */
+slider {
+  background-color: #ffffff;
+  border: 2px solid #4261ff;
+  border-radius: 50%;
+  min-height: 12px;
+  min-width: 12px;
+}
