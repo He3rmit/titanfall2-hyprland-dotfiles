@@ -1,48 +1,40 @@
 #!/bin/bash
 
-# usage: ./install.sh [laptop|desktop]
 TARGET=$1
-
-# 1. Safety Check
 if [[ -z "$TARGET" ]]; then
-    echo "❌ Error: You must specify a target."
-    echo "Usage: ./install.sh laptop  OR  ./install.sh desktop"
+    echo "❌ Error: Specify laptop or desktop."
     exit 1
 fi
 
+DOTFILES_DIR="$HOME/dotfiles"
 echo "🚧 Deploying Titanfall Config for: $TARGET"
 
-# 2. Link User Home Files (.zshrc)
-# Links ~/dotfiles/home/.zshrc -> ~/.zshrc
-stow -v -R -t ~ home
+# 1. Link Home Files
+cd "$DOTFILES_DIR"
+stow -v -R --adopt -t "$HOME" home
 
-# 3. Link Core Configs (Theming, Scripts, Kitty, Starship)
-# Links ~/dotfiles/core/* -> ~/.config/*
-stow -v -R -t ~/.config core
+# 2. Link Core Configs (This creates the ~/.config/swaync folder)
+stow -v -R -t "$HOME/.config" core
 
-# 4. Link Base Hyprland Config
-# Links ~/dotfiles/hyprland/* -> ~/.config/hypr/*
-stow -v -R -t ~/.config/hypr hyprland
+# 3. Handle the Host-Specific Config (The Manual Override)
+# Instead of stowing the folder (which causes the conflict), 
+# we link the specific config.json directly into the folder Stow just made.
+echo "🔗 Overriding SwayNC config for $TARGET..."
+ln -sf "$DOTFILES_DIR/hosts/$TARGET/.config/swaync/config.json" "$HOME/.config/swaync/config.json"
 
-# 5. The "Switch" Logic (Hardware Specifics)
-# This forces the link to point to the correct file for this machine
-echo "🔗 Linking host-specific configs..."
+# 4. Link Hyprland
+cd "$DOTFILES_DIR"
+stow -v -R -t "$HOME/.config/hypr" hyprland
 
-# Hyprland Host Config
-ln -sf "$HOME/dotfiles/hosts/$TARGET/hypr-host.conf" "$HOME/.config/hypr/host.conf"
-
-# Waybar Host Config
-ln -sf "$HOME/dotfiles/hosts/$TARGET/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
-
-# Kitty Host Config  <-- ADD THIS LINE
-ln -sf "$HOME/dotfiles/hosts/$TARGET/kitty-host.conf" "$HOME/.config/kitty/host.conf"
+# 5. Manual Host Links
+ln -sf "$DOTFILES_DIR/hosts/$TARGET/hypr-host.conf" "$HOME/.config/hypr/host.conf"
+ln -sf "$DOTFILES_DIR/hosts/$TARGET/kitty-host.conf" "$HOME/.config/kitty/host.conf"
 
 echo "✅ Configuration applied for $TARGET."
 
-# 6. Reload System
+# 6. Reload
 if pgrep Hyprland > /dev/null; then
-    echo "🔄 Reloading Hyprland..."
     hyprctl reload
-    killall waybar
-    waybar &
+    killall waybar && waybar &
+    swaync-client -rs && echo "✅ PILOT HUD Refreshed."
 fi

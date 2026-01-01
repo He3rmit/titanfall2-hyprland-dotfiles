@@ -1,0 +1,56 @@
+/* Global Titanfall HUD Variables */
+:root {
+    --pilot-blue: #4261ff;
+    --imc-orange: #ff8242;
+    --hud-bg: rgba(10, 15, 20, 0.85);
+}
+
+* {
+    font-family: "JetBrainsMono Nerd Font", sans-serif;
+}
+
+.notification {
+    background: var(--hud-bg);
+    border: 1px solid var(--pilot-blue);
+    border-radius: 4px;
+    margin: 8px;
+    box-shadow: 0 0 10px rgba(66, 97, 255, 0.3);
+}
+
+.notification.critical {
+    border: 2px solid var(--imc-orange);
+}
+
+.notification-title {
+    color: var(--pilot-blue);
+    font-weight: bold;
+}
+
+/* THE DOCK (Buttons Grid) */
+.widget-buttons-grid {
+    background: rgba(255, 255, 255, 0.05);
+    margin: 10px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.widget-buttons-grid > box > button {
+    background: rgba(66, 97, 255, 0.1);
+    border: 1px solid var(--pilot-blue);
+    margin: 5px;
+    border-radius: 4px;
+    color: white;
+}
+
+.widget-buttons-grid > box > button:hover {
+    background: rgba(255, 130, 66, 0.2);
+    border: 1px solid var(--imc-orange);
+    color: var(--imc-orange);
+}
+
+/* Bigger icons */
+.widget-buttons-grid > box > button {
+    font-size: 1.5rem;
+    padding: 10px;
+    font-family: "JetBrainsMono Nerd Font";
+}

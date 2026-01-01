@@ -1,0 +1,33 @@
+{
+  "$schema": "/etc/xdg/swaync/configSchema.json",
+  "positionX": "right",
+  "positionY": "top",
+  "control-center-width": 400,
+  "widgets": ["title", "buttons-grid", "mpris", "notifications"],
+  "widget-config": {
+    "title": { "text": "COMMAND CENTER", "clear-all-button": true },
+    "buttons-grid": {
+      "actions": [
+        {
+          "label": "󰓅",
+          "type": "toggle",
+          "active": false,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && hyprctl keyword animations:enabled 0 && hyprctl keyword decoration:blur:enabled 0 || hyprctl reload'",
+          "update-command": "sh -c '[[ $(hyprctl getoption animations:enabled | grep \"int: 1\") ]] && echo false || echo true'"
+        },
+        {
+          "label": "󰔏",
+          "command": "notify-send 'Thermal Status' \"$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader)°C\""
+        },
+        {
+          "label": "󰑐",
+          "command": "hyprctl reload && swaync-client -rs && notify-send 'Systems' 'HUD Refreshed'"
+        },
+        {
+          "label": "󰄀",
+          "command": "grim -g \"$(slurp)\" - | swappy -f -"
+        }
+      ]
+    }
+  }
+}
