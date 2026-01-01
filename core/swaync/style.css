@@ -26,31 +26,30 @@
     font-weight: bold;
 }
 
-/* THE DOCK (Buttons Grid) */
+/* Pilot HUD Button Grid Styling */
 .widget-buttons-grid {
-    background: rgba(255, 255, 255, 0.05);
-    margin: 10px;
-    padding: 10px;
-    border-radius: 8px;
+  padding: 8px;
+  margin: 8px;
+  border-radius: 12px;
+  background-color: rgba(26, 27, 38, 0.5); /* Match your translucent theme */
 }
 
 .widget-buttons-grid > box > button {
-    background: rgba(66, 97, 255, 0.1);
-    border: 1px solid var(--pilot-blue);
-    margin: 5px;
-    border-radius: 4px;
-    color: white;
+  background-color: rgba(43, 48, 59, 0.5);
+  border: 1px solid rgba(66, 97, 255, 0.3); /* Subtle Pilot Blue border */
+  border-radius: 8px;
+  min-height: 50px;
+  min-width: 50px;
+  margin: 4px;
+  padding: 10px;
 }
 
 .widget-buttons-grid > box > button:hover {
-    background: rgba(255, 130, 66, 0.2);
-    border: 1px solid var(--imc-orange);
-    color: var(--imc-orange);
+  background-color: rgba(66, 97, 255, 0.2);
+  border: 1px solid rgba(66, 97, 255, 1.0); /* Glowing border on hover */
 }
 
-/* Bigger icons */
-.widget-buttons-grid > box > button {
-    font-size: 1.5rem;
-    padding: 10px;
-    font-family: "JetBrainsMono Nerd Font";
+/* Make the Nerd Font icons larger and centered */
+.widget-buttons-grid > box > button > label {
+  font-size: 1.6rem;
 }
