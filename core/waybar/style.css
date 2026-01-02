@@ -61,3 +61,28 @@ window#waybar {
 #clock, #cpu, #memory, #network, #battery {
   animation: hudPulse 6s infinite ease-in-out;
 }
+
+#workspaces button.active {
+    background: #4261ff; /* Pilot Blue */
+    color: white;
+}
+
+/* Target the menu container itself */
+#tray menu {
+    background-color: #1e1e2e; /* Your dark Pilot HUD background */
+    border: 1px solid #4261ff;   /* Titan Blue border */
+    border-radius: 8px;
+    padding: 5px;
+}
+
+/* Target the individual items in the menu */
+#tray menu menuitem {
+    color: #ffffff;
+    padding: 4px 10px;
+}
+
+/* Add a hover effect for when you're selecting an option */
+#tray menu menuitem:hover {
+    background-color: #4261ff;
+    color: #000000;
+}

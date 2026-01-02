@@ -1,37 +1,12 @@
 {
-  "layer": "top",
-  "position": "bottom",
-  "margin": 0,
-  "spacing": 8,
-
-  "modules-left": ["cpu", "memory"],
-  "modules-center": ["clock"],
-  "modules-right": ["network", "battery"],
-
-  "cpu": {
-    "format": "CPU {usage}%",
-    "tooltip": false
-  },
-
-  "memory": {
-    "format": "RAM {used:0.1f}G",
-    "tooltip": false
-  },
-
-  "clock": {
-    "format": "{:%a %b %d  %H:%M}",
-    "tooltip": false
-  },
-
-  "network": {
-    "format-wifi": "NET {signalStrength}%",
-    "format-ethernet": "LAN",
-    "format-disconnected": "OFFLINE",
-    "tooltip": false
-  },
+  "include": ["~/.config/waybar/common.jsonc"],
+  
+  "modules-left": ["cpu", "memory", "network"],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": ["tray", "clock", "battery"],
 
   "battery": {
-    "format": "BAT {capacity}%",
+    "format": "BAT: {capacity}%",
     "format-charging": "CHG {capacity}%",
     "tooltip": false
   }

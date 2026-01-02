@@ -81,3 +81,9 @@ slider {
   min-height: 12px;
   min-width: 12px;
 }
+
+:root {
+    --notification-icon-size: 64px; /* The replacement for the deprecated setting */
+    --pilot-blue: #4261ff;
+    /* ... rest of your variables */
+}

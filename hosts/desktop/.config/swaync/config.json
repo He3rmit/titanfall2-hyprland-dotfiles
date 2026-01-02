@@ -3,31 +3,76 @@
   "positionX": "right",
   "positionY": "top",
   "control-center-width": 400,
-  "widgets": ["title", "buttons-grid", "mpris", "notifications"],
+  "fit-to-screen": false,
+  "layer": "overlay",
+  "control-center-layer": "overlay",
+  "cssPriority": "user",
+  "notification-body-image-height": 100,
+  "notification-body-image-width": 200,
+
+  "timeout": 5,
+  "timeout-low": 2,
+  "timeout-critical": 0,
+
+  "widgets": [
+    "title", 
+    "dnd", 
+    "buttons-grid", 
+    "volume", 
+    "mpris", 
+    "notifications"
+  ],
+
   "widget-config": {
-    "title": { "text": "COMMAND CENTER", "clear-all-button": true },
+    "title": { 
+      "text": "PILOT HUD", 
+      "clear-all-button": true,
+      "button-text": "PURGE"
+    },
+    
+    "dnd": {
+      "text": "Do Not Disturb"
+    },
+
     "buttons-grid": {
+      "buttons-per-row": 3,
       "actions": [
         {
-          "label": "󰓅",
+          "label": "󰖩",
           "type": "toggle",
-          "active": false,
-          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && hyprctl keyword animations:enabled 0 && hyprctl keyword decoration:blur:enabled 0 || hyprctl reload'",
-          "update-command": "sh -c '[[ $(hyprctl getoption animations:enabled | grep \"int: 1\") ]] && echo false || echo true'"
+          "active": true,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+          "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
         },
         {
-          "label": "󰔏",
-          "command": "notify-send 'Thermal Status' \"$(nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader)°C\""
+          "label": "󰓅",
+          "command": "powerprofilesctl set performance && notify-send 'Core' 'Performance Mode Active'"
         },
         {
-          "label": "󰑐",
-          "command": "hyprctl reload && swaync-client -rs && notify-send 'Systems' 'HUD Refreshed'"
+          "label": "󱫐",
+          "command": "powerprofilesctl set balanced && notify-send 'Core' 'Balanced Mode Engaged'"
+        },
+        {
+          "label": "󰾆",
+          "command": "powerprofilesctl set power-saver && notify-send 'Core' 'Power Saver Engaged'"
         },
         {
           "label": "󰄀",
           "command": "grim -g \"$(slurp)\" - | swappy -f -"
+        },
+        {
+          "label": "󰂯",
+          "type": "toggle",
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetooth on || bluetooth off'"
         }
       ]
+    },
+
+    "volume": {
+      "label": "󰕾",
+      "show-per-app": true,
+      "show-per-app-icon": true,
+      "show-per-app-label": false
     }
   }
 }
