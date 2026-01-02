@@ -21,7 +21,7 @@
           "command": "powerprofilesctl set performance && notify-send 'Core' 'Performance Mode Active'"
         },
         {
-          "label": "󰗧",
+          "label": "󱫐",
           "command": "powerprofilesctl set balanced && notify-send 'Core' 'Balanced Mode Engaged'"
         },
         {
