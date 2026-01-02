@@ -7,7 +7,7 @@
   "widget-config":  {
     "title": { "text": "PILOT HUD", "clear-all-button": true },
     "buttons-grid": {
-      "buttons-per-row": 5,
+      "buttons-per-row": 3,
       "actions": [
         {
           "label": "󰖩",
@@ -19,6 +19,10 @@
         {
           "label": "󰓅",
           "command": "powerprofilesctl set performance && notify-send 'Core' 'Performance Mode Active'"
+        },
+        {
+          "label": "󰗧",
+          "command": "powerprofilesctl set balanced && notify-send 'Core' 'Balanced Mode Engaged'"
         },
         {
           "label": "󰾆",
