@@ -1,0 +1,53 @@
+{
+  "layer": "top",
+  "position": "bottom",
+  "margin": 0,
+  "spacing": 5,
+
+  // Shared Module Logic
+  "cpu": {
+    "format": "CPU: {usage}%",
+    "tooltip": false
+  },
+
+  "memory": {
+    "format": "RAM: {used:0.1f}G",
+    "tooltip": false
+  },
+
+  "network": {
+    "format-wifi": "NET: {signalStrength}%",
+    "format-ethernet": "LAN",
+    "format-disconnected": "OFFLINE",
+    "tooltip": false
+  },
+
+  "hyprland/workspaces": {
+    "format": "{name}: {windows}",
+    "format-window-separator": " ",
+    "window-rewrite": {
+      "class<steam>": "󰓓",
+      "class<kitty>": "",
+      "class<code>": "󰨞",
+      "class<brave>": "󰖟",
+      "class<brave>: title<.*gitlab.*>": ""
+    },
+    "workspace-taskbar": {
+      "enable": true,
+      "icon-size": 18
+    },
+    "persistent-workspaces": {
+      "*": 10 
+    }
+  },
+
+  "tray": {
+    "icon-size": 21,
+    "spacing": 5
+  },
+
+  "clock": {
+    "format": "{:%a, %b %d  %H:%M}",
+    "tooltip": false
+  }
+}
