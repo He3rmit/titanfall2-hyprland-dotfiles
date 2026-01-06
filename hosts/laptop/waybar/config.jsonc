@@ -3,11 +3,7 @@
   
   "modules-left": ["cpu", "memory", "network"],
   "modules-center": ["hyprland/workspaces"],
-  "modules-right": ["tray", "clock", "upower", "battery"],
-
-"battery": {
-  "format": "SYS: {capacity}%", // Label it as System/Laptop
-  "format-charging": "⚡ {capacity}%",
-  "tooltip": false
-  }
+  
+  // UPDATE: Removed "battery", kept only "custom/peripheral"
+  "modules-right": ["tray", "clock", "custom/peripheral"]
 }

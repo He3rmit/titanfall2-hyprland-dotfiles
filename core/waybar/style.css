@@ -1,5 +1,5 @@
 /* ──────────────────────────────────────────────────────────────────────────
-   TITANFALL PILOT HUD - WAYBAR STYLE (MARK 3)
+   TITANFALL PILOT HUD - WAYBAR STYLE (MARK 4 - FINAL POLISH)
    ────────────────────────────────────────────────────────────────────────── */
 
 * {
@@ -17,8 +17,10 @@ window#waybar {
     transition: background 0.3s ease-in-out;
 }
 
-/* UNIFIED MODULE STYLING */
-#cpu, #memory, #battery, #network, #clock, #custom-peripheral {
+/* ──────────────────────────────────────────────────────────────────────────
+   UNIFIED MODULE STYLING
+   ────────────────────────────────────────────────────────────────────────── */
+#cpu, #memory, #network, #clock, #custom-peripheral {
     background: rgba(10, 15, 20, 0.8);
     border: 1px solid rgba(0, 255, 255, 0.25);
     border-radius: 8px;
@@ -29,41 +31,55 @@ window#waybar {
 }
 
 /* HOVER EFFECTS */
-#cpu:hover, #memory:hover, #battery:hover, #network:hover, #clock:hover, #custom-peripheral:hover {
+#cpu:hover, #memory:hover, #network:hover, #clock:hover, #custom-peripheral:hover {
     border-color: #00aaff;
     box-shadow: 0 0 12px rgba(0, 174, 239, 0.4);
     background: rgba(10, 15, 20, 0.95);
     transition: all 0.2s ease-in-out;
 }
 
-/* --- DUAL POWER COLORS --- */
+/* ──────────────────────────────────────────────────────────────────────────
+   MASTER POWER MODULE
+   ────────────────────────────────────────────────────────────────────────── */
+#custom-peripheral { 
+    color: #00e0ff; 
+    font-weight: bold;
+}
 
-/* System Battery (Pilot Blue) */
-#battery { color: #00e0ff; }
-#battery.charging { color: #00ffcc; }
-#battery.critical { color: #ff4500; border-color: #ff4500; }
+#custom-peripheral.charging { 
+    color: #00ffcc; 
+    border-color: rgba(0, 255, 204, 0.4);
+}
 
-/* Peripheral Scout (Success Green) */
-#custom-peripheral { color: #00ffcc; border-color: rgba(0, 255, 204, 0.4); }
-#custom-peripheral.charging { color: #ffffff; }
-#custom-peripheral.critical { color: #ff8242; }
+#custom-peripheral.critical { 
+    color: #ff8242; 
+    border-color: #ff8242;
+    animation: hudPulse 1s infinite ease-in-out;
+}
 
-/* --- HUD ANIMATION --- */
+/* ──────────────────────────────────────────────────────────────────────────
+   HUD ANIMATIONS & TOOLTIPS
+   ────────────────────────────────────────────────────────────────────────── */
 @keyframes hudPulse {
     0%   { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
     50%  { box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); }
     100% { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
 }
 
-/* --- TOOLTIP OVERRIDES (The Visibility Fix) --- */
+/* TOOLTIP RESTORATION */
 tooltip {
+    /* Keep the dark background you liked */
     background: rgba(10, 15, 20, 0.95);
     border: 1px solid #4261ff;
     border-radius: 8px;
 }
+
 tooltip label {
-    color: #e0e0e0;
-    font-family: "JetBrainsMono Nerd Font", monospace;
+    /* RESTORED: Pilot Blue Text */
+    color: #00e0ff; 
+    /* RESTORED: Orbitron (Sci-Fi) Font */
+    font-family: "Orbitron", monospace;
     font-size: 13px;
-    padding: 4px;
+    padding: 8px;
+    text-shadow: 0 0 5px rgba(0, 224, 255, 0.3);
 }
