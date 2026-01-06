@@ -1,0 +1,20 @@
+[General]
+# Use the full, absolute path to the system folder
+Background="/usr/share/sddm/themes/sddm-astronaut-theme/Movies/titan-hatch.mp4"
+
+# Force the video to fill your 1920x1200 screen
+FillMode=PreserveAspectCrop
+
+# Pilot HUD Colors
+MainColor="#4261ff"
+AccentColor="#ff8242"
+
+# --- DISABLING THE BLUR ---
+# This stops the theme from blurring the video behind the login box
+PartialBlur="false"
+FullBlur="false"
+BlurRadius="0"
+
+# --- MAKING THE BOX TRANSPARENT ---
+# This makes the login area clear so you see the cockpit through it
+HaveFormBackground="false"

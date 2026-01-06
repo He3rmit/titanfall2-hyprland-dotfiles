@@ -1,88 +1,69 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   TITANFALL PILOT HUD - WAYBAR STYLE (MARK 3)
+   ────────────────────────────────────────────────────────────────────────── */
+
 * {
-  font-family: "Orbitron", monospace;
-  font-size: 12px;
-  color: #00e0ff;
-  background: transparent;
+    font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+    color: #00e0ff;
+    background: transparent;
 }
 
-/* Bar container */
 window#waybar {
-  background: rgba(0, 0, 0, 0.6);
-  border-top: 2px solid rgba(0, 174, 239, 0.4);
-  border-radius: 10px 10px 0 0;
-  padding: 5px 10px;
-  transition: background 0.3s ease-in-out;
+    background: rgba(0, 0, 0, 0.6);
+    border-top: 2px solid rgba(0, 174, 239, 0.4);
+    border-radius: 10px 10px 0 0;
+    padding: 5px 10px;
+    transition: background 0.3s ease-in-out;
 }
 
-/* Modules */
-#cpu, #memory, #battery, #network, #clock {
-  background: rgba(10, 15, 20, 0.8);
-  border: 1px solid rgba(0, 255, 255, 0.25);
-  border-radius: 8px;
-  padding: 4px 10px;
-  margin: 0 4px;
-  box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
-}
-
-/* Hover effect: light pulse */
-#cpu:hover, #memory:hover, #battery:hover, #network:hover, #clock:hover {
-  border-color: #00aaff;
-  box-shadow: 0 0 12px rgba(0, 174, 239, 0.4);
-}
-
-/* Center module (clock) accent */
-#clock {
-  background: rgba(0, 20, 30, 0.85);
-  border-color: rgba(0, 224, 255, 0.4);
-  font-weight: bold;
-  letter-spacing: 1px;
-}
-
-/* Battery color logic */
-#battery.charging {
-  color: #00ffcc;
-}
-#battery.critical {
-  color: #ff6600;
-}
-
-/* Network status */
-#network.disconnected {
-  color: #ff4500;
-}
-
-/* Subtle glow animation for active modules */
-@keyframes hudPulse {
-  0% { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
-  50% { box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); }
-  100% { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
-}
-
-#clock, #cpu, #memory, #network, #battery {
-  animation: hudPulse 6s infinite ease-in-out;
-}
-
-#workspaces button.active {
-    background: #4261ff; /* Pilot Blue */
-    color: white;
-}
-
-/* Target the menu container itself */
-#tray menu {
-    background-color: #1e1e2e; /* Your dark Pilot HUD background */
-    border: 1px solid #4261ff;   /* Titan Blue border */
+/* UNIFIED MODULE STYLING */
+#cpu, #memory, #battery, #network, #clock, #custom-peripheral {
+    background: rgba(10, 15, 20, 0.8);
+    border: 1px solid rgba(0, 255, 255, 0.25);
     border-radius: 8px;
-    padding: 5px;
-}
-
-/* Target the individual items in the menu */
-#tray menu menuitem {
-    color: #ffffff;
     padding: 4px 10px;
+    margin: 0 4px;
+    box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
+    animation: hudPulse 6s infinite ease-in-out;
 }
 
-/* Add a hover effect for when you're selecting an option */
-#tray menu menuitem:hover {
-    background-color: #4261ff;
-    color: #000000;
+/* HOVER EFFECTS */
+#cpu:hover, #memory:hover, #battery:hover, #network:hover, #clock:hover, #custom-peripheral:hover {
+    border-color: #00aaff;
+    box-shadow: 0 0 12px rgba(0, 174, 239, 0.4);
+    background: rgba(10, 15, 20, 0.95);
+    transition: all 0.2s ease-in-out;
+}
+
+/* --- DUAL POWER COLORS --- */
+
+/* System Battery (Pilot Blue) */
+#battery { color: #00e0ff; }
+#battery.charging { color: #00ffcc; }
+#battery.critical { color: #ff4500; border-color: #ff4500; }
+
+/* Peripheral Scout (Success Green) */
+#custom-peripheral { color: #00ffcc; border-color: rgba(0, 255, 204, 0.4); }
+#custom-peripheral.charging { color: #ffffff; }
+#custom-peripheral.critical { color: #ff8242; }
+
+/* --- HUD ANIMATION --- */
+@keyframes hudPulse {
+    0%   { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
+    50%  { box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); }
+    100% { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
+}
+
+/* --- TOOLTIP OVERRIDES (The Visibility Fix) --- */
+tooltip {
+    background: rgba(10, 15, 20, 0.95);
+    border: 1px solid #4261ff;
+    border-radius: 8px;
+}
+tooltip label {
+    color: #e0e0e0;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    padding: 4px;
 }

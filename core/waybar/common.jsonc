@@ -4,7 +4,8 @@
   "margin": 0,
   "spacing": 5,
 
-  // Shared Module Logic
+  // --- MODULES ---
+
   "cpu": {
     "format": "CPU: {usage}%",
     "tooltip": false
@@ -49,5 +50,29 @@
   "clock": {
     "format": "{:%a, %b %d  %H:%M}",
     "tooltip": false
+  },
+
+  // 1. SYSTEM BATTERY (Native Waybar Module)
+  // Handles the main laptop power visualization
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "SYS: {capacity}%",
+    "format-charging": "⚡ {capacity}%",
+    "format-plugged": " {capacity}%",
+    "tooltip-format": "{timeTo} remaining"
+  },
+
+  // 2. PERIPHERAL SCOUT (Custom Script)
+  // Detects Mouse/Headset. Tooltip shows ALL power stats.
+  "custom/peripheral": {
+    "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh",
+    "interval": 5,
+    "return-type": "json",
+    "format": "{}", 
+    "on-click": "blueman-manager",
+    "hide-empty-text": true
   }
 }

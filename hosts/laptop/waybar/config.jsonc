@@ -3,11 +3,11 @@
   
   "modules-left": ["cpu", "memory", "network"],
   "modules-center": ["hyprland/workspaces"],
-  "modules-right": ["tray", "clock", "battery"],
+  "modules-right": ["tray", "clock", "upower", "battery"],
 
-  "battery": {
-    "format": "BAT: {capacity}%",
-    "format-charging": "CHG {capacity}%",
-    "tooltip": false
+"battery": {
+  "format": "SYS: {capacity}%", // Label it as System/Laptop
+  "format-charging": "⚡ {capacity}%",
+  "tooltip": false
   }
 }
