@@ -76,12 +76,12 @@
       "command": "grim -g \"$(slurp)\" - | swappy -f -"
     },
     {
-      "label": "󰂯",
-      "type": "toggle",
-      "active": false, 
-      "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && rfkill unblock bluetooth || rfkill block bluetooth'",
-      "update-command": "sh -c 'rfkill list bluetooth | grep -q \"Soft blocked: no\" && echo true || echo false'",
-      "interval": 5
+  "label": "󰂯",
+  "type": "toggle",
+  "active": false, 
+  "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && rfkill unblock bluetooth || rfkill block bluetooth'",
+  "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'",
+  "interval": 5
     }
   ]
 },
