@@ -63,10 +63,12 @@
           "label": "󰄀",
           "command": "grim -g \"$(slurp)\" - | swappy -f -"
         },
-        {
+       {
           "label": "󰂯",
           "type": "toggle",
-          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && bluetooth on || bluetooth off'"
+          "active": false,
+          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && rfkill unblock bluetooth || rfkill block bluetooth'",
+          "update-command": "sh -c 'rfkill list bluetooth | grep -q \"Soft blocked: no\" && echo true || echo false'"
         }
       ]
     },

@@ -10,6 +10,7 @@ if [ ! -x "$WPCTL" ]; then
   exit 1
 fi
 
+# 1. TRANSMIT: Send the command to the audio source
 case "$1" in
   up)    $WPCTL set-volume @DEFAULT_AUDIO_SOURCE@ "$STEP"+ ;;
   down)  $WPCTL set-volume @DEFAULT_AUDIO_SOURCE@ "$STEP"- ;;
@@ -17,18 +18,28 @@ case "$1" in
   *) echo "Usage: $0 {up|down|toggle}" >&2; exit 1 ;;
 esac
 
-sleep 0.06
-OUT=$($WPCTL get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null)
+# 2. PILOT'S WAIT LOOP: Wait for the source to respond (Self-Healing)
+# This loop checks 5 times with a 0.1s delay. 
+# It catches the device if it's "waking up" from a suspended state.
+for i in {1..5}; do
+    OUT=$($WPCTL get-volume @DEFAULT_AUDIO_SOURCE@ 2>/dev/null)
+    if [ -n "$OUT" ]; then break; fi
+    sleep 0.1
+done
+
+# 3. VERIFY: If after 0.5s there is still no output, report a telemetry failure
 if [ -z "$OUT" ]; then
-  $NOTIFY -u critical "Mic" "Unable to read microphone state."
+  $NOTIFY -u critical "Mic" "Telemetry Lost: Microphone source not responding."
   exit 1
 fi
 
+# 4. PARSE: Extract volume and mute status
 if echo "$OUT" | grep -qi "MUTED"; then
   VOL_PERC=0
   MUTED=true
 else
   MUTED=false
+  # Robust parsing for both percentage and decimal outputs
   VOL_PERC=$(echo "$OUT" | awk '{
     for(i=1;i<=NF;i++){
       if($i ~ /[0-9]+%/){ gsub(/[^0-9]/,"",$i); print $i; exit }
@@ -40,6 +51,7 @@ else
   VOL_PERC=${VOL_PERC:-0}
 fi
 
+# 5. NOTIFY: Update the SwayNC HUD
 OLD_ID=0
 if [ -f "$ID_FILE" ]; then OLD_ID=$(cat "$ID_FILE" 2>/dev/null || echo 0); fi
 
