@@ -81,7 +81,7 @@
   "active": false, 
   "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && rfkill unblock bluetooth || rfkill block bluetooth'",
   "update-command": "sh -c 'bluetoothctl show | grep -q \"Powered: yes\" && echo true || echo false'",
-  "interval": 5
+  "interval": 2
     }
   ]
 },
