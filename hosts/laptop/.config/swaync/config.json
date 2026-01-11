@@ -94,8 +94,7 @@
       "show-per-app-label": false
     },
     "backlight": {
-      "label": "󰃠",
-      "device": "intel_backlight"
+      "label": "󰃠"
     }
   }
 }

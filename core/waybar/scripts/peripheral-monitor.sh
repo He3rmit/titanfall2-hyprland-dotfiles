@@ -34,8 +34,8 @@ while read -r DEV_PATH; do
 
     # --- 2. CATEGORIZE DEVICES ---
     
-    # IS IT THE LAPTOP BATTERY? (Look for BAT or known laptop names)
-    if [[ "$DEV_PATH" == *"BAT"* ]] || [[ "$MODEL" == *"ASUS Battery"* ]]; then
+    # Automatically find the internal system battery
+    if [[ "$DEV_PATH" == *"BAT"* ]]; then
         ICON="SYS"
         if [[ "$STATE" == "charging" ]]; then ICON="⚡"; fi
         LAPTOP_BAT="${ICON}: ${PERCENT}%"
