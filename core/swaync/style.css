@@ -87,3 +87,18 @@ slider {
     --pilot-blue: #4261ff;
     /* ... rest of your variables */
 }
+
+/* --- Pilot HUD Active State --- */
+
+/* This triggers when Bluetooth, WiFi, or Power Modes are toggled ON */
+.widget-buttons-grid > box > button.active {
+    background-color: rgba(66, 97, 255, 0.4); /* Brighter translucent Pilot Blue */
+    border: 1px solid var(--pilot-blue);
+    box-shadow: 0 0 12px rgba(66, 97, 255, 0.6);
+}
+
+/* Brightens the icon when the button is active */
+.widget-buttons-grid > box > button.active > label {
+    color: #ffffff;
+    text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+}

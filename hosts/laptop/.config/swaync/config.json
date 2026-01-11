@@ -37,42 +37,54 @@
       "text": "Do Not Disturb"
     },
 
-    "buttons-grid": {
-      "buttons-per-row": 3,
-      "actions": [
-        {
-          "label": "󰖩",
-          "type": "toggle",
-          "active": true,
-          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
-          "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
-        },
-        {
-          "label": "󰓅",
-          "command": "powerprofilesctl set performance && notify-send 'Core' 'Performance Mode Active'"
-        },
-        {
-          "label": "󱫐",
-          "command": "powerprofilesctl set balanced && notify-send 'Core' 'Balanced Mode Engaged'"
-        },
-        {
-          "label": "󰾆",
-          "command": "powerprofilesctl set power-saver && notify-send 'Core' 'Power Saver Engaged'"
-        },
-        {
-          "label": "󰄀",
-          "command": "grim -g \"$(slurp)\" - | swappy -f -"
-        },
-        {
-          "label": "󰂯",
-          "type": "toggle",
-          "active": true, 
-          "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && rfkill unblock bluetooth || rfkill block bluetooth'",
-          "update-command": "sh -c 'rfkill list bluetooth | grep -q \"Soft blocked: no\" && echo true || echo false'",
-          "interval": 5
-        }
-      ]
+"buttons-grid": {
+  "buttons-per-row": 3,
+  "actions": [
+    {
+      "label": "󰖩",
+      "type": "toggle",
+      "active": false,
+      "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && nmcli radio wifi on || nmcli radio wifi off'",
+      "update-command": "sh -c '[[ $(nmcli radio wifi) == \"enabled\" ]] && echo true || echo false'"
     },
+    {
+      "label": "󰓅",
+      "type": "toggle",
+      "active": false,
+      "command": "powerprofilesctl set performance && notify-send 'Core' 'Performance Mode Active'",
+      "update-command": "sh -c '[[ $(powerprofilesctl get) == \"performance\" ]] && echo true || echo false'",
+      "interval": 2
+    },
+    {
+      "label": "󱫐",
+      "type": "toggle",
+      "active": false,
+      "command": "powerprofilesctl set balanced && notify-send 'Core' 'Balanced Mode Engaged'",
+      "update-command": "sh -c '[[ $(powerprofilesctl get) == \"balanced\" ]] && echo true || echo false'",
+      "interval": 2
+    },
+    {
+      "label": "󰾆",
+      "type": "toggle",
+      "active": false,
+      "command": "powerprofilesctl set power-saver && notify-send 'Core' 'Power Saver Engaged'",
+      "update-command": "sh -c '[[ $(powerprofilesctl get) == \"power-saver\" ]] && echo true || echo false'",
+      "interval": 2
+    },
+    {
+      "label": "󰄀",
+      "command": "grim -g \"$(slurp)\" - | swappy -f -"
+    },
+    {
+      "label": "󰂯",
+      "type": "toggle",
+      "active": false, 
+      "command": "sh -c '[[ $SWAYNC_TOGGLE_STATE == true ]] && rfkill unblock bluetooth || rfkill block bluetooth'",
+      "update-command": "sh -c 'rfkill list bluetooth | grep -q \"Soft blocked: no\" && echo true || echo false'",
+      "interval": 5
+    }
+  ]
+},
 
     
     "volume": {
