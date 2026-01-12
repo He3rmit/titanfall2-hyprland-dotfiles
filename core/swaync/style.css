@@ -88,19 +88,19 @@ slider {
     /* ... rest of your variables */
 }
 
-/* --- Pilot HUD Active State --- */
-
 /* --- Pilot HUD Active State (Force Override) --- */
 
-/* Use the button ID and !important to prevent the 'stubborn' behavior */
-.widget-buttons-grid > box > button.active {
+/* Targets the button when active via class OR internal toggle state */
+.widget-buttons-grid > box > button.active,
+.widget-buttons-grid > box > button:checked {
     background-color: rgba(66, 97, 255, 0.5) !important; 
     border: 1px solid var(--pilot-blue) !important;
-    box-shadow: 0 0 12px rgba(66, 97, 255, 0.8) !important;
+    box-shadow: 0 0 15px rgba(66, 97, 255, 0.8) !important;
 }
 
-/* Ensure the icon label also stays bright white */
-.widget-buttons-grid > box > button.active label {
+/* Ensure the icon label stays bright white and glowing when active */
+.widget-buttons-grid > box > button.active label,
+.widget-buttons-grid > box > button:checked label {
     color: #ffffff !important;
-    text-shadow: 0 0 5px rgba(255, 255, 255, 1) !important;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 1) !important;
 }
