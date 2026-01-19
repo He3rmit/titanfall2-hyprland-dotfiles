@@ -1,106 +1,165 @@
-/* Global Titanfall HUD Variables */
+/* ──────────────────────────────────────────────────────────────────────────
+   TITANFALL PILOT HUD - ISOLATION PROTOCOL
+   (Forces High Contrast Dark Mode regardless of System Theme)
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* 1. Global Variables (The Palette) */
 :root {
     --pilot-blue: #4261ff;
     --imc-orange: #ff8242;
-    --hud-bg: rgba(10, 15, 20, 0.85);
+    --hud-bg: rgba(10, 15, 20, 0.95);
+    --hud-border: rgba(0, 224, 255, 0.4);
+    --text-main: #e0e0e0;
+    --text-highlight: #ffffff;
 }
 
+/* 2. Global Reset (Kill the System Theme) */
 * {
-    font-family: "JetBrainsMono Nerd Font", sans-serif;
+    font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
+    background-clip: border-box;
+}
+
+/* 3. The Main Window Container */
+.control-center {
+    background: var(--hud-bg) !important; /* Force Dark Background */
+    border: 2px solid var(--pilot-blue);
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(66, 97, 255, 0.3);
+    margin: 10px;
+    padding: 10px;
+}
+
+/* 4. The Critical Fix: BUTTONS (Wifi, Bluetooth, etc.) */
+/* We reset ALL buttons to prevent "White on White" */
+button {
+    background: rgba(43, 48, 59, 0.6) !important; /* Dark Grey Default */
+    color: var(--text-main) !important;           /* Light Grey Text */
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+}
+
+button:hover {
+    background: var(--pilot-blue) !important;
+    color: var(--text-highlight) !important;
+    border-color: var(--text-highlight) !important;
+}
+
+/* 5. The "Do Not Disturb" Toggle (Top of HUD) */
+.widget-dnd {
+    background: rgba(20, 20, 20, 0.6) !important;
+    margin: 8px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+}
+
+/* The Toggle Switch Itself */
+.widget-dnd > switch {
+    background: #1a1b1d !important;
+    border-radius: 12px;
+    border: 1px solid var(--pilot-blue);
+}
+
+.widget-dnd > switch:checked {
+    background: var(--pilot-blue) !important;
+    border: 1px solid var(--text-highlight);
+}
+
+.widget-dnd > switch slider {
+    background: var(--text-highlight) !important;
+    border-radius: 50%;
+}
+
+/* 6. The Grid Buttons (Wifi, BT, Air) */
+.widget-buttons-grid {
+    background-color: transparent !important; /* Let the HUD bg show */
+    padding: 5px;
+    margin: 10px 0;
+    font-size: 1.5rem;
+}
+
+/* Force specific styling for the big grid buttons */
+.widget-buttons-grid > flowbox > flowboxchild > button {
+    background: rgba(43, 48, 59, 0.6) !important;
+    border-radius: 8px;
+    margin: 2px;
+    padding: 12px;
+    min-width: 70px; /* Make them chunky */
+}
+
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
+    background: rgba(66, 97, 255, 0.3) !important;
+    border: 1px solid var(--pilot-blue) !important;
+}
+
+/* Active State (When Wifi is ON) */
+.widget-buttons-grid > flowbox > flowboxchild > button.checked {
+    background: var(--pilot-blue) !important;
+    color: #ffffff !important;
+    border: 1px solid #ffffff !important;
+    box-shadow: 0 0 10px rgba(66, 97, 255, 0.5) !important;
+}
+
+/* 7. Sliders (Volume / Brightness) */
+.widget-mpris {
+    background: rgba(20, 20, 20, 0.4) !important;
+    padding: 8px;
+    margin: 8px 0;
+    border-radius: 8px;
+}
+
+scale trough {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 12px;
+    min-height: 8px;
+}
+
+scale highlight {
+    background: var(--pilot-blue) !important;
+    border-radius: 12px;
+}
+
+scale slider {
+    background: #ffffff !important;
+    border: 2px solid var(--pilot-blue) !important;
+    border-radius: 50%;
+    margin: -6px 0; /* Center the knob */
+    min-height: 20px;
+    min-width: 20px;
+}
+
+/* 8. Notifications */
+.notification-row {
+    outline: none;
+    margin: 10px;
 }
 
 .notification {
-    background: var(--hud-bg);
+    background: rgba(20, 25, 30, 0.9) !important;
     border: 1px solid var(--pilot-blue);
-    border-radius: 4px;
-    margin: 8px;
-    box-shadow: 0 0 10px rgba(66, 97, 255, 0.3);
+    border-radius: 6px;
+    margin-top: 5px;
+    padding: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.notification.critical {
-    border: 2px solid var(--imc-orange);
+.notification-default-action:hover {
+    background: rgba(66, 97, 255, 0.1) !important;
 }
 
-.notification-title {
-    color: var(--pilot-blue);
+.notification-content {
+    background: transparent !important;
+}
+
+.summary {
+    color: var(--pilot-blue) !important;
     font-weight: bold;
 }
 
-/* Pilot HUD Button Grid Styling */
-.widget-buttons-grid {
-  padding: 8px;
-  margin: 8px;
-  border-radius: 12px;
-  background-color: rgba(26, 27, 38, 0.5); /* Match your translucent theme */
+.body {
+    color: var(--text-main) !important;
 }
 
-.widget-buttons-grid > box > button {
-  background-color: rgba(43, 48, 59, 0.5);
-  border: 1px solid rgba(66, 97, 255, 0.3); /* Subtle Pilot Blue border */
-  border-radius: 8px;
-  min-height: 50px;
-  min-width: 50px;
-  margin: 4px;
-  padding: 10px;
-}
-
-.widget-buttons-grid > box > button:hover {
-  background-color: rgba(66, 97, 255, 0.2);
-  border: 1px solid rgba(66, 97, 255, 1.0); /* Glowing border on hover */
-}
-
-/* Make the Nerd Font icons larger and centered */
-.widget-buttons-grid > box > button > label {
-  font-size: 1.6rem;
-}
-
-/* Slider styling */
-.widget-volume, .widget-backlight {
-  background-color: rgba(26, 27, 38, 0.5);
-  padding: 8px;
-  margin: 8px;
-  border-radius: 12px;
-  border: 1px solid rgba(66, 97, 255, 0.2);
-}
-
-/* The actual slider bar */
-scale {
-  margin: 0 10px;
-}
-
-highlight {
-  background-color: #4261ff; /* Pilot Blue */
-  border-radius: 10px;
-}
-
-/* The slider "knob" (Pilot Helmet) */
-slider {
-  background-color: #ffffff;
-  border: 2px solid #4261ff;
-  border-radius: 50%;
-  min-height: 12px;
-  min-width: 12px;
-}
-
-:root {
-    --notification-icon-size: 64px; /* The replacement for the deprecated setting */
-    --pilot-blue: #4261ff;
-    /* ... rest of your variables */
-}
-
-/* --- Pilot HUD Active State (Force Override) --- */
-
-/* Targets the button when active via class OR internal toggle state */
-.widget-buttons-grid > box > button.active,
-.widget-buttons-grid > box > button:checked {
-    background-color: rgba(66, 97, 255, 0.5) !important; 
-    border: 1px solid var(--pilot-blue) !important;
-    box-shadow: 0 0 15px rgba(66, 97, 255, 0.8) !important;
-}
-
-/* Ensure the icon label stays bright white and glowing when active */
-.widget-buttons-grid > box > button.active label,
-.widget-buttons-grid > box > button:checked label {
-    color: #ffffff !important;
-    text-shadow: 0 0 8px rgba(255, 255, 255, 1) !important;
+.time {
+    color: rgba(255, 255, 255, 0.5) !important;
 }
