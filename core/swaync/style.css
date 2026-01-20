@@ -1,165 +1,164 @@
 /* ──────────────────────────────────────────────────────────────────────────
-   TITANFALL PILOT HUD - ISOLATION PROTOCOL
-   (Forces High Contrast Dark Mode regardless of System Theme)
+   TITANFALL PILOT HUD - NUCLEAR OPTION
+   (Forces 100% Dark Mode & High Contrast)
    ────────────────────────────────────────────────────────────────────────── */
 
-/* 1. Global Variables (The Palette) */
-:root {
-    --pilot-blue: #4261ff;
-    --imc-orange: #ff8242;
-    --hud-bg: rgba(10, 15, 20, 0.95);
-    --hud-border: rgba(0, 224, 255, 0.4);
-    --text-main: #e0e0e0;
-    --text-highlight: #ffffff;
-}
-
-/* 2. Global Reset (Kill the System Theme) */
+/* 1. Global Reset - Kill System Light Mode */
 * {
     font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
-    background-clip: border-box;
+    font-weight: bold;
+    color: #e0e0e0; /* Default text color */
 }
 
-/* 3. The Main Window Container */
+/* 2. The Main Window - FORCE DARK BACKGROUND */
 .control-center {
-    background: var(--hud-bg) !important; /* Force Dark Background */
-    border: 2px solid var(--pilot-blue);
+    background: #090a0a !important; /* Pitch black, no transparency */
+    border: 2px solid #4261ff;      /* Pilot Blue Border */
     border-radius: 12px;
-    box-shadow: 0 0 15px rgba(66, 97, 255, 0.3);
+    box-shadow: 0 0 20px rgba(66, 97, 255, 0.4); /* Blue Glow */
     margin: 10px;
-    padding: 10px;
+    padding: 14px;
 }
 
-/* 4. The Critical Fix: BUTTONS (Wifi, Bluetooth, etc.) */
-/* We reset ALL buttons to prevent "White on White" */
-button {
-    background: rgba(43, 48, 59, 0.6) !important; /* Dark Grey Default */
-    color: var(--text-main) !important;           /* Light Grey Text */
-    border: 1px solid rgba(255, 255, 255, 0.1) !important;
-    box-shadow: none !important;
-    text-shadow: none !important;
+/* 3. The Background "wash" fix */
+/* This targets the inner box that often stays white in GTK light themes */
+.control-center-list {
+    background: transparent !important;
 }
 
-button:hover {
-    background: var(--pilot-blue) !important;
-    color: var(--text-highlight) !important;
-    border-color: var(--text-highlight) !important;
-}
-
-/* 5. The "Do Not Disturb" Toggle (Top of HUD) */
-.widget-dnd {
-    background: rgba(20, 20, 20, 0.6) !important;
-    margin: 8px;
+/* 4. The Top Header ("Pilot HUD" & Buttons) */
+.widget-title {
+    color: #4261ff !important;
+    font-size: 1.5rem;
+    background: #15171a !important;
+    border-bottom: 1px solid #4261ff;
+    padding: 8px;
+    margin-bottom: 10px;
     border-radius: 8px;
-    font-size: 1.1rem;
 }
 
-/* The Toggle Switch Itself */
-.widget-dnd > switch {
+.widget-title > button {
     background: #1a1b1d !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #4261ff !important;
+    border-radius: 6px;
+}
+
+.widget-title > button:hover {
+    background: #4261ff !important;
+    color: #ffffff !important;
+}
+
+/* 5. The "Do Not Disturb" Area */
+.widget-dnd {
+    background: #15171a !important; /* Dark Grey Box */
+    margin: 8px 0;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(66, 97, 255, 0.2);
+}
+
+.widget-dnd > switch {
+    background: #000000 !important;
+    border: 1px solid #4261ff;
     border-radius: 12px;
-    border: 1px solid var(--pilot-blue);
 }
 
 .widget-dnd > switch:checked {
-    background: var(--pilot-blue) !important;
-    border: 1px solid var(--text-highlight);
+    background: #4261ff !important;
 }
 
 .widget-dnd > switch slider {
-    background: var(--text-highlight) !important;
+    background: #ffffff !important;
     border-radius: 50%;
 }
 
-/* 6. The Grid Buttons (Wifi, BT, Air) */
+/* 6. The Big Buttons (Wifi, BT, etc.) */
 .widget-buttons-grid {
-    background-color: transparent !important; /* Let the HUD bg show */
-    padding: 5px;
+    background: transparent !important;
+    padding: 0;
     margin: 10px 0;
-    font-size: 1.5rem;
 }
 
-/* Force specific styling for the big grid buttons */
+/* FORCE DARK BUTTONS */
 .widget-buttons-grid > flowbox > flowboxchild > button {
-    background: rgba(43, 48, 59, 0.6) !important;
+    background: #1a1b1d !important; /* Dark Grey */
+    color: #e0e0e0 !important;       /* Light Text */
+    border: 1px solid rgba(66, 97, 255, 0.3) !important;
     border-radius: 8px;
-    margin: 2px;
+    margin: 3px;
     padding: 12px;
-    min-width: 70px; /* Make them chunky */
+    min-width: 75px;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:hover {
-    background: rgba(66, 97, 255, 0.3) !important;
-    border: 1px solid var(--pilot-blue) !important;
-}
-
-/* Active State (When Wifi is ON) */
-.widget-buttons-grid > flowbox > flowboxchild > button.checked {
-    background: var(--pilot-blue) !important;
+    background: rgba(66, 97, 255, 0.2) !important;
+    border-color: #4261ff !important;
     color: #ffffff !important;
+}
+
+/* ACTIVE STATE (When Wifi is ON) */
+.widget-buttons-grid > flowbox > flowboxchild > button.checked {
+    background: #4261ff !important; /* Solid Blue */
+    color: #ffffff !important;      /* White Text */
     border: 1px solid #ffffff !important;
-    box-shadow: 0 0 10px rgba(66, 97, 255, 0.5) !important;
+    box-shadow: 0 0 10px rgba(66, 97, 255, 0.6) !important;
 }
 
-/* 7. Sliders (Volume / Brightness) */
+/* 7. Sliders (Volume/Brightness) - Fix the White Background */
 .widget-mpris {
-    background: rgba(20, 20, 20, 0.4) !important;
-    padding: 8px;
-    margin: 8px 0;
+    background: #15171a !important;
+    padding: 10px;
+    margin: 10px 0;
     border-radius: 8px;
+    border: 1px solid rgba(66, 97, 255, 0.2);
 }
 
+/* The Trough (Bar Background) */
 scale trough {
     background: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 12px;
+    border-radius: 10px;
     min-height: 8px;
 }
 
+/* The Filled Part */
 scale highlight {
-    background: var(--pilot-blue) !important;
-    border-radius: 12px;
+    background: #4261ff !important;
+    border-radius: 10px;
 }
 
+/* The Knob */
 scale slider {
     background: #ffffff !important;
-    border: 2px solid var(--pilot-blue) !important;
+    border: 2px solid #4261ff !important;
     border-radius: 50%;
-    margin: -6px 0; /* Center the knob */
-    min-height: 20px;
-    min-width: 20px;
+    margin: -7px 0;
+    min-height: 22px;
+    min-width: 22px;
 }
 
 /* 8. Notifications */
-.notification-row {
-    outline: none;
-    margin: 10px;
-}
-
 .notification {
-    background: rgba(20, 25, 30, 0.9) !important;
-    border: 1px solid var(--pilot-blue);
-    border-radius: 6px;
+    background: #1a1b1d !important;
+    border: 1px solid #4261ff;
+    border-radius: 8px;
     margin-top: 5px;
-    padding: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-.notification-default-action:hover {
-    background: rgba(66, 97, 255, 0.1) !important;
-}
-
-.notification-content {
+.notification-default-action {
     background: transparent !important;
 }
 
 .summary {
-    color: var(--pilot-blue) !important;
-    font-weight: bold;
+    color: #4261ff !important;
+    font-weight: 800;
 }
 
 .body {
-    color: var(--text-main) !important;
+    color: #cccccc !important;
 }
 
 .time {
-    color: rgba(255, 255, 255, 0.5) !important;
+    color: #888888 !important;
 }
