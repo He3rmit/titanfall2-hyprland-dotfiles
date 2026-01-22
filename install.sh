@@ -1,5 +1,21 @@
 #!/bin/bash
 
+# --- PILOT AUTHORIZATION ---
+# Ask for the password once and keep the timestamp fresh
+echo "Initializing Pilot Authorization..."
+sudo -v
+
+# Background loop to update the sudo timestamp every 60 seconds
+# It kills itself automatically when the parent script (install.sh) exits
+while true; do 
+    sudo -n true
+    sleep 60
+    kill -0 "$$" || exit
+done 2>/dev/null &
+
+# --- START DEPLOYMENT ---
+# Rest of your script follows here...
+
 TARGET=$1
 if [[ -z "$TARGET" ]]; then
     echo "❌ Error: Specify laptop or desktop."
