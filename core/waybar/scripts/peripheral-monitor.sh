@@ -64,3 +64,13 @@ fi
 CLEAN_TOOLTIP=$(echo -e "$TOOLTIP_MSG" | sed ':a;N;$!ba;s/\n/\\n/g')
 
 printf '{"text": "%s", "tooltip": "%s", "class": "%s"}\n' "$FINAL_TEXT" "$CLEAN_TOOLTIP" "$MAIN_CLASS"
+
+# Get the battery percentage (agnostic check)
+BAT_PATH=$(upower -e | grep 'battery' | head -n 1)
+BAT_LEVEL=$(upower -i "$BAT_PATH" | grep percentage | awk '{print $2}' | tr -d '%')
+
+# Trigger the "Nuclear" Alert at 20%
+if [ "$BAT_LEVEL" -le 20 ]; then
+    # Sending a critical notification tells SwayNC to apply special styling
+    notify-send -u critical "REACTOR INSTABILITY" "Battery Level: $BAT_LEVEL% - Seek Power Source"
+fi

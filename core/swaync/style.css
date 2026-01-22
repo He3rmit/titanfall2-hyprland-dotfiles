@@ -1,164 +1,264 @@
 /* ──────────────────────────────────────────────────────────────────────────
-   TITANFALL PILOT HUD - NUCLEAR OPTION
-   (Forces 100% Dark Mode & High Contrast)
+   TITANFALL PILOT HUD - MARK 33 (ICON RESURRECTION)
+   Base: Mark 32 (Universal Protocol)
+   Fix: Forces the invisible icons inside the side ovals to manifest in Cyan.
    ────────────────────────────────────────────────────────────────────────── */
 
-/* 1. Global Reset - Kill System Light Mode */
+@define-color titan-cyan #00e0ff;
+@define-color titan-dark #0a0f14;
+@define-color titan-panel rgba(16, 22, 28, 0.95);
+@define-color titan-border rgba(0, 224, 255, 0.5);
+
 * {
     font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
-    font-weight: bold;
-    color: #e0e0e0; /* Default text color */
+    color: @titan-cyan;
 }
 
-/* 2. The Main Window - FORCE DARK BACKGROUND */
+/* 1. MAIN FRAME */
 .control-center {
-    background: #090a0a !important; /* Pitch black, no transparency */
-    border: 2px solid #4261ff;      /* Pilot Blue Border */
-    border-radius: 12px;
-    box-shadow: 0 0 20px rgba(66, 97, 255, 0.4); /* Blue Glow */
-    margin: 10px;
-    padding: 14px;
-}
-
-/* 3. The Background "wash" fix */
-/* This targets the inner box that often stays white in GTK light themes */
-.control-center-list {
-    background: transparent !important;
-}
-
-/* 4. The Top Header ("Pilot HUD" & Buttons) */
-.widget-title {
-    color: #4261ff !important;
-    font-size: 1.5rem;
-    background: #15171a !important;
-    border-bottom: 1px solid #4261ff;
-    padding: 8px;
-    margin-bottom: 10px;
+    background: @titan-panel;
+    border: 2px solid @titan-border;
     border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    padding: 12px;
+}
+
+/* 2. MODULE CONTAINERS */
+.widget-title,
+.widget-dnd,
+.widget-mpris,
+.widget-buttons-grid,
+.widget-volume,
+.widget-backlight {
+    background: #05080a;
+    border: 1px solid rgba(0, 224, 255, 0.3);
+    border-radius: 6px;
+    padding: 10px;
+    margin-bottom: 8px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* 3. TITLES & DND SWITCH */
+.widget-title > label {
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-shadow: 0 0 2px @titan-cyan;
 }
 
 .widget-title > button {
-    background: #1a1b1d !important;
-    color: #e0e0e0 !important;
-    border: 1px solid #4261ff !important;
-    border-radius: 6px;
+    background: @titan-dark;
+    border: 1px solid @titan-cyan;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 4px;
 }
 
-.widget-title > button:hover {
-    background: #4261ff !important;
-    color: #ffffff !important;
-}
-
-/* 5. The "Do Not Disturb" Area */
-.widget-dnd {
-    background: #15171a !important; /* Dark Grey Box */
-    margin: 8px 0;
-    padding: 8px;
-    border-radius: 8px;
-    border: 1px solid rgba(66, 97, 255, 0.2);
-}
-
-.widget-dnd > switch {
-    background: #000000 !important;
-    border: 1px solid #4261ff;
+.widget-dnd switch {
+    background: #151a21;
+    border: 1px solid #334455;
     border-radius: 12px;
 }
 
-.widget-dnd > switch:checked {
-    background: #4261ff !important;
+.widget-dnd switch:checked {
+    background: @titan-cyan;
+    border-color: #ffffff;
 }
 
-.widget-dnd > switch slider {
-    background: #ffffff !important;
+.widget-dnd switch slider {
+    background: #ffffff;
     border-radius: 50%;
+    margin: 2px;
 }
 
-/* 6. The Big Buttons (Wifi, BT, etc.) */
-.widget-buttons-grid {
-    background: transparent !important;
-    padding: 0;
-    margin: 10px 0;
-}
+/* 4. PHYSICAL SWITCHES (Grid) */
+.widget-buttons-grid { padding: 8px; }
 
-/* FORCE DARK BUTTONS */
 .widget-buttons-grid > flowbox > flowboxchild > button {
-    background: #1a1b1d !important; /* Dark Grey */
-    color: #e0e0e0 !important;       /* Light Text */
-    border: 1px solid rgba(66, 97, 255, 0.3) !important;
-    border-radius: 8px;
-    margin: 3px;
-    padding: 12px;
-    min-width: 75px;
+    background: #151a21;
+    border: 1px solid #334455;
+    border-radius: 4px;
+    margin: 4px;
+    min-height: 50px;
+    box-shadow: 0 2px 0 #000;
 }
 
-.widget-buttons-grid > flowbox > flowboxchild > button:hover {
-    background: rgba(66, 97, 255, 0.2) !important;
-    border-color: #4261ff !important;
-    color: #ffffff !important;
+.widget-buttons-grid > flowbox > flowboxchild > button label {
+    color: #556677;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-/* ACTIVE STATE (When Wifi is ON) */
-.widget-buttons-grid > flowbox > flowboxchild > button.checked {
-    background: #4261ff !important; /* Solid Blue */
-    color: #ffffff !important;      /* White Text */
-    border: 1px solid #ffffff !important;
-    box-shadow: 0 0 10px rgba(66, 97, 255, 0.6) !important;
+.widget-buttons-grid > flowbox > flowboxchild > button:checked {
+    background: @titan-cyan;
+    border: 1px solid #ffffff;
+    box-shadow: 0 0 15px @titan-cyan;
 }
 
-/* 7. Sliders (Volume/Brightness) - Fix the White Background */
+.widget-buttons-grid > flowbox > flowboxchild > button:checked label {
+    color: #000000;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   5. MEDIA PLAYER (ICON FIX)
+   ────────────────────────────────────────────────────────────────────────── */
 .widget-mpris {
-    background: #15171a !important;
-    padding: 10px;
-    margin: 10px 0;
-    border-radius: 8px;
-    border: 1px solid rgba(66, 97, 255, 0.2);
+    background: #000000;
+    border: 1px solid @titan-cyan;
 }
 
-/* The Trough (Bar Background) */
-scale trough {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-radius: 10px;
-    min-height: 8px;
+.widget-mpris-title {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 900;
 }
 
-/* The Filled Part */
-scale highlight {
-    background: #4261ff !important;
-    border-radius: 10px;
+.widget-mpris-subtitle {
+    color: @titan-cyan;
 }
 
-/* The Knob */
-scale slider {
-    background: #ffffff !important;
-    border: 2px solid #4261ff !important;
-    border-radius: 50%;
-    margin: -7px 0;
-    min-height: 22px;
-    min-width: 22px;
+/* STEP 1: STYLE THE BUTTONS (OVALS) */
+.widget-mpris button {
+    background: #000000;           /* Void Black */
+    border: 1px solid @titan-cyan; /* Cyan Border */
+    border-radius: 30px;           /* OVAL SHAPE */
+    min-width: 30px;               /* Width adjusted for sleekness */
+    min-height: 80px;              /* Tall */
+    margin: 0 5px;
+    padding: 0;
+    opacity: 1 !important;         /* Force Visible */
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
-/* 8. Notifications */
-.notification {
-    background: #1a1b1d !important;
-    border: 1px solid #4261ff;
-    border-radius: 8px;
-    margin-top: 5px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+/* STEP 2: THE ICON RESURRECTION (New Code) */
+/* This targets whatever is inside the button (image or label) and Forces Cyan */
+.widget-mpris button > * {
+    color: @titan-cyan !important; /* FORCE CYAN COLOR */
+    opacity: 1 !important;         /* FORCE VISIBILITY */
+    -gtk-icon-shadow: 0 0 5px @titan-cyan; /* GLOW */
 }
 
-.notification-default-action {
+/* Handle Disabled State (Single Player Mode) */
+.widget-mpris button:disabled {
+    background: #0a0f14;
+    border-color: #005f6b;
+    opacity: 1 !important;
+}
+
+.widget-mpris button:disabled > * {
+    color: #005f6b !important; /* Dim Cyan for inactive arrows */
+    opacity: 0.8 !important;
+}
+
+/* STEP 3: RESET MIDDLE BUTTONS TO SQUARES */
+.widget-mpris .widget-mpris-player button {
+    background: #151a21;
+    border-radius: 8px;            /* SQUARE */
+    min-width: 45px;
+    min-height: 45px;
+    margin: 5px;
+    box-shadow: none;
+}
+
+/* Hover Effects */
+.widget-mpris button:hover {
+    background: @titan-cyan;
+    color: #000000;
+    box-shadow: 0 0 15px @titan-cyan;
+}
+
+/* On hover, turn the icon black */
+.widget-mpris button:hover > * {
+    color: #000000 !important;
+    -gtk-icon-shadow: none;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   6. VOLUME & SINK FIX
+   ────────────────────────────────────────────────────────────────────────── */
+.widget-volume > box > label,
+.widget-backlight > box > label {
+    color: @titan-cyan;
+    font-weight: bold;
+}
+
+/* Nuclear Transparency for Sink Label */
+.widget-volume > box > label {
     background: transparent !important;
+    background-color: transparent !important;
+    border: none;
+    box-shadow: none;
 }
 
-.summary {
-    color: #4261ff !important;
-    font-weight: 800;
+/* Specific target for the "No active sink" state */
+.widget-volume list {
+    background-color: transparent;
+    border: none;
 }
 
-.body {
-    color: #cccccc !important;
+.widget-volume list row {
+    background: transparent;
 }
 
-.time {
-    color: #888888 !important;
+.widget-volume list row:hover {
+    background: rgba(0, 224, 255, 0.2);
+}
+
+/* Expander Button */
+.widget-volume > box > button {
+    background: #151a21;
+    border: 1px solid @titan-cyan;
+    border-radius: 4px;
+    box-shadow: none;
+    min-width: 30px;
+    min-height: 30px; 
+}
+
+.widget-volume > box > button:hover {
+    background: @titan-cyan;
+}
+
+/* Sliders */
+scale trough {
+    min-height: 12px;
+    border-radius: 2px;
+    background: #151a21;
+    border: 1px solid #334455;
+    margin: 6px 0;
+}
+
+scale highlight {
+    background-color: @titan-cyan;
+    border-radius: 2px;
+    min-height: 12px;
+}
+
+scale slider {
+    min-height: 20px;
+    min-width: 20px;
+    margin: -4px; 
+    background: #ffffff;
+    border: none;
+    border-radius: 2px;
+    box-shadow: 0 0 5px @titan-cyan;
+}
+
+/* 7. NOTIFICATIONS */
+.notification-row .notification {
+    background: #0a0f14;
+    border-left: 4px solid @titan-cyan;
+    border-right: 1px solid #334455;
+    border-top: 1px solid #334455;
+    border-bottom: 1px solid #334455;
+    border-radius: 4px;
+    margin: 6px 0;
+}
+
+.notification-row .notification .summary {
+    color: #ffffff;
+    font-weight: 900;
+}
+
+.notification-row .notification .body {
+    color: #a0a0a0;
 }
