@@ -55,22 +55,27 @@ done < <(upower -e)
 # Trim trailing spaces from multi-device string
 PERIPH_BAT=$(echo "$PERIPH_BAT" | xargs)
 
-if [ -n "$PERIPH_BAT" ]; then
-    FINAL_TEXT="$PERIPH_BAT | $LAPTOP_BAT"
-else
-    FINAL_TEXT="$LAPTOP_BAT"
-fi
+# --- 5. SAFETY CHECKS (Prevent Spam) ---
 
-CLEAN_TOOLTIP=$(echo -e "$TOOLTIP_MSG" | sed ':a;N;$!ba;s/\n/\\n/g')
-
-printf '{"text": "%s", "tooltip": "%s", "class": "%s"}\n' "$FINAL_TEXT" "$CLEAN_TOOLTIP" "$MAIN_CLASS"
-
-# Get the battery percentage (agnostic check)
+# Get the battery percentage and state again for the main battery
 BAT_PATH=$(upower -e | grep 'battery' | head -n 1)
-BAT_LEVEL=$(upower -i "$BAT_PATH" | grep percentage | awk '{print $2}' | tr -d '%')
 
-# Trigger the "Nuclear" Alert at 20%
-if [ "$BAT_LEVEL" -le 20 ]; then
-    # Sending a critical notification tells SwayNC to apply special styling
-    notify-send -u critical "REACTOR INSTABILITY" "Battery Level: $BAT_LEVEL% - Seek Power Source"
+# Only proceed if a battery was actually found
+if [ -n "$BAT_PATH" ]; then
+    BAT_INFO=$(upower -i "$BAT_PATH")
+    BAT_LEVEL=$(echo "$BAT_INFO" | grep percentage | awk '{print $2}' | tr -d '%')
+    BAT_STATE=$(echo "$BAT_INFO" | grep state | awk '{print $2}')
+
+    # Trigger the "Nuclear" Alert at 20%
+    # LOGIC: If Low AND Discharging AND We haven't warned yet...
+    if [[ "$BAT_LEVEL" -le 20 ]] && [[ "$BAT_STATE" != "charging" ]]; then
+        if [ ! -f /tmp/reactor_instability_sent ]; then
+            notify-send -u critical "REACTOR INSTABILITY" "Battery Level: $BAT_LEVEL% - Seek Power Source"
+            # Create a 'lock file' so we don't spam again
+            touch /tmp/reactor_instability_sent
+        fi
+    else
+        # If we are charging or safe, reset the lock file so it can warn us next time
+        rm -f /tmp/reactor_instability_sent
+    fi
 fi

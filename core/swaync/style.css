@@ -262,3 +262,43 @@ scale slider {
 .notification-row .notification .body {
     color: #a0a0a0;
 }
+
+/* ──────────────────────────────────────────────────────────────────────────
+   MARK 33 ADDON: REACTOR CRITICAL OVERRIDE
+   This only affects notifications tagged as 'critical' (Battery Alert)
+   ────────────────────────────────────────────────────────────────────────── */
+
+/* 1. DEFINE THE ORANGE ALERT COLOR */
+@define-color titan-alert #ff8242;
+
+/* 2. THE NUCLEAR PULSE ANIMATION */
+@keyframes criticalPulse {
+    0%   { box-shadow: 0 0 4px rgba(255, 130, 66, 0.2); }
+    50%  { box-shadow: 0 0 20px rgba(255, 130, 66, 0.9); border-color: #ffffff; }
+    100% { box-shadow: 0 0 4px rgba(255, 130, 66, 0.2); }
+}
+
+/* 3. OVERRIDE THE NOTIFICATION BOX */
+/* This specific selector targets the battery alert */
+.notification-row .notification.critical {
+    background: rgba(40, 10, 10, 0.95);  /* Deep Red Background */
+    border-left: 4px solid @titan-alert; /* Orange Left Bar */
+    border-right: 1px solid @titan-alert;
+    border-top: 1px solid @titan-alert;
+    border-bottom: 1px solid @titan-alert;
+    color: @titan-alert;
+    
+    /* Apply the heartbeat animation */
+    animation: criticalPulse 1s infinite ease-in-out; 
+}
+
+/* 4. OVERRIDE TEXT COLORS INSIDE THE ALERT */
+.notification-row .notification.critical .summary {
+    color: #ffffff;       /* Title White */
+    text-shadow: 0 0 5px @titan-alert;
+}
+
+.notification-row .notification.critical .body {
+    color: @titan-alert;  /* Body Orange */
+    font-weight: bold;
+}
