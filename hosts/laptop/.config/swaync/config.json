@@ -9,13 +9,10 @@
   "cssPriority": "user",
   "notification-body-image-height": 100,
   "notification-body-image-width": 200,
-
-  
   "timeout": 5,
   "timeout-low": 2,
   "timeout-critical": 0,
 
-  
   "widgets": [
     "title", 
     "dnd", 
@@ -37,21 +34,21 @@
       "text": "Do Not Disturb"
     },
 
-"buttons-grid": {
+   "buttons-grid": {
       "buttons-per-row": 3,
       "actions": [
         {
           "label": "󰖩",
           "type": "toggle",
           "active": false,
-          "command": "nmcli radio wifi on || nmcli radio wifi off",
+          "command": "~/.config/swaync/scripts/pilot-control.sh wifi",
           "update-command": "nmcli radio wifi | grep -q enabled && echo true || echo false"
         },
         {
           "label": "󰂯",
           "type": "toggle",
           "active": false,
-          "command": "rfkill unblock bluetooth || rfkill block bluetooth",
+          "command": "~/.config/swaync/scripts/pilot-control.sh bluetooth",
           "update-command": "rfkill list bluetooth | grep -q 'Soft blocked: no' && echo true || echo false",
           "interval": 2
         },
@@ -59,7 +56,7 @@
           "label": "󰓅",
           "type": "toggle",
           "active": false,
-          "command": "powerprofilesctl set performance && notify-send 'Core' 'Performance Mode Active'",
+          "command": "~/.config/swaync/scripts/pilot-control.sh perf",
           "update-command": "powerprofilesctl get | grep -q performance && echo true || echo false",
           "interval": 2
         },
@@ -67,7 +64,7 @@
           "label": "󱫐",
           "type": "toggle",
           "active": false,
-          "command": "powerprofilesctl set balanced && notify-send 'Core' 'Balanced Mode Engaged'",
+          "command": "~/.config/swaync/scripts/pilot-control.sh bal",
           "update-command": "powerprofilesctl get | grep -q balanced && echo true || echo false",
           "interval": 2
         },
@@ -75,7 +72,7 @@
           "label": "󰾆",
           "type": "toggle",
           "active": false,
-          "command": "powerprofilesctl set power-saver && notify-send 'Core' 'Power Saver Engaged'",
+          "command": "~/.config/swaync/scripts/pilot-control.sh save",
           "update-command": "powerprofilesctl get | grep -q power-saver && echo true || echo false",
           "interval": 2
         },
@@ -87,16 +84,17 @@
       ]
     },
 
-    
     "volume": {
       "label": "󰕾",
       "show-per-app": true,
       "show-per-app-icon": true,
       "show-per-app-label": false
     },
+
     "backlight": {
       "label": "󰃠"
     },
+
     "mpris": {
       "image-size": 96,
       "image-radius": 12

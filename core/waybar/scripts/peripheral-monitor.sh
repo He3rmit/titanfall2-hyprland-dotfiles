@@ -51,12 +51,23 @@ done < <(upower -e)
 [[ "$IS_CHARGING" == true ]] && MAIN_CLASS="charging"
 [[ "$HAS_CRITICAL" == true ]] && MAIN_CLASS="critical"
 
-# --- 4. FORMAT OUTPUT ---
+# --- 4. FORMAT OUTPUT (THIS WAS MISSING) ---
 # Trim trailing spaces from multi-device string
 PERIPH_BAT=$(echo "$PERIPH_BAT" | xargs)
 
-# --- 5. SAFETY CHECKS (Prevent Spam) ---
+if [ -n "$PERIPH_BAT" ]; then
+    FINAL_TEXT="$PERIPH_BAT | $LAPTOP_BAT"
+else
+    FINAL_TEXT="$LAPTOP_BAT"
+fi
 
+# Clean tooltip for JSON
+CLEAN_TOOLTIP=$(echo -e "$TOOLTIP_MSG" | sed ':a;N;$!ba;s/\n/\\n/g')
+
+# OUTPUT TO WAYBAR (Essential!)
+printf '{"text": "%s", "tooltip": "%s", "class": "%s"}\n' "$FINAL_TEXT" "$CLEAN_TOOLTIP" "$MAIN_CLASS"
+
+# --- 5. SAFETY CHECKS (Prevent Spam) ---
 # Get the battery percentage and state again for the main battery
 BAT_PATH=$(upower -e | grep 'battery' | head -n 1)
 
