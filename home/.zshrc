@@ -38,10 +38,10 @@ alias update='sudo pacman -Syu'
 alias grubup='sudo update-grub'
 alias tarnow='shutdown -h now'
 alias unlock='sudo rm /var/lib/pacman/db.lck'
-alias batteryhealth='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
+alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias wifi='nmtui'
 alias clearcache= 'kbuildsycoca6 --noincremental' 
-alias autorefresh='kbuildsycoca6 --noincremental  && killall waybar && waybar && killall swaync && swaync && swaync-client -rs && swaync-client -R'
+alias reload='kbuildsycoca6 --noincremental  && killall waybar && waybar && killall swaync && swaync && swaync-client -rs && swaync-client -R'
 
 # 7. 🎨 Optional Fetch
 fastfetch
