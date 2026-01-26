@@ -1,63 +1,128 @@
 {
-  "layer": "top",
-  "position": "bottom",
-  "margin": 0,
-  "spacing": 5,
+    "layer": "top",
+    "position": "bottom",
+    "height": 34,
+    "margin": 0,
+    "spacing": 5,
 
-  // --- MODULES ---
+    // -------------------------------------------------------------------------
+    // TITAN WORKSPACES (The "Clean" config)
+    // -------------------------------------------------------------------------
+    "hyprland/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": true,
+        "active-only": false,
+        "on-click": "activate",
+        "show-special": true,  // CRITICAL: Shows Niche/Work/Hobby/Gaming
+        "format": "{icon}  :  {windows}",
+        "format-window-separator": "  ",
 
-  "cpu": {
-    "format": "CPU: {usage}%",
-    "tooltip": false
-  },
+        "window-rewrite": {
+          //BROWSER
+          "class<brave-browser>": "",
+          "class<librewolf>": "",
 
-  "memory": {
-    "format": "RAM: {used:0.1f}G",
-    "tooltip": false
-  },
+          //GAMES
+          "class<steam>": "",
+          "class<heroic>": "󰊴",
+          "class<lutris>": "",
+          "class<bottles>": "",
 
-  "network": {
-    "format-wifi": "NET: {signalStrength}%",
-    "format-ethernet": "LAN",
-    "format-disconnected": "OFFLINE",
-    "tooltip": false
-  },
+          //TOOLS
+          "class<protonvpn-app>": "󰗹",
+          "class<code>": "",
+          "class<org.kde.dolphin>": "",
+          "class<org.pulseaudio.pavucontrol>": "󰕾",
+          "class<kitty>": "",
+          
+          //MEDIA
+          "class<mpv>": "󰕧",
+          "class<vlc>": "󰕼",
+          
 
-  "hyprland/workspaces": {
-    "format": "{name}: {windows}",
-    "format-window-separator": " ",
-    "window-rewrite": {
-      "class<steam>": "󰓓",
-      "class<kitty>": "",
-      "class<code>": "󰨞",
-      "class<brave>": "󰖟",
-      "class<brave>: title<.*gitlab.*>": ""
+          //CATCH ALL
+          "default": ""
+          
+
+
+        },
+        
+        // Force 1-10 to always show (Titan Standard)
+        "persistent-workspaces": {
+            "*": 10
+        },
+
+
+        
+        // The Icon Mapping
+        "format-icons": {
+            // Standard 1-10
+            "1": "1",
+            "2": "2",
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "0",
+
+            // Special Buckets (The "Titan" Cluster)
+            "standard": "󱂬",   // Super+S (System/VPN)
+            "work": "",    // Super+W (Coding)
+            "hobby": "",   // Super+D (Discord/Music)
+            "gaming": "󱎓",  // Super+G (Steam)
+
+            // F-Key Expansion (11-22)
+            "11": "F1", "12": "F2", "13": "F3", "14": "F4",
+            "15": "F5", "16": "F6", "17": "F7", "18": "F8",
+            "19": "F9", "20": "F10", "21": "F11", "22": "F12",
+
+            "urgent": "",
+            "default": ""
+        }
     },
-    "workspace-taskbar": {
-      "enable": true,
-      "icon-size": 18
+
+    // -------------------------------------------------------------------------
+    // HARDWARE MODULES
+    // -------------------------------------------------------------------------
+    "cpu": {
+        "format": "CPU: {usage}%",
+        "tooltip": false
     },
-    "persistent-workspaces": {
-      "*": 10 
+
+    "memory": {
+        "format": "RAM: {used:0.1f}G",
+        "tooltip": false
+    },
+
+    "network": {
+        "format-wifi": "NET: {signalStrength}%",
+        "format-ethernet": "LAN",
+        "format-disconnected": "OFFLINE",
+        "tooltip": false
+    },
+
+    "clock": {
+        "format": "{:%a,  %b  %d  %H:%M}",
+        "tooltip": false
+    },
+
+    "tray": {
+        "icon-size": 21,
+        "spacing": 5
+    },
+
+    // -------------------------------------------------------------------------
+    // CUSTOM MODULES
+    // -------------------------------------------------------------------------
+    // Master Power Scout (Battery + Bluetooth Combined)
+    "custom/peripheral": {
+        "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh",
+        "interval": 5,
+        "return-type": "json",
+        "format": "{}",  
+        "on-click": "blueman-manager"
     }
-  },
-
-  "tray": {
-    "icon-size": 21,
-    "spacing": 5
-  },
-
-  "clock": {
-    "format": "{:%a,  %b  %d  %H:%M}",
-    "tooltip": false
-  },
-
-  /// 1. MASTER POWER MODULE (Replaces 'battery' and 'bluetooth')
-  "custom/peripheral": {
-    "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh",
-    "interval": 5,
-    "return-type": "json",
-    "format": "{}",  
-    "on-click": "blueman-manager"
-  }
 }

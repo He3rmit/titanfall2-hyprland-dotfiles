@@ -3,7 +3,7 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 * {
-    font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
+    font-family: "Orbitron", "JetBrains Mono Nerd Font", monospace;
     font-size: 12px;
     color: #00e0ff;
     background: transparent;
@@ -28,6 +28,47 @@ window#waybar {
     margin: 0 4px;
     box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
     animation: hudPulse 6s infinite ease-in-out;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   WORKSPACES (The Missing Indicator)
+   ────────────────────────────────────────────────────────────────────────── */
+#workspaces {
+    background: rgba(10, 15, 20, 0.8);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    border-radius: 8px;
+    margin: 0 4px;
+    padding: 4px 5px;
+    box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
+}
+
+#workspaces button {
+    padding: 0 8px;
+    color: #455a64;  /* Dimmed Grey for inactive slots */
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+/* THE ACTIVE WORKSPACE (Pilot Blue Glow) */
+#workspaces button.active {
+    color: #00e0ff;             /* Titan Cyan */
+    background: rgba(0, 224, 255, 0.15);
+    border-bottom: 2px solid #00e0ff; /* The "Underline" Indicator */
+    box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
+}
+
+#workspaces button:hover {
+    background: rgba(0, 224, 255, 0.2);
+    color: #ffffff;
+    box-shadow: 0 0 5px rgba(0, 224, 255, 0.2);
+}
+
+/* Optional: Urgent Workspace (If an app is screaming for attention) */
+#workspaces button.urgent {
+    color: #ff3b3b;
+    border-bottom: 2px solid #ff3b3b;
+    animation: hudPulse 1s infinite;
 }
 
 /* HOVER EFFECTS */
