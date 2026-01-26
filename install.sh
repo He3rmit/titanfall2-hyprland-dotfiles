@@ -13,6 +13,36 @@ while true; do
     kill -0 "$$" || exit
 done 2>/dev/null &
 
+# --- PILOT UTILITIES ---
+
+# Safety Protocol: Backup existing files before symlinking
+safe_link() {
+    local source="$1"
+    local target="$2"
+    mkdir -p "$(dirname "$target")"
+
+    if [ -L "$target" ]; then
+        # It's already a symlink, just replace it
+        rm "$target"
+    elif [ -e "$target" ]; then
+        # It's a real file, back it up
+        echo "⚠️  Existing file detected at $target. Creating backup (.bak)"
+        mv "$target" "${target}.bak"
+    fi
+    ln -s "$source" "$target"
+}
+
+# HUD Verification: Check for necessary fonts to avoid "?" icons
+check_fonts() {
+    local font_name="ShureTechMonoNF"
+    if ! fc-list : family | grep -iq "$font_name"; then
+        echo "❌ WARNING: $font_name not found. Workspace icons may show as '?'"
+        echo "💡 Hint: Install the font from your dotfiles or AUR."
+    else
+        echo "✨ Font $font_name verified. HUD icons nominal."
+    fi
+}
+
 # --- START DEPLOYMENT ---
 # Rest of your script follows here...
 
@@ -34,18 +64,18 @@ stow -v -R -t "$HOME/.config" core
 
 # 3. Handle Host-Specific Configs
 echo "🔗 Overriding SwayNC config for $TARGET..."
-ln -sf "$DOTFILES_DIR/hosts/$TARGET/.config/swaync/config.json" "$HOME/.config/swaync/config.json"
+safe_link "$DOTFILES_DIR/hosts/$TARGET/.config/swaync/config.json" "$HOME/.config/swaync/config.json"
 
 # 4. Link Hyprland
 cd "$DOTFILES_DIR"
 stow -v -R -t "$HOME/.config/hypr" hyprland
-ln -sf "$DOTFILES_DIR/hosts/$TARGET/hypr-host.conf" "$HOME/.config/hypr/host.conf"
-ln -sf "$DOTFILES_DIR/hosts/$TARGET/kitty-host.conf" "$HOME/.config/kitty/host.conf"
+safe_link "$DOTFILES_DIR/hosts/$TARGET/hypr-host.conf" "$HOME/.config/hypr/host.conf"
+safe_link "$DOTFILES_DIR/hosts/$TARGET/kitty-host.conf" "$HOME/.config/kitty/host.conf"
 
 # 5. Waybar Deployment (Mark 4: Power Scout)
 echo "📶 Deploying Waybar for $TARGET..."
-mkdir -p "$HOME/.config/waybar"
-ln -sf "$DOTFILES_DIR/hosts/$TARGET/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
+check_fonts # Run the font check right before Waybar starts
+safe_link "$DOTFILES_DIR/hosts/$TARGET/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
 
 # CRITICAL: Make the Scout Script Executable
 # This fixes the permission error for the battery script
