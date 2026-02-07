@@ -40,11 +40,12 @@ alias tarnow='shutdown -h now'
 alias unlock='sudo rm /var/lib/pacman/db.lck'
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias wifi='nmtui'
-alias clearcache= 'kbuildsycoca6 --noincremental & sudo paccache -r' 
+alias clearcache= 'kbuildsycoca6 --noincremental && sudo paccache -r &' 
 alias refresh='hyprctl reload && killall waybar; waybar & disown && killall swaync && rm -rf ~/.cache/swaync && swaync & disown'
 alias manga='manga-tui -p weebcentral'
 alias anime='ani-cli'
 alias movie='lobster'
+alias logout='hyprctl dispatch exit'
 
 # 7. 🎨 Optional Fetch
 fastfetch
