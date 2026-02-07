@@ -1,9 +1,9 @@
 {
   "include": ["~/.config/waybar/common.jsonc"],
   
-  "modules-left": ["cpu", "memory", "network"],
-  "modules-center": ["hyprland/workspaces"],
+  "modules-left": ["cpu", "memory", "network", "hyprland/workspaces"],
+  //"modules-center": ["hyprland/workspaces"],
   
   // UPDATE: Removed "battery", kept only "custom/peripheral"
-  "modules-right": ["tray", "clock", "custom/peripheral"]
+  "modules-right": ["tray", "clock", "custom/peripheral", "custom/notification"]
 }

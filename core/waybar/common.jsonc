@@ -1,9 +1,9 @@
 {
     "layer": "top",
     "position": "bottom",
-    "height": 34,
+    "height": 32,
     "margin": 0,
-    "spacing": 5,
+    "spacing": 10,
 
     // -------------------------------------------------------------------------
     // TITAN WORKSPACES (The "Clean" config)
@@ -72,7 +72,8 @@
             "standard": "󱂬",   // Super+S (System/VPN)
             "work": "",    // Super+W (Coding)
             "hobby": "",   // Super+D (Discord/Music)
-            "gaming": "󱎓",  // Super+G (Steam)
+            "gaming": "󰊖",  // Super+G (Steam)
+            "tools": "󱁤",   // Super+T (Utilities)
 
             // F-Key Expansion (11-22)
             "11": "F1", "12": "F2", "13": "F3", "14": "F4",
@@ -124,5 +125,26 @@
         "return-type": "json",
         "format": "{}",  
         "on-click": "blueman-manager"
-    }
+    },
+
+    "custom/notification": {
+    "tooltip": false,
+    "format": "{icon}",
+    "format-icons": {
+        "notification": "<span foreground='red'><sup></sup></span>",
+        "none": "",
+        "dnd-notification": "<span foreground='red'><sup></sup></span>",
+        "dnd-none": "",
+        "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+        "inhibited-none": "",
+        "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+        "dnd-inhibited-none": ""
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb",
+    "on-click": "swaync-client -t -sw",
+    "on-click-right": "swaync-client -d -sw",
+    "escape": true
+}
 }

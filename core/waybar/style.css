@@ -47,7 +47,7 @@ window#waybar {
     color: #455a64;  /* Dimmed Grey for inactive slots */
     border-radius: 4px;
     transition: all 0.3s ease;
-    font-weight: bold;
+    
 }
 
 /* THE ACTIVE WORKSPACE (Pilot Blue Glow) */
@@ -84,7 +84,6 @@ window#waybar {
    ────────────────────────────────────────────────────────────────────────── */
 #custom-peripheral { 
     color: #00e0ff; 
-    font-weight: bold;
 }
 
 #custom-peripheral.charging { 
@@ -140,4 +139,24 @@ menuitem {
 menuitem:hover {
     background: rgba(0, 224, 255, 0.1);
     color: #ffffff;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   CUSTOM NOTIFICATION MODULE
+   ────────────────────────────────────────────────────────────────────────── */
+#custom-notification {
+    background: rgba(10, 15, 20, 0.8);  /* Match this to your other modules' background */
+    color: #00f0ff;             /* Cyan Titanfall text color */
+    padding: 0px 20px;          /* Adds breathing room inside the box */
+    border-radius: 8px;        /* Rounds the corners */
+    margin-left: 0px;          /* Pushes it away from the System stats */
+    margin-right: 0px;         /* Keeps it away from the edge/tray */
+    border: 1px solid #00f0ff;  /* Optional: Adds a high-tech border */
+}
+
+/* Optional: Make it glow when you have unread messages */
+#custom-notification.notification {
+    background-color: #00f0ff;
+    color: #000000;
+    box-shadow: 0 0 5px #00f0ff;
 }
