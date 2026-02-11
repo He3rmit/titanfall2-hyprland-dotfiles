@@ -4,5 +4,5 @@
 #git commit -m "Ignore Hyprland backup folders"
 
 #gitignore incase of errors
-core/swaync/config.json
-core/waybar/config.jsonc
+
+core/hypr/touchpad.conf

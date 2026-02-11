@@ -60,6 +60,13 @@ cd "$DOTFILES_DIR"
 stow -v -R --adopt -t "$HOME" home
 
 # 2. Link Core Configs
+# --- ADD THESE LINES ---
+echo "📂 Pre-creating config directories to prevent Stow folding..."
+mkdir -p "$HOME/.config/waybar"
+mkdir -p "$HOME/.config/swaync"
+mkdir -p "$HOME/.config/hypr"
+# -----------------------
+
 stow -v -R -t "$HOME/.config" core
 
 # 3. Handle Host-Specific Configs
