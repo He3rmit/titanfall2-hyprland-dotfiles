@@ -34,7 +34,7 @@ safe_link() {
 
 # HUD Verification: Check for necessary fonts to avoid "?" icons
 check_fonts() {
-    local font_name="ShureTechMonoNF"
+    local font_name="ShureTechMono Nerd Font"
     if ! fc-list : family | grep -iq "$font_name"; then
         echo "❌ WARNING: $font_name not found. Workspace icons may show as '?'"
         echo "💡 Hint: Install the font from your dotfiles or AUR."
