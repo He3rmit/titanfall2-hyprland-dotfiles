@@ -3,7 +3,7 @@
    ────────────────────────────────────────────────────────────────────────── */
 
 * {
-    font-family: "Orbitron", "ShureTechMono Nerd Font", "JetBrainsMono NF", monospace; /* use fc-list : family | grep "family name" to check for the font*/
+    font-family: "Orbitron", "ShureTechMono Nerd Font Mono", "JetBrainsMono NF", monospace; /* use fc-list : family | grep "family name" to check for the font*/
     font-size: 13px;
     color: #00e0ff;
     background: transparent;

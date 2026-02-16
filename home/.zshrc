@@ -33,18 +33,17 @@ export BROWSER=firefox
 export PATH=$HOME/.local/bin:$HOME/dotfiles/core/hypr/scripts:$PATH
 
 # 6. 🔗 Aliases
-alias ll='ls -alF'
-alias update='paru -Syu --noconfirm && flatpak update -y --noninteractive && flatpak remove --unused -y --noninteractive && paru -Rns (pacman -Qdtq)$ --noconfirm &'
-alias grubup='sudo update-grub'
-alias tarnow='shutdown -h now'
-alias unlock='sudo rm /var/lib/pacman/db.lck'
-alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
-alias wifi='nmtui'
-alias refresh='hyprctl reload && killall waybar; waybar & disown && killall swaync && rm -rf ~/.cache/swaync && swaync & disown'
-alias manga='manga-tui -p weebcentral'
+alias filelist='ls -alF' # long listing with file types
+alias upgrade='paru -Syu --noconfirm && flatpak update -y --noninteractive && flatpak remove --unused -y --noninteractive && paru -Rns (pacman -Qdtq)$ --noconfirm && paru -Sc --noconfirm && paccache -r -u' #Use with caution, as it will automatically update and remove packages without asking for confirmation. The & at the end runs the command in the background, allowing you to continue using the terminal while it updates.
+alias limeup='sudo limine-update' # change parameters depending on the type of boot loader used
+alias unlock='sudo rm /var/lib/pacman/db.lck' #when the pacman database is locked, use this to unlock it. Use with caution.
+alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0' # check battery status
+alias wifi='nmtui' # Network Manager TUI, a terminal-based Wi-Fi manager
+alias refresh='hyprctl reload && killall waybar; waybar & disown && killall swaync && rm -rf ~/.cache/swaync && swaync & disown' # reload Hyprland, restart Waybar, and restart swaync (the status notifier daemon) to apply changes to your config without restarting your entire session. Use with caution, as it will kill all instances of Waybar and swaync, which may cause issues if you have multiple instances running.
+alias manga='manga-tui -p weebcentral' #
 alias anime='ani-cli'
 alias movie='lobster'
-alias logout='hyprctl dispatch exit'
+alias logout='hyprctl dispatch exit' # log out of your session immediately, use with caution
 
 # 7. 🎨 Optional Fetch
 fastfetch
