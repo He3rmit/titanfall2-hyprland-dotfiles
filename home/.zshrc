@@ -34,7 +34,7 @@ export PATH=$HOME/.local/bin:$HOME/dotfiles/core/hypr/scripts:$PATH
 
 # 6. 🔗 Aliases
 alias filelist='ls -alF' # long listing with file types
-alias upgrade='paru -Syu --noconfirm && flatpak update -y --noninteractive && flatpak remove --unused -y --noninteractive && paru -Rns (pacman -Qdtq)$ --noconfirm && paru -Sc --noconfirm && paccache -r -u' #Use with caution, as it will automatically update and remove packages without asking for confirmation. The & at the end runs the command in the background, allowing you to continue using the terminal while it updates.
+alias upgrade='paru -Syu --noconfirm && flatpak update -y --noninteractive && paru -Sc --noconfirm && paccache -r -u && flatpak remove --unused -y --noninteractive && paru -Rns (pacman -Qdtq)$ --noconfirm' #Use with caution, as it will automatically update and remove packages without asking for confirmation. The & at the end runs the command in the background, allowing you to continue using the terminal while it updates.
 alias limeup='sudo limine-update' # change parameters depending on the type of boot loader used
 alias unlock='sudo rm /var/lib/pacman/db.lck' #when the pacman database is locked, use this to unlock it. Use with caution.
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0' # check battery status
