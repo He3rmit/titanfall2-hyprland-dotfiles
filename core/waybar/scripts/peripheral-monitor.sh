@@ -8,21 +8,22 @@ MAIN_CLASS="discharging"
 HAS_CRITICAL=false
 IS_CHARGING=false
 
-# --- 1. DIRECT KERNEL READ FOR LAPTOP BATTERY (THE FIX) ---
-# This bypasses upower entirely and reads straight from the hardware
-SYS_BAT=$(ls -d /sys/class/power_supply/BAT* | head -n 1 2>/dev/null)
+# --- 1. UPOWER READ FOR LAPTOP BATTERY (THE FIX) ---
+# This uses upower to safely buffer battery reads and prevent blank/0% ghost reads
+BAT_DEVICE=$(upower -e | grep -m 1 'BAT')
 
-if [ -n "$SYS_BAT" ]; then
-    BAT_LEVEL=$(cat "$SYS_BAT/capacity")
-    # Kernel statuses are capitalized (Charging, Discharging, Full), so we make them lowercase
-    BAT_STATE=$(cat "$SYS_BAT/status" | tr '[:upper:]' '[:lower:]') 
+if [ -n "$BAT_DEVICE" ]; then
+    RAW_LEVEL=$(upower -i "$BAT_DEVICE" | grep -E "percentage:" | awk '{print $2}' | tr -d '%')
+    BAT_LEVEL=${RAW_LEVEL%.*} # Strips any decimals just in case
+    BAT_STATE=$(upower -i "$BAT_DEVICE" | grep -E "state:" | awk '{print $2}')
     
     ICON="SYS"
     [[ "$BAT_STATE" == "charging" ]] && ICON="⚡"
     LAPTOP_BAT="${ICON}: ${BAT_LEVEL}%"
     
     if [[ "$BAT_STATE" == "charging" ]]; then IS_CHARGING=true; fi
-    if [[ "$BAT_LEVEL" -le 20 ]]; then HAS_CRITICAL=true; fi
+    # Only flag critical if BAT_LEVEL is actually a number
+    if [[ -n "$BAT_LEVEL" ]] && [[ "$BAT_LEVEL" -le 20 ]]; then HAS_CRITICAL=true; fi
     
     TOOLTIP_MSG+="Laptop Battery: ${BAT_LEVEL}% (${BAT_STATE})\n"
 fi
@@ -83,8 +84,8 @@ CLEAN_TOOLTIP=$(echo -e "$TOOLTIP_MSG" | sed ':a;N;$!ba;s/\n/\\n/g')
 printf '{"text": "%s", "tooltip": "%s", "class": "%s"}\n' "$FINAL_TEXT" "$CLEAN_TOOLTIP" "$MAIN_CLASS"
 
 # --- 5. SAFETY CHECKS (Prevent Spam) ---
-# Now uses the highly reliable kernel data instead of upower
-if [ -n "$SYS_BAT" ]; then
+# Safely checks the upower battery level
+if [ -n "$BAT_DEVICE" ] && [ -n "$BAT_LEVEL" ]; then
     if [[ "$BAT_LEVEL" -le 20 ]] && [[ "$BAT_STATE" != "charging" ]]; then
         if [ ! -f /tmp/reactor_instability_sent ]; then
             notify-send -u critical "REACTOR INSTABILITY" "Battery Level: ${BAT_LEVEL}% - Seek Power Source"
