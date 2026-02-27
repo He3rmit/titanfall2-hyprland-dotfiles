@@ -65,6 +65,7 @@ echo "📂 Pre-creating config directories to prevent Stow folding..."
 mkdir -p "$HOME/.config/waybar"
 mkdir -p "$HOME/.config/swaync"
 mkdir -p "$HOME/.config/hypr"
+mkdir -p "$HOME/.config/fastfetch"
 # -----------------------
 
 stow -v -R -t "$HOME/.config" core
