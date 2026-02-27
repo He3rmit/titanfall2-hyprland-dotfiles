@@ -4,10 +4,12 @@
     "type": "file",
     "source": "~/.config/fastfetch/titanfall.txt",
     "padding": {
-      "top": 0,
+      "top": 3,
       "left": 0,
       "right": 1
+      
     }
+    
   },
   "modules": [
     "title",
