@@ -1,8 +1,8 @@
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
   "logo": {
-    "type": "chafa",
-    "source": "~/.config/fastfetch/titanfall_white.png",
+    "type": "file",
+    "source": "~/.config/fastfetch/titanfall.txt",
     "height": 15,
     "padding": {
       "top": 1,
