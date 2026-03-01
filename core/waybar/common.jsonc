@@ -1,6 +1,6 @@
 {
     "layer": "top",
-    "position": "bottom",
+    "position": "top",
     "height": 31,
     "margin": 0,
     "spacing": 10,
@@ -146,5 +146,11 @@
     "on-click": "swaync-client -t -sw",
     "on-click-right": "swaync-client -d -sw",
     "escape": true
+    
+    },
+    "custom/power": {
+    "format": "⏻",
+    "tooltip": false,
+    "on-click": "wlogout"
 }
 }

@@ -5,5 +5,5 @@
   //"modules-center": ["hyprland/workspaces"],
   
   // UPDATE: Removed "battery", kept only "custom/peripheral"
-  "modules-right": ["tray", "clock", "custom/peripheral", "custom/notification"]
+  "modules-right": ["tray", "clock", "custom/peripheral", "custom/notification", "custom/power"]
 }
