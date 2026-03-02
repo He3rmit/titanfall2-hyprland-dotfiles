@@ -31,8 +31,12 @@ window#waybar {
     background: rgba(10, 15, 20, 0.8);
     border: 1px solid rgba(0, 255, 255, 0.25);
     border-radius: 8px;
-    padding: 10px 4px;
-    margin: 2px 0;
+    padding: 10px 0px;
+    /* Let min-width and horizontal margin padding handle the width */
+    margin: 3px 0px;
+    /* Centers the box horizontally in the vertical bar */
+    min-width: 48px;
+    /* Consistent width for all square modules */
     box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
     animation: hudPulse 6s infinite ease-in-out;
 }
@@ -44,8 +48,9 @@ window#waybar {
     background: rgba(10, 15, 20, 0.8);
     border: 1px solid rgba(0, 255, 255, 0.25);
     border-radius: 8px;
-    margin: 2px 0;
-    padding: 5px 4px;
+    margin: 3px 0px;
+    padding: 5px 0px;
+    min-width: 48px;
     box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
 }
 
@@ -55,6 +60,16 @@ window#waybar {
     /* Dimmed Grey for inactive slots */
     border-radius: 4px;
     transition: all 0.3s ease;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────
+   TRAY
+   ────────────────────────────────────────────────────────────────────────── */
+#tray {
+    margin: 3px 0px;
+    padding: 5px 0px;
+    min-width: 48px;
+    border-radius: 8px;
 }
 
 /* THE ACTIVE WORKSPACE (Pilot Blue Glow) */
@@ -120,12 +135,8 @@ window#waybar {
     font-weight: bold;
 
     /* SIZE UPGRADE: More breathing room inside the box */
-    padding: 12px 4px;
+    padding: 12px 0px;
     /* Taller and wider than standard modules */
-
-    /* Layout Tweaks */
-    margin-right: 0px;
-    margin-bottom: 4px;
 }
 
 /* RED "DOOM STATE" HOVER */
@@ -149,10 +160,7 @@ window#waybar {
     font-size: 15px;
 
     /* SIZE UPGRADE: Much wider box for a "Command Center" feel */
-    padding: 12px 2px;
-
-    margin-top: 0px;
-    margin-bottom: 0px;
+    padding: 12px 0px;
 }
 
 #custom-notification.notification {
