@@ -1,6 +1,6 @@
 [General]
 # Use the full, absolute path to the system folder
-Background="/usr/share/sddm/themes/sddm-astronaut-theme/Movies/titan-hatch.mp4"
+Background="/usr/share/sddm/themes/sddm-astronaut-theme/Movies/titanfall_intro_cinematic.mp4"
 
 # Force the video to fill your 1920x1200 screen
 FillMode=PreserveAspectCrop

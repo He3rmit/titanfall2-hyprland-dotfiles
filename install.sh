@@ -104,8 +104,8 @@ if pgrep Hyprland > /dev/null; then
     echo "✅ PILOT HUD Refreshed."
 fi
 
-# 7. SDDM Hatch Protocol (System-Level)
-echo "🔓 Engaging SDDM Hatch Protocol..."
+# 7. SDDM Cinematic Protocol (System-Level)
+echo "🔓 Engaging SDDM Cinematic Protocol..."
 
 THEME_NAME="sddm-astronaut-theme"
 THEME_DIR="/usr/share/sddm/themes/$THEME_NAME"
@@ -114,16 +114,16 @@ THEME_DIR="/usr/share/sddm/themes/$THEME_NAME"
 sudo mkdir -p /etc/sddm.conf.d
 sudo ln -sf "$DOTFILES_DIR/core/sddm/sddm.conf.d/theme.conf" "/etc/sddm.conf.d/theme.conf"
 
-# 2. THE VIDEO: Deploy to 'Backgrounds' (Modern Standard)
-sudo mkdir -p "$THEME_DIR/Backgrounds"
-sudo cp -u "$DOTFILES_DIR/core/sddm/astronaut/titan-hatch.mp4" "$THEME_DIR/Backgrounds/titan-hatch.mp4"
+# 2. THE VIDEO: Deploy to 'Movies' (Standard for this theme)
+sudo mkdir -p "$THEME_DIR/Movies"
+sudo cp -u "$DOTFILES_DIR/core/sddm/astronaut/Movies/titanfall_intro_cinematic.mp4" "$THEME_DIR/Movies/titanfall_intro_cinematic.mp4"
 
-# 3. THE HUD: Link User Settings to the sub-theme folder
-sudo mkdir -p "$THEME_DIR/Themes"
-sudo ln -sf "$DOTFILES_DIR/core/sddm/astronaut/theme.conf.user" "$THEME_DIR/Themes/astronaut.conf.user"
+# 3. THE HUD: Link User Settings to the ROOT theme folder (Corrected)
+# OLD: sudo ln -sf "$DOTFILES_DIR/core/sddm/astronaut/theme.conf.user" "$THEME_DIR/Themes/astronaut.conf.user"
+sudo ln -sf "$DOTFILES_DIR/core/sddm/astronaut/theme.conf.user" "$THEME_DIR/theme.conf.user"
 
-# 4. Permissions: Ensure SDDM user can read the assets
-sudo chown -R sddm:sddm "$THEME_DIR/Backgrounds"
-sudo chmod 644 "$THEME_DIR/Backgrounds/titan-hatch.mp4"
+# 4. Permissions: Ensure SDDM user can read the assets in Movies
+sudo chown -R sddm:sddm "$THEME_DIR/Movies"
+sudo chmod 644 "$THEME_DIR/Movies/titanfall_intro_cinematic.mp4"
 
 echo "🏁 Protocol Complete. Welcome back, Pilot."
