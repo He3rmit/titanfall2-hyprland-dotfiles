@@ -4,16 +4,16 @@
 
 * {
     font-family: "Orbitron", "ShureTechMono Nerd Font Mono", "JetBrainsMono NF", monospace;
-    font-size: 13px;
+    font-size: 12px;
     color: #00e0ff;
     background: transparent;
 }
 
 window#waybar {
     background: rgba(0, 0, 0, 0.6);
-    border-top: 2px solid rgba(0, 174, 239, 0.4);
-    border-radius: 0px 0px 0 0;
-    padding: 5px 10px;
+    border-right: 2px solid rgba(0, 174, 239, 0.4);
+    border-radius: 0px 10px 10px 0px;
+    padding: 10px 5px;
     transition: background 0.3s ease-in-out;
 }
 
@@ -21,18 +21,18 @@ window#waybar {
    UNIFIED MODULE STYLING
    All modules share this glass-panel look and heartbeat animation.
    ────────────────────────────────────────────────────────────────────────── */
-#cpu, 
-#memory, 
-#network, 
-#clock, 
-#custom-peripheral, 
-#custom-power, 
+#cpu,
+#memory,
+#network,
+#clock,
+#custom-peripheral,
+#custom-power,
 #custom-notification {
     background: rgba(10, 15, 20, 0.8);
     border: 1px solid rgba(0, 255, 255, 0.25);
     border-radius: 8px;
-    padding: 4px 10px;
-    margin: 0 4px;
+    padding: 10px 4px;
+    margin: 2px 0;
     box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
     animation: hudPulse 6s infinite ease-in-out;
 }
@@ -44,14 +44,15 @@ window#waybar {
     background: rgba(10, 15, 20, 0.8);
     border: 1px solid rgba(0, 255, 255, 0.25);
     border-radius: 8px;
-    margin: 0 4px;
-    padding: 4px 5px;
+    margin: 2px 0;
+    padding: 5px 4px;
     box-shadow: 0 0 8px rgba(0, 224, 255, 0.2);
 }
 
 #workspaces button {
-    padding: 0 8px;
-    color: #455a64;  /* Dimmed Grey for inactive slots */
+    padding: 6px 0;
+    color: #455a64;
+    /* Dimmed Grey for inactive slots */
     border-radius: 4px;
     transition: all 0.3s ease;
 }
@@ -60,7 +61,7 @@ window#waybar {
 #workspaces button.active {
     color: #00e0ff;
     background: rgba(0, 224, 255, 0.15);
-    border-bottom: 2px solid #00e0ff;
+    border-left: 2px solid #00e0ff;
     box-shadow: 0 0 10px rgba(0, 224, 255, 0.3);
 }
 
@@ -72,14 +73,18 @@ window#waybar {
 
 #workspaces button.urgent {
     color: #ff3b3b;
-    border-bottom: 2px solid #ff3b3b;
+    border-left: 2px solid #ff3b3b;
     animation: hudPulse 1s infinite;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
    SYSTEM MONITOR HOVER EFFECTS
    ────────────────────────────────────────────────────────────────────────── */
-#cpu:hover, #memory:hover, #network:hover, #clock:hover, #custom-peripheral:hover {
+#cpu:hover,
+#memory:hover,
+#network:hover,
+#clock:hover,
+#custom-peripheral:hover {
     border-color: #00aaff;
     box-shadow: 0 0 12px rgba(0, 174, 239, 0.4);
     background: rgba(10, 15, 20, 0.95);
@@ -89,17 +94,17 @@ window#waybar {
 /* ──────────────────────────────────────────────────────────────────────────
    BATTERY / PERIPHERAL COLOR LOGIC
    ────────────────────────────────────────────────────────────────────────── */
-#custom-peripheral { 
-    color: #00e0ff; 
+#custom-peripheral {
+    color: #00e0ff;
 }
 
-#custom-peripheral.charging { 
-    color: #00ffcc; 
+#custom-peripheral.charging {
+    color: #00ffcc;
     border-color: rgba(0, 255, 204, 0.4);
 }
 
-#custom-peripheral.critical { 
-    color: #ff8242; 
+#custom-peripheral.critical {
+    color: #ff8242;
     border-color: #ff8242;
     animation: hudPulse 1s infinite ease-in-out;
 }
@@ -109,16 +114,18 @@ window#waybar {
    ────────────────────────────────────────────────────────────────────────── */
 #custom-power {
     /* Base styling inherited from Unified Block */
-    
+
     /* SIZE UPGRADE: Make the icon physically larger */
     font-size: 16px;
     font-weight: bold;
-    
+
     /* SIZE UPGRADE: More breathing room inside the box */
-    padding: 2px 18px; /* Taller and wider than standard modules */
-    
+    padding: 12px 4px;
+    /* Taller and wider than standard modules */
+
     /* Layout Tweaks */
-    margin-right: 10px;
+    margin-right: 0px;
+    margin-bottom: 4px;
 }
 
 /* RED "DOOM STATE" HOVER */
@@ -135,33 +142,42 @@ window#waybar {
    ────────────────────────────────────────────────────────────────────────── */
 #custom-notification {
     /* Base styling inherited from Unified Block */
-    
+
     color: #00f0ff;
-    
+
     /* SIZE UPGRADE: Slightly larger text/icon for readability */
-    font-size: 15px; 
-    
+    font-size: 15px;
+
     /* SIZE UPGRADE: Much wider box for a "Command Center" feel */
-    padding: 2px 20px; 
-    
-    margin-left: 0px;
-    margin-right: 0px;
+    padding: 12px 2px;
+
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 #custom-notification.notification {
     background-color: #00f0ff;
     color: #000000;
     box-shadow: 0 0 5px #00f0ff;
-    animation: none; /* Solid glow, no pulsing */
+    animation: none;
+    /* Solid glow, no pulsing */
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
    ANIMATIONS & MENUS
    ────────────────────────────────────────────────────────────────────────── */
 @keyframes hudPulse {
-    0%   { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
-    50%  { box-shadow: 0 0 10px rgba(0, 224, 255, 0.4); }
-    100% { box-shadow: 0 0 4px rgba(0, 224, 255, 0.1); }
+    0% {
+        box-shadow: 0 0 4px rgba(0, 224, 255, 0.1);
+    }
+
+    50% {
+        box-shadow: 0 0 10px rgba(0, 224, 255, 0.4);
+    }
+
+    100% {
+        box-shadow: 0 0 4px rgba(0, 224, 255, 0.1);
+    }
 }
 
 tooltip {
@@ -171,7 +187,7 @@ tooltip {
 }
 
 tooltip label {
-    color: #00e0ff; 
+    color: #00e0ff;
     font-family: "Orbitron", monospace;
     font-size: 13px;
     padding: 8px;

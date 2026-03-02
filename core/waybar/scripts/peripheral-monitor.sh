@@ -19,7 +19,7 @@ if [ -n "$BAT_DEVICE" ]; then
     
     ICON="SYS"
     [[ "$BAT_STATE" == "charging" ]] && ICON="⚡"
-    LAPTOP_BAT="${ICON}: ${BAT_LEVEL}%"
+    LAPTOP_BAT="${ICON}\n${BAT_LEVEL}%"
     
     if [[ "$BAT_STATE" == "charging" ]]; then IS_CHARGING=true; fi
     # Only flag critical if BAT_LEVEL is actually a number
@@ -56,19 +56,21 @@ while read -r DEV_PATH; do
 
     [[ "$STATE" == "charging" ]] && DEV_ICON="⚡$DEV_ICON"
     
-    PERIPH_BAT+="$DEV_ICON ${PERCENT}%  "
+    if [ -n "$PERIPH_BAT" ]; then
+        PERIPH_BAT+="\n"
+    fi
+    PERIPH_BAT+="${DEV_ICON}\n${PERCENT}%"
 done < <(upower -e)
 
 # --- 3. DETERMINE CLASS ---
 [[ "$IS_CHARGING" == true ]] && MAIN_CLASS="charging"
 [[ "$HAS_CRITICAL" == true ]] && MAIN_CLASS="critical"
 
-# --- 4. FORMAT OUTPUT (AGNOSTIC FIX) ---
-PERIPH_BAT=$(echo "$PERIPH_BAT" | xargs)
+PERIPH_BAT=$(echo -e "$PERIPH_BAT" | sed '/^$/d')
 
 if [ -n "$PERIPH_BAT" ] && [ -n "$LAPTOP_BAT" ]; then
     # Both exist: Put a separator between them
-    FINAL_TEXT="$PERIPH_BAT | $LAPTOP_BAT"
+    FINAL_TEXT="${PERIPH_BAT}\n${LAPTOP_BAT}"
 elif [ -n "$PERIPH_BAT" ]; then
     # Only peripherals exist (Desktop PC scenario)
     FINAL_TEXT="$PERIPH_BAT"
@@ -81,7 +83,8 @@ else
 fi
 
 CLEAN_TOOLTIP=$(echo -e "$TOOLTIP_MSG" | sed ':a;N;$!ba;s/\n/\\n/g')
-printf '{"text": "%s", "tooltip": "%s", "class": "%s"}\n' "$FINAL_TEXT" "$CLEAN_TOOLTIP" "$MAIN_CLASS"
+CLEAN_TEXT=$(echo -e "$FINAL_TEXT" | sed ':a;N;$!ba;s/\n/\\n/g')
+printf '{"text": "%s", "tooltip": "%s", "class": "%s"}\n' "$CLEAN_TEXT" "$CLEAN_TOOLTIP" "$MAIN_CLASS"
 
 # --- 5. SAFETY CHECKS (Prevent Spam) ---
 # Safely checks the upower battery level
