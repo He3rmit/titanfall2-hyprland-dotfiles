@@ -46,5 +46,8 @@ alias music='tmusic'
 alias logout='hyprctl dispatch exit'  # log out of your session immediately, use with caution
 alias xampp='sudo /opt/lampp/manager-linux-x64.run' #xampp manager
 
+# Audio Refresh: Kills the WP "memory" and restarts it with your configs
+alias audiorefix='systemctl --user stop wireplumber && rm -rf ~/.local/state/wireplumber/* && systemctl --user start wireplumber'
+
 # 7. 🎨 Optional Fetch
 fastfetch

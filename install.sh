@@ -137,4 +137,27 @@ sudo chown -R sddm:sddm "$THEME_DIR/Movies"
 sudo chmod 644 "$THEME_DIR/Movies/titanfall_intro_cinematic.mp4"
 sudo chmod 644 "$THEME_DIR/Themes/astronaut.conf.user"
 
+# 8. WirePlumber Audio Protocol (Hardware-Agnostic)
+echo "🔊 Deploying Audio Configuration for $TARGET..."
+
+WP_SYSTEM_DIR="$HOME/.config/wireplumber/wireplumber.conf.d"
+mkdir -p "$WP_SYSTEM_DIR"
+
+# A. Link Universal Rules (Core)
+safe_link "$DOTFILES_DIR/core/wireplumber/50-common-priorities.conf" "$WP_SYSTEM_DIR/50-common-priorities.conf"
+
+# B. Link Host-Specific Quirks (If they exist for this machine)
+HOST_WP_CONFIG="$DOTFILES_DIR/hosts/$TARGET/wireplumber/51-host-rescue.conf"
+if [ -f "$HOST_WP_CONFIG" ]; then
+    echo "🏗️  Applying specific hardware rescue protocol for $TARGET..."
+    safe_link "$HOST_WP_CONFIG" "$WP_SYSTEM_DIR/51-host-rescue.conf"
+fi
+
+# C. Refresh State: Wipe memory to ensure priorities take hold
+systemctl --user stop wireplumber
+rm -rf ~/.local/state/wireplumber/*
+systemctl --user start wireplumber
+
+echo "✅ Audio nominal. Pilot mic secured."
+
 echo "🏁 Protocol Complete. Welcome back, Pilot."
