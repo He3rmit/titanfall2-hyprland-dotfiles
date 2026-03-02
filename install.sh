@@ -118,12 +118,23 @@ sudo ln -sf "$DOTFILES_DIR/core/sddm/sddm.conf.d/theme.conf" "/etc/sddm.conf.d/t
 sudo mkdir -p "$THEME_DIR/Movies"
 sudo cp -u "$DOTFILES_DIR/core/sddm/astronaut/Movies/titanfall_intro_cinematic.mp4" "$THEME_DIR/Movies/titanfall_intro_cinematic.mp4"
 
-# 3. THE HUD: Link User Settings to the ROOT theme folder (Corrected)
-# OLD: sudo ln -sf "$DOTFILES_DIR/core/sddm/astronaut/theme.conf.user" "$THEME_DIR/Themes/astronaut.conf.user"
-sudo ln -sf "$DOTFILES_DIR/core/sddm/astronaut/theme.conf.user" "$THEME_DIR/theme.conf.user"
+# 3. THE HUD: Copy User Settings to the proper ConfigFile location
+# According to metadata.desktop, ConfigFile=Themes/astronaut.conf
+# SDDM expects the user override at Themes/astronaut.conf.user
+# IMPORTANT: We COPY (not symlink) because the sddm user cannot traverse
+# /home/rexsm to follow symlinks back into the dotfiles directory.
 
-# 4. Permissions: Ensure SDDM user can read the assets in Movies
+# First, remove any stale symlinks/files so cp doesn't fail with "same file"
+sudo rm -f "$THEME_DIR/Themes/astronaut.conf.user"
+sudo rm -f "$THEME_DIR/Themes/astronaut.confA"
+sudo rm -f "$THEME_DIR/theme.conf.user"
+
+# Now copy fresh
+sudo cp "$DOTFILES_DIR/core/sddm/astronaut/theme.conf.user" "$THEME_DIR/Themes/astronaut.conf.user"
+
+# 4. Permissions: Ensure SDDM user can read all deployed assets
 sudo chown -R sddm:sddm "$THEME_DIR/Movies"
 sudo chmod 644 "$THEME_DIR/Movies/titanfall_intro_cinematic.mp4"
+sudo chmod 644 "$THEME_DIR/Themes/astronaut.conf.user"
 
 echo "🏁 Protocol Complete. Welcome back, Pilot."
