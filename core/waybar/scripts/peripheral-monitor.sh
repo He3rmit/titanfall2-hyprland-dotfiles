@@ -17,7 +17,7 @@ if [ -n "$BAT_DEVICE" ]; then
     BAT_LEVEL=${RAW_LEVEL%.*} # Strips any decimals just in case
     BAT_STATE=$(upower -i "$BAT_DEVICE" | grep -E "state:" | awk '{print $2}')
     
-    ICON="SYS"
+    ICON="BAT"
     [[ "$BAT_STATE" == "charging" ]] && ICON="⚡"
     LAPTOP_BAT="${ICON}\n${BAT_LEVEL}%"
     
