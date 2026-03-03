@@ -6,3 +6,4 @@
 #gitignore incase of errors
 
 core/hypr/touchpad.conf
+home/.secrets.sh

@@ -26,7 +26,7 @@ safe_link() {
         rm "$target"
     elif [ -e "$target" ]; then
         # It's a real file, back it up
-        echo "⚠️  Existing file detected at $target. Creating backup (.bak)"
+        echo "!!! Existing file detected at $target. Creating backup (.bak) !!!"
         mv "$target" "${target}.bak"
     fi
     ln -s "$source" "$target"
@@ -36,8 +36,8 @@ safe_link() {
 check_fonts() {
     local font_name="ShureTechMono Nerd Font"
     if ! fc-list : family | grep -iq "$font_name"; then
-        echo "❌ WARNING: $font_name not found. Workspace icons may show as '?'"
-        echo "💡 Hint: Install the font from your dotfiles or AUR."
+        echo "X WARNING: $font_name not found. Workspace icons may show as '?'"
+        echo " Hint: Install the font from your dotfiles or AUR."
     else
         echo "✨ Font $font_name verified. HUD icons nominal."
     fi
@@ -66,6 +66,13 @@ mkdir -p "$HOME/.config/waybar"
 mkdir -p "$HOME/.config/swaync"
 mkdir -p "$HOME/.config/hypr"
 mkdir -p "$HOME/.config/fastfetch"
+mkdir -p "$HOME/.config/wtf"
+
+# Backup default wtfutil config if it exists so stow doesn't conflict
+if [ -f "$HOME/.config/wtf/config.yml" ] && [ ! -L "$HOME/.config/wtf/config.yml" ]; then
+    echo "⚠️  Existing file detected at $HOME/.config/wtf/config.yml. Creating backup (.bak)"
+    mv "$HOME/.config/wtf/config.yml" "$HOME/.config/wtf/config.yml.bak"
+fi
 # -----------------------
 
 stow -v -R -t "$HOME/.config" core
@@ -137,10 +144,12 @@ sudo chown -R sddm:sddm "$THEME_DIR/Movies"
 sudo chmod 644 "$THEME_DIR/Movies/titanfall_intro_cinematic.mp4"
 sudo chmod 644 "$THEME_DIR/Themes/astronaut.conf.user"
 
+
 # 8. WirePlumber Audio Protocol (Hardware-Agnostic)
-echo "🔊 Deploying Audio Configuration for $TARGET..."
+echo "Deploying Audio Configuration for $TARGET..."
 
 WP_SYSTEM_DIR="$HOME/.config/wireplumber/wireplumber.conf.d"
+rm -rf "$WP_SYSTEM_DIR"
 mkdir -p "$WP_SYSTEM_DIR"
 
 # A. Link Universal Rules (Core)
@@ -149,7 +158,7 @@ safe_link "$DOTFILES_DIR/core/wireplumber/50-common-priorities.conf" "$WP_SYSTEM
 # B. Link Host-Specific Quirks (If they exist for this machine)
 HOST_WP_CONFIG="$DOTFILES_DIR/hosts/$TARGET/wireplumber/51-host-rescue.conf"
 if [ -f "$HOST_WP_CONFIG" ]; then
-    echo "🏗️  Applying specific hardware rescue protocol for $TARGET..."
+    echo "Applying specific hardware rescue protocol for $TARGET..."
     safe_link "$HOST_WP_CONFIG" "$WP_SYSTEM_DIR/51-host-rescue.conf"
 fi
 
@@ -160,4 +169,20 @@ systemctl --user start wireplumber
 
 echo "✅ Audio nominal. Pilot mic secured."
 
-echo "🏁 Protocol Complete. Welcome back, Pilot."
+
+# 9. Mission Control (wtfutil)
+echo "Deploying Mission Control Dashboard..."
+
+if ! command -v wtfutil &> /dev/null; then
+    paru -S --noconfirm wtfutil-bin
+fi
+
+# A. SECRETS PROTOCOL: Ensure the local secrets file exists for API keys
+if [ ! -f "$HOME/.secrets.sh" ]; then
+    echo "Initializing empty secrets vault at ~/.secrets.sh..."
+    echo "#!/bin/bash" > "$HOME/.secrets.sh"
+    echo "# Add your private API keys here (e.g., export WTF_OWM_API_KEY=\"...\")" >> "$HOME/.secrets.sh"
+    echo "!!! MISSION DATA MISSING !!!: Please add your weather api for wtfutil to ~/.secrets.sh"
+fi
+
+echo "Protocol Complete. Welcome back, Pilot."
