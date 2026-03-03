@@ -24,13 +24,21 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-# 5. 📂 Environment & Path
+# 5. 📂 Environment & Secrets
+# Load private API keys/secrets from a local-only file (gitignored)
+if [ -f "$HOME/.secrets.sh" ]; then
+    source "$HOME/.secrets.sh"
+fi
+
 export EDITOR=nvim
 export TERMINAL=kitty
 export BROWSER=firefox
 
 # Add your custom scripts to PATH so you can run them from anywhere
 export PATH=$HOME/.local/bin:$HOME/dotfiles/core/hypr/scripts:$PATH
+
+#openweather api
+
 
 # 6. 🔗 Aliases
 # alias filelist='ls -alF' # long listing with file types
