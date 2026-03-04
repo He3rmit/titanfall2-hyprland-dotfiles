@@ -59,7 +59,7 @@ alias hud='wtfutil'
 alias pilot='wtfutil'
 
 # Audio Refresh: Kills the WP "memory" and restarts it with your configs
-alias audiorefix='systemctl --user stop wireplumber && rm -rf ~/.local/state/wireplumber/* && systemctl --user start wireplumber'
+alias audiofix='systemctl --user stop wireplumber && rm -rf ~/.local/state/wireplumber/* && systemctl --user start wireplumber'
 
 # 7. 🎨 Optional Fetch
 fastfetch
