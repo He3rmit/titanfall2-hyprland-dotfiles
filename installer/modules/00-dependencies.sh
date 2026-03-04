@@ -17,9 +17,11 @@ CORE_PACKAGES=(
     
     # --- HYPRLAND SYSTEM DEPS ---
     "hyprland"
+    "xdg-desktop-portal"
     "xdg-desktop-portal-hyprland"
     "qt5-wayland"
     "qt6-wayland"
+    "nwg-look"
     
     # --- GUI COMPONENTS ---
     "waybar"
@@ -31,12 +33,14 @@ CORE_PACKAGES=(
     # --- HYPRLAND DAEMONS & SYSTEM UTILS ---
     "hypridle"
     "hyprlock"
+    "hyprpicker"
     "hyprsunset"
     "wlogout"
     "wl-clipboard"
     "cliphist"
     "libnotify"
     "xorg-xhost"
+    "xdg-user-dirs"
     
     # --- SCREENSHOT & WALLPAPER ---
     "grim"
@@ -52,6 +56,10 @@ CORE_PACKAGES=(
     "playerctl"
     "networkmanager"
     
+    # --- CORE UTILITIES ---
+    "unzip"
+    "wget"
+    
     # --- AUDIO & BLUETOOTH ---
     "wireplumber"
     "pipewire"
@@ -60,8 +68,12 @@ CORE_PACKAGES=(
     "easyeffects"
     "blueman"
     
-    # --- THEME & TERMINAL ---
+    # --- THEME & FONTS ---
+    "ttf-sharetech-mono-nerd"
+    "ttf-jetbrains-mono-nerd"
     "ttf-nerd-fonts-symbols"
+    "noto-fonts-emoji"
+    "obsidian-icon-theme"
     "starship"
     "fastfetch"
     "wtfutil-bin"
