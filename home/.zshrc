@@ -48,11 +48,8 @@ alias unlock='sudo rm /var/lib/pacman/db.lck' #when the pacman database is locke
 alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0' # check battery status
 alias wifi='nmtui' # Network Manager TUI, a terminal-based Wi-Fi manager
 alias refresh='hyprctl reload && killall waybar; waybar & disown && killall swaync && rm -rf ~/.cache/swaync && swaync & disown' # reload Hyprland, restart Waybar, and restart swaync (the status notifier daemon) to apply changes to your config without restarting your entire session. Use with caution, as it will kill all instances of Waybar and swaync, which may cause issues if you have multiple instances running.
-alias manga='manga-tui -p weebcentral' #
-alias anime='ani-cli'
-alias yt='yt-x'
 alias logout='hyprctl dispatch exit'  # log out of your session immediately, use with caution
-alias xampp='sudo /opt/lampp/manager-linux-x64.run' #xampp manager
+
 
 # Summon the Mission Control Dashboard
 alias hud='wtfutil'
