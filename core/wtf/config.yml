@@ -85,7 +85,7 @@ wtf:
         left: 0
         height: 1
         width: 1
-      location: "Dasmariñas"
+      cityCode: 1715430
       title: "🌤️ Atmosphere"
       type: "weather"
       unit: "c"

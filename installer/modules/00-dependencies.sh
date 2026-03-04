@@ -28,11 +28,29 @@ CORE_PACKAGES=(
     "kitty"
     "dolphin"
     
-    # --- HYPRLAND DAEMONS & UTILS ---
+    # --- HYPRLAND DAEMONS & SYSTEM UTILS ---
     "hypridle"
+    "hyprlock"
     "hyprsunset"
+    "wlogout"
     "wl-clipboard"
     "cliphist"
+    "libnotify"
+    "xorg-xhost"
+    
+    # --- SCREENSHOT & WALLPAPER ---
+    "grim"
+    "slurp"
+    "swappy"
+    "mpvpaper"
+    "jq"
+    
+    # --- HARDWARE CONTROL ---
+    "upower"
+    "brightnessctl"
+    "power-profiles-daemon"
+    "playerctl"
+    "networkmanager"
     
     # --- AUDIO & BLUETOOTH ---
     "wireplumber"
