@@ -12,29 +12,25 @@
   "timeout": 5,
   "timeout-low": 2,
   "timeout-critical": 0,
-
   "widgets": [
-    "title", 
-    "dnd", 
-    "buttons-grid", 
-    "volume", 
-    "backlight", 
-    "mpris", 
+    "title",
+    "dnd",
+    "buttons-grid",
+    "backlight",
+    "volume",
+    "mpris",
     "notifications"
   ],
-
   "widget-config": {
-    "title": { 
-      "text": "PILOT HUD", 
+    "title": {
+      "text": "PILOT HUD",
       "clear-all-button": true,
       "button-text": "PURGE"
     },
-    
     "dnd": {
       "text": "Do Not Disturb"
     },
-
-   "buttons-grid": {
+    "buttons-grid": {
       "buttons-per-row": 3,
       "actions": [
         {
@@ -83,18 +79,15 @@
         }
       ]
     },
-
     "volume": {
       "label": "󰕾",
       "show-per-app": true,
       "show-per-app-icon": true,
       "show-per-app-label": false
     },
-
     "backlight": {
       "label": "󰃠"
     },
-
     "mpris": {
       "image-size": 96,
       "image-radius": 12
