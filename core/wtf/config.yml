@@ -15,7 +15,7 @@ wtf:
     # Two fixed columns + one flexible right column for git
     columns: [40, 40, -1]
     # Top row tall (CPU bars), middle compact (clock/signal), bottom medium
-    rows: [12, 6, 8]
+    rows: [12, 6, 8, 8]
   refreshInterval: 1
   term: "xterm-256color"
 
@@ -85,10 +85,10 @@ wtf:
         left: 0
         height: 1
         width: 1
-      cityCode: 1715430
+      cityids: [1715430]
       title: "🌤️ Atmosphere"
       type: "weather"
-      unit: "c"
+      tempUnit: "C"
 
     # --- POWER LINE (Custom Shell Module) ---
     cmdrunner:
@@ -117,3 +117,45 @@ wtf:
       refreshInterval: 3600
       title: "💻 Chassis Info"
       type: "security"
+
+    # --- POWER & DIAGNOSTICS ---
+    power:
+      enabled: true
+      focusable: true
+      position:
+        top: 3
+        left: 0
+        height: 1
+        width: 1
+      refreshInterval: 15
+      title: "🔋 Power"
+      type: "power"
+
+    uptime:
+      enabled: true
+      focusable: true
+      position:
+        top: 3
+        left: 1
+        height: 1
+        width: 1
+      refreshInterval: 30
+      title: "⏳ Uptime"
+      type: "cmdrunner"
+      cmd: "uptime"
+      args: ["-p"]
+
+    textfile:
+      enabled: true
+      focusable: true
+      position:
+        top: 3
+        left: 2
+        height: 1
+        width: 1
+      filePaths:
+        - "/home/rexsm/dotfiles/core/wtf/notes.md"
+      format: true
+      refreshInterval: 15
+      title: "📝 Notes"
+      type: "textfile"
