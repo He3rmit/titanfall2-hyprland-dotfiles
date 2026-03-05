@@ -19,9 +19,12 @@ CORE_PACKAGES=(
     "hyprland"
     "xdg-desktop-portal"
     "xdg-desktop-portal-hyprland"
+    "xdg-desktop-portal-gtk"  # Essential for file pickers & settings
+    "xwaylandvideobridge"     # Allows screen sharing for X11 apps like Discord
     "qt5-wayland"
     "qt6-wayland"
     "nwg-look"
+    "nss-mdns"                # Required for local hostname resolution (.local)
     
     # --- GUI COMPONENTS ---
     "waybar"
@@ -29,6 +32,13 @@ CORE_PACKAGES=(
     "rofi-wayland"
     "kitty"
     "dolphin"
+    "ark"                     # Archives (unzip/zip from GUI)
+    "kio-admin"               # Root access in Dolphin
+    "kio-extras"              # Network protocols & extra thumbnails
+    "ffmpegthumbs"            # Video thumbnails
+    "kdegraphics-thumbnailers" # Image thumbnails
+    "baloo-widgets"           # Information panel
+    "taglib"                  # File metadata
     
     # --- HYPRLAND DAEMONS & SYSTEM UTILS ---
     "hypridle"
@@ -72,6 +82,7 @@ CORE_PACKAGES=(
     "ttf-sharetech-mono-nerd"
     "ttf-jetbrains-mono-nerd"
     "ttf-nerd-fonts-symbols"
+    "ttf-orbitron"
     "noto-fonts-emoji"
     "obsidian-icon-theme"
     "starship"
