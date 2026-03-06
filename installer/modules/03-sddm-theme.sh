@@ -14,7 +14,7 @@ THEME_DIR="/usr/share/sddm/themes/$THEME_NAME"
 # Check if SDDM theme is installed before proceeding
 if [ ! -d "$THEME_DIR" ]; then
     print_error "Theme directory $THEME_DIR not found."
-    print_warning "Please ensure $THEME_NAME is installed via paru."
+    print_warning "Please ensure $THEME_NAME is installed via your AUR helper."
     exit 1
 fi
 

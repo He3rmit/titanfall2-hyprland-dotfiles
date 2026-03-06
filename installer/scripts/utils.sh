@@ -74,3 +74,24 @@ keep_sudo_alive() {
         kill -0 "$$" || exit
     done 2>/dev/null &
 }
+
+# Distro-Agnostic Package Installation (Pacman -> Yay/Paru)
+aur_install() {
+    local pkg="$1"
+    
+    # Try official repos first using sudo pacman
+    if sudo pacman -Sp "$pkg" &>/dev/null; then
+        sudo pacman -S --noconfirm --needed "$pkg"
+        return $?
+    fi
+
+    # Fallback to AUR helpers
+    if command -v yay &> /dev/null; then
+        yay -S --noconfirm --needed "$pkg"
+    elif command -v paru &> /dev/null; then
+        paru -S --noconfirm --needed "$pkg"
+    else
+        print_error "AUR Helper (yay or paru) not found! Cannot install: $pkg"
+        return 1
+    fi
+}

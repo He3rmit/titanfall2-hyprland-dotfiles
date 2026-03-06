@@ -18,12 +18,8 @@ source "$INSTALLER_DIR/scripts/utils.sh"
 # 1. Dependency Check
 if ! command -v gum &> /dev/null; then
     echo "⚠️  'gum' is not installed. We need it for the UI."
-    echo "Installing gum via paru..."
-    if ! command -v paru &> /dev/null; then
-        echo "❌ paru not found. Please install paru first (or run the old install.sh)."
-        exit 1
-    fi
-    paru -S --noconfirm gum
+    echo "Installing gum..."
+    aur_install gum
 fi
 
 clear

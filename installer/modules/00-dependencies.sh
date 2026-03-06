@@ -104,7 +104,7 @@ install_pkg() {
     local pkg=$1
     if ! pacman -Qi "$pkg" &> /dev/null && ! pacman -Qq "$pkg" &> /dev/null; then
         echo "Installing $pkg..."
-        paru -S --noconfirm "$pkg"
+        aur_install "$pkg"
     else
         echo "✅ $pkg is already installed."
     fi

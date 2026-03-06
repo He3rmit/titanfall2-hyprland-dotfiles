@@ -10,8 +10,8 @@ print_step "Deploying Mission Control Dashboard..."
 
 # 1. Dependency Verification
 if ! command -v wtfutil &> /dev/null; then
-    print_warning "wtfutil not found. Installing via paru..."
-    paru -S --noconfirm wtfutil-bin
+    print_warning "wtfutil not found."
+    aur_install wtfutil-bin
     print_success "wtfutil installed."
 else
     print_success "wtfutil is installed."
