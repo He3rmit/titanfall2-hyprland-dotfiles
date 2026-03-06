@@ -51,6 +51,8 @@ CORE_PACKAGES=(
     "libnotify"
     "xorg-xhost"
     "xdg-user-dirs"
+    "imagemagick"             # Required by cliphist-rofi for image previews
+    "wtype"                   # Required by cliphist-rofi for auto-typing
     
     # --- SCREENSHOT & WALLPAPER ---
     "grim"
