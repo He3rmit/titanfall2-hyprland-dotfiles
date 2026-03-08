@@ -33,7 +33,7 @@ print_step ">> Applying Theme Override Preferences..."
 # According to metadata.desktop, ConfigFile=Themes/astronaut.conf
 # SDDM expects the user override at Themes/astronaut.conf.user
 # IMPORTANT: We COPY (not symlink) because the sddm user cannot traverse
-# /home/rexsm to follow symlinks back into the dotfiles directory.
+# user's home directory to follow symlinks back into the dotfiles directory.
 
 # First, remove any stale symlinks/files so cp doesn't fail with "same file"
 sudo rm -f "$THEME_DIR/Themes/astronaut.conf.user"

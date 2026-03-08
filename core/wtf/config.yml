@@ -68,7 +68,7 @@ wtf:
         width: 1
       refreshInterval: 30
       repositories:
-        - "/home/rexsm/dotfiles"
+        - "~/dotfiles"
       title: "📁 Data Core"
       type: "git"
 
@@ -154,7 +154,7 @@ wtf:
         height: 1
         width: 1
       filePaths:
-        - "/home/rexsm/dotfiles/core/wtf/notes.md"
+        - "~/dotfiles/core/wtf/notes.md"
       format: true
       refreshInterval: 15
       title: "📝 Notes"
