@@ -26,7 +26,13 @@ cd ~/dotfiles
 
 ## Milestones & Version History
 
-### [v2.0.0] - Modular Installer Rewrite (Current)
+### [v2.1.0] - UI Quality of Life & Wallpaper Restructure (Current)
+- Implemented a fully interactive, Rofi-based manual wallpaper selector (Grid UI).
+- Combined all static and live wallpapers into a single `core/wallpapers/library` directory.
+- Retired the automated `mpvpaper-pool.sh` script in favor of the manual persistent selector.
+- Completely redesigned the Rofi Application Launcher (drun) to feature a modern, wide-search grid layout inspired by JaKooLit.
+
+### [v2.0.0] - Modular Installer Rewrite
 - Replaced the monolithic `install.sh` with a modular `installer/` directory structure.
 - Introduced `gum` for a high-quality Terminal UI and interactive deployment.
 - Completely overhauled `00-dependencies.sh` to auto-detect "Naked Arch" vs "KDE Fallback" installations to ensure required UI daemons (like `polkit-kde-agent`) are installed.

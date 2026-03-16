@@ -37,6 +37,7 @@ CORE_PACKAGES=(
     "kio-extras"              # Network protocols & extra thumbnails
     "ffmpegthumbs"            # Video thumbnails
     "kdegraphics-thumbnailers" # Image thumbnails
+    "ffmpegthumbnailer"       # Rofi video thumbnails
     "baloo-widgets"           # Information panel
     "taglib"                  # File metadata
     
