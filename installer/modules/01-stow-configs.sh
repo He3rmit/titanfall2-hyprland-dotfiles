@@ -22,15 +22,6 @@ find "$DOTFILES_DIR/core" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; |
     mkdir -p "$HOME/.config/$dir"
 done
 
-# Optional: Add any extra manual directories here just in case
-mkdir -p "$HOME/.config/wtf"
-
-# Back up the auto-generated wtfutil config to prevent stow conflicts
-if [ -f "$HOME/.config/wtf/config.yml" ] && [ ! -L "$HOME/.config/wtf/config.yml" ]; then
-    print_warning "Default wtfutil config detected. Backing up..."
-    mv "$HOME/.config/wtf/config.yml" "$HOME/.config/wtf/config.yml.bak"
-fi
-
 print_step ">> Stowing Core Configs..."
 stow -v -R -t "$HOME/.config" core
 

@@ -14,8 +14,9 @@ apply_wallpaper() {
     
     local monitors=$(hyprctl monitors -j | jq -r '.[].name')
     
-    # Kill existing mpvpaper instances
+    # Kill existing daemons
     pkill mpvpaper 2>/dev/null
+    pkill swaybg 2>/dev/null
     sleep 0.5
     
     # Determine type
@@ -32,15 +33,20 @@ apply_wallpaper() {
                 fade_opt="--script=$HOME/.config/wallpapers/fade.lua --script-opts=fade_duration=1.0"
             fi
             
-            mpvpaper "$monitor" "$wall" \
-                -o "--no-audio --loop --fullscreen --panscan=1.0 --no-osc --no-osd-bar \
-                    --geometry=100%x100% $fade_opt" &
+            # Using both loop-file and loop-playlist, plus keep-open to prevent premature exiting
+            mpvpaper -f "$monitor" "$wall" \
+                -o "--no-audio --loop-file=inf --loop-playlist=inf --keep-open=yes --fullscreen --panscan=1.0 --no-osc --no-osd-bar \
+                    --geometry=100%x100% $fade_opt"
         else
-            # Static image settings
-            mpvpaper "$monitor" "$wall" \
-                -o "--loop-file=inf --fullscreen --panscan=1.0 --no-osc --no-osd-bar --geometry=100%x100%" &
+            # Static image settings (swaybg is lighter and more stable for images)
+            swaybg -o "$monitor" -i "$wall" -m fill &
         fi
     done
+    
+    # Disown swaybg if it was launched (shell bg)
+    if [[ $is_video -eq 0 ]]; then
+        disown -a
+    fi
 }
 
 if [[ "$1" == "--init" ]]; then

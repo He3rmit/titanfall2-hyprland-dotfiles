@@ -11,6 +11,8 @@ configuration {
     display-filebrowser: " Files";
     display-window: " Windows";
     drun-display-format: "{name}";
+    terminal: "kitty";
+    run-shell-command: "{terminal} -e {cmd}";
 }
 
 * {

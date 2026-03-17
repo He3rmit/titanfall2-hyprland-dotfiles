@@ -90,7 +90,6 @@ CORE_PACKAGES=(
     "obsidian-icon-theme"
     "starship"
     "fastfetch"
-    "wtfutil-bin"
 )
 
 # Fallback packages only needed if we are NOT running alongside KDE Plasma
