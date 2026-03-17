@@ -1,2 +1,6 @@
-@import "~/.config/rofi/themes/titanfall2.rasi"
+/**
+ * TITAN CLUSTER : GLOBAL CONFIG
+ * Specific modes use their own .rasi files via the -theme flag.
+ **/
 
+@import "~/.config/rofi/themes/launcher.rasi"
