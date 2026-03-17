@@ -3,13 +3,12 @@
 # Titanfall Clipboard Manager (Pilot Edition)
 # -----------------------------------------------------
 
-THEME="$HOME/.config/rofi/themes/titanfall2.rasi"
+THEME="$HOME/.config/rofi/themes/clipboard.rasi"
 CACHE_DIR="/tmp/cliphist-thumbnails"
 mkdir -p "$CACHE_DIR"
 
-# TITANFALL HUD COLORS
-COLOR_BLUE="#4261ff"   # Pilot/Friendly Blue
-COLOR_ORANGE="#ff8242" # Enemy/IMC Orange
+# Keybind cheat sheet shown at the bottom of the popup
+KEYBIND_HINTS="Enter: Paste  |  Alt+Del: Delete  |  Alt+Shift+Del: Wipe All  |  Alt+T: Type  |  Alt+O: Open URL  |  Alt+E: Edit"
 
 notify_pilot() {
     notify-send -u normal -a "Titanfall Systems" -i "terminal" "$1" "$2"
@@ -24,16 +23,32 @@ generate_list() {
             if [ ! -f "$preview_file" ]; then
                 cliphist decode "$id" | magick - -resize 64x64! "$preview_file" 2>/dev/null
             fi
-            echo -en "${id}\t[ Captured Image ]\0icon\x1f${preview_file}\n"
+            # Get image dimensions for a better label
+            dims=$(cliphist decode "$id" | magick identify -format '%wx%h' - 2>/dev/null)
+            if [[ -n "$dims" ]]; then
+                label="[Image ${dims}]"
+            else
+                label="[Image]"
+            fi
+            echo -en "${id}\t${label}\0icon\x1f${preview_file}\n"
         else
-            echo -en "${id}\t${content}\0icon\x1ftext-x-generic\n"
+            # Collapse whitespace for cleaner display
+            clean=$(echo "$content" | tr '\n' ' ' | sed 's/  */ /g' | head -c 120)
+            echo -en "${id}\t${clean}\0icon\x1ftext-x-generic\n"
         fi
     done
 }
 
+# Kill Rofi if already running
+if pgrep -x "rofi" > /dev/null; then
+    pkill rofi
+    exit 0
+fi
+
 selection=$(generate_list | rofi -dmenu \
     -theme "$THEME" \
-    -p "Data Core" \
+    -p "󰅇" \
+    -mesg "$KEYBIND_HINTS" \
     -display-columns 2 \
     -show-icons \
     -kb-custom-1 "Alt+Delete" \
@@ -47,32 +62,30 @@ exit_code=$?
 clip_id=$(echo "$selection" | awk '{print $1}')
 
 case $exit_code in
-    0)  # ENTER
+    0)  # ENTER — Paste
         cliphist decode "$clip_id" | wl-copy
-        notify_pilot "Buffer Updated" "Pilot, data sequence ready."
+        notify_pilot "Buffer Updated" "Data sequence ready."
         ;;
-    10) # Alt+Delete
+    10) # Alt+Delete — Delete Entry
         cliphist delete <<< "$selection"
-        notify_pilot "Entry Purged" "Security protocol active. Item deleted."
+        notify_pilot "Entry Purged" "Item removed from history."
         ;;
-    11) # Alt+Shift+Delete
+    11) # Alt+Shift+Delete — Wipe All
         cliphist wipe
         rm -rf "$CACHE_DIR"/*
-        notify-send -u critical -a "Titanfall Systems" "DATABASE PURGED" "All records have been erased."
+        notify-send -u critical -a "Titanfall Systems" "DATABASE PURGED" "All clipboard records erased."
         ;;
-    12) # Alt+T
-        notify_pilot "Auto-Type Engaged" "Injecting keystrokes into local terminal..."
+    12) # Alt+T — Auto-Type
         cliphist decode "$clip_id" | wtype -
         ;;
-    13) # Alt+O
+    13) # Alt+O — Open URL
         url=$(cliphist decode "$clip_id")
-        notify_pilot "Protocol 2" "Opening external uplink: $url"
+        notify_pilot "Opening Uplink" "$url"
         xdg-open "$url"
         ;;
-    14) # Alt+E
+    14) # Alt+E — Edit in Terminal
         tmp_file="/tmp/cliphist-edit-$clip_id.txt"
         cliphist decode "$clip_id" > "$tmp_file"
-        notify_pilot "Editing Record" "Opening secure editor..."
         kitty --class floating -e nano "$tmp_file"
         [ -f "$tmp_file" ] && cat "$tmp_file" | wl-copy && rm "$tmp_file"
         ;;
