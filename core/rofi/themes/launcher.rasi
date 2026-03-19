@@ -6,9 +6,9 @@
 configuration {
     modi: "drun,filebrowser,window";
     show-icons: true;
-    display-drun: " Apps";
-    display-filebrowser: " Files";
-    display-window: " Win";
+    display-drun: " Applications";
+    display-filebrowser: " File Manager";
+    display-window: " Active Window";
     drun-display-format: "{name}";
     terminal: "kitty";
     run-shell-command: "{terminal} -e {cmd}";
@@ -61,7 +61,8 @@ inputbar {
     padding: 12px 16px;
     spacing: 12px;
     children: [ "prompt", "entry" ];
-    expand: true;
+    expand: false;
+    width: 400px;
 }
 
 prompt {
@@ -78,7 +79,8 @@ entry {
 /* MODE SWITCHER (Tabs) */
 mode-switcher {
     orientation: horizontal;
-    spacing: 10px;
+    spacing: 12px;
+    expand: true;
 }
 
 button {
