@@ -1,92 +1,127 @@
 #!/bin/bash
 # ==============================================================================
-# TITANFALL HUD - MODULAR INSTALLER
-# ==============================================================================
-# This is the main entry point for the dotfiles installation.
-# It uses 'gum' to provide a highly interactive Terminal UI.
+# TITANFALL PILOT HUD — DEPLOYMENT TERMINAL
 # ==============================================================================
 
-# Ensure we are in the script directory
 cd "$(dirname "$0")" || exit 1
 INSTALLER_DIR=$(pwd)
 DOTFILES_DIR=$(dirname "$INSTALLER_DIR")
 export INSTALLER_DIR DOTFILES_DIR
 
-# Import utilities
 source "$INSTALLER_DIR/scripts/utils.sh"
 
-# 1. Dependency Check
+# ── 0. ENSURE GUM ──────────────────────────────────────────────────────────────
 if ! command -v gum &> /dev/null; then
-    echo "⚠️  'gum' is not installed. We need it for the UI."
-    echo "Installing gum..."
+    echo "Installing 'gum' for Deployment UI..."
     aur_install gum
 fi
 
 clear
-print_step "=============================================="
-print_step "      TITANFALL PILOT HUD DEPLOYMENT          "
-print_step "=============================================="
+
+# ── 1. SPLASH SCREEN ───────────────────────────────────────────────────────────
+gum style \
+    --border double \
+    --border-foreground 51 \
+    --foreground 51 \
+    --bold \
+    --margin "1 4" \
+    --padding "1 8" \
+    "████████╗██╗████████╗ █████╗ ███╗   ██╗███████╗ █████╗ ██╗     ██╗" \
+    "╚══██╔══╝██║╚══██╔══╝██╔══██╗████╗  ██║██╔════╝██╔══██╗██║     ██║" \
+    "   ██║   ██║   ██║   ███████║██╔██╗ ██║█████╗  ███████║██║     ██║" \
+    "   ██║   ██║   ██║   ██╔══██║██║╚██╗██║██╔══╝  ██╔══██║██║     ██║" \
+    "   ██║   ██║   ██║   ██║  ██║██║ ╚████║██║     ██║  ██║███████╗███████╗" \
+    "   ╚═╝   ╚═╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝     ╚═╝  ╚═╝╚══════╝╚══════╝"
+
+gum style \
+    --foreground 244 \
+    --align center \
+    --margin "0 4" \
+    "PILOT HUD  //  DEPLOYMENT TERMINAL  //  v2.1"
+
 echo ""
 
-# 2. Authorization
+# ── 2. AUTHORIZATION ───────────────────────────────────────────────────────────
+gum style --foreground 214 --bold "[ PILOT AUTHORIZATION ]"
 keep_sudo_alive
 
-# 3. Host Selection (Replaces argument passing)
+# ── 3. HOST SELECTION ──────────────────────────────────────────────────────────
 echo ""
-print_step "Select Deployment Target:"
+gum style --foreground 51 --bold "Select Deployment Target:"
 TARGET=$(gum choose "laptop" "desktop")
 export TARGET
 
-# Validate Target
 if [ ! -d "$DOTFILES_DIR/hosts/$TARGET" ]; then
     print_error "Host configuration for '$TARGET' not found."
     exit 1
 fi
 print_success "Target locked: $TARGET"
 
-# 4. Module Selection Menu
+# ── 4. MODULE SELECTION ────────────────────────────────────────────────────────
 echo ""
-print_step "Select Operational Modules to Deploy:"
-echo "(Use SPACE to select/deselect, ENTER to confirm)"
+gum style --foreground 51 --bold "Select Modules to Deploy:"
+gum style --foreground 244 \
+    "  00-dependencies   — Install all system and AUR packages" \
+    "  01-stow-configs   — Symlink dotfiles into ~/.config" \
+    "  02-audio-rescue   — Deploy Wireplumber audio config" \
+    "  03-sddm-theme     — Install the Astronaut SDDM login theme"
+echo ""
+gum style --foreground 244 "(SPACE to select, ENTER to confirm)"
 echo ""
 
-# Define the modules available
 MODULES=$(gum choose --no-limit \
     "00-dependencies" \
     "01-stow-configs" \
     "02-audio-rescue" \
-    "03-sddm-theme" \
-    "04-mission-control")
+    "03-sddm-theme")
 
 if [ -z "$MODULES" ]; then
-    print_warning "No modules selected. Aborting deployment."
+    print_warning "No modules selected. Aborting."
     exit 0
 fi
 
-# 5. Execution Loop
+# ── 5. CONFIRMATION ────────────────────────────────────────────────────────────
 echo ""
-print_step "Initiating Deployment Sequence..."
+gum style --foreground 51 --bold "Deployment Manifest:"
+echo "$MODULES" | while read -r m; do
+    gum style --foreground 46 "  ✓ $m"
+done
 echo ""
 
-# Convert multi-line output from gum into an array
+if ! gum confirm "Initiate deployment to [$TARGET]?"; then
+    print_warning "Deployment aborted by Pilot."
+    exit 0
+fi
+
+# ── 6. EXECUTION ───────────────────────────────────────────────────────────────
+echo ""
 IFS=$'\n' read -rd '' -a SELECTED_MODULES <<< "$MODULES"
 
 for module in "${SELECTED_MODULES[@]}"; do
     module_script="$INSTALLER_DIR/modules/${module}.sh"
-    
+
     if [ -f "$module_script" ]; then
-        print_step ">> Executing: $module"
-        bash "$module_script"
-        
-        # Check exit status
+        echo ""
+        gum spin --spinner dot --title " Deploying: $module..." -- bash "$module_script"
+
         if [ $? -ne 0 ]; then
             print_error "Module '$module' failed. Aborting."
             exit 1
         fi
+        print_success "$module deployed."
     else
         print_error "Module script not found: $module_script"
     fi
 done
 
+# ── 7. SIGN-OFF ────────────────────────────────────────────────────────────────
 echo ""
-print_success "Deployment Complete. Welcome back, Pilot."
+gum style \
+    --border rounded \
+    --border-foreground 46 \
+    --foreground 46 \
+    --bold \
+    --padding "1 4" \
+    --margin "1 2" \
+    "DEPLOYMENT COMPLETE" \
+    "Welcome back, Pilot."
