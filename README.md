@@ -26,6 +26,12 @@ cd ~/dotfiles
 
 ## Milestones & Version History
 
+### [v2.2.0] - Reworked Clipboard Manager
+- Uses the same utilities as before, but more modern
+- Has instructions on how to use the clipboard more effectively
+- Reworked the clipboard in favor of simplicity and ease of use
+- Uses keybinds to adhere actions
+
 ### [v2.1.0] - UI Quality of Life & Wallpaper Restructure (Current)
 - Implemented a fully interactive, Rofi-based manual wallpaper selector (Grid UI).
 - Combined all static and live wallpapers into a single `core/wallpapers/library` directory.
