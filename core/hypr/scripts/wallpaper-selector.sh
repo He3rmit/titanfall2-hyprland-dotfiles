@@ -9,8 +9,11 @@ apply_wallpaper() {
         return
     fi
     
-    # Save current wallpaper
-    echo "$wall" > "$CURRENT_WALLPAPER_FILE"
+    # Save current wallpaper (Only if it is NOT an effect image)
+    if [[ ! "$wall" == *"current_wallpaper_effect"* ]]; then
+        echo "$wall" > "$CURRENT_WALLPAPER_FILE"
+        rm -f "$HOME/.config/wallpapers/.current_effect_image"
+    fi
     
     local monitors=$(hyprctl monitors -j | jq -r '.[].name')
     
@@ -47,9 +50,44 @@ apply_wallpaper() {
     if [[ $is_video -eq 0 ]]; then
         disown -a
     fi
+    
+    # Extract colors and theme the system
+    if command -v wal &>/dev/null; then
+        local wal_target="$wall"
+        
+        if [[ $is_video -eq 1 ]]; then
+             local cname=$(basename "$wall")
+             if [[ -f "$HOME/.cache/wallpaper-thumbnails/${cname}.jpg" ]]; then
+                 wal_target="$HOME/.cache/wallpaper-thumbnails/${cname}.jpg"
+             fi
+        fi
+        
+        # Run pywal silently, skip its own wallpaper setting (-n)
+        wal -q -n -i "$wal_target"
+        
+        # Copy the dynamically generated hyprland variables to the permanent source
+        cp "$HOME/.cache/wal/colors-hyprland.conf" "$HOME/.config/hypr/modules/colors.conf" 2>/dev/null
+        
+        # Hot reload UI to fetch new colors
+        pkill -SIGUSR2 waybar
+        swaync-client -rs 2>/dev/null
+    fi
 }
 
+if [[ "$1" == "--set" && -n "$2" ]]; then
+    apply_wallpaper "$2"
+    exit 0
+fi
+
 if [[ "$1" == "--init" ]]; then
+    if [[ -f "$HOME/.config/wallpapers/.current_effect_image" ]]; then
+        effect_wall=$(cat "$HOME/.config/wallpapers/.current_effect_image")
+        if [[ -f "$effect_wall" ]]; then
+            apply_wallpaper "$effect_wall"
+            exit 0
+        fi
+    fi
+
     if [[ -f "$CURRENT_WALLPAPER_FILE" ]]; then
         wall=$(cat "$CURRENT_WALLPAPER_FILE")
         apply_wallpaper "$wall"
@@ -97,7 +135,7 @@ if [[ -n "$selected_name" ]]; then
     # Find full path mapping back to the name
     selected_path=$(echo "$all_walls" | grep -F "/$selected_name")
     if [[ -n "$selected_path" ]]; then
-        # Pick the first match in case of duplicates
-        apply_wallpaper "$(echo "$selected_path" | head -n 1)"
+        selected_path=$(echo "$selected_path" | head -n 1)
+        apply_wallpaper "$selected_path"
     fi
 fi

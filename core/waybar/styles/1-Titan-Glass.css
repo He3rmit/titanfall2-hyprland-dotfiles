@@ -1,0 +1,125 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   TITANFALL PILOT HUD - WAYBAR STYLE (Pywal Integrated)
+   ────────────────────────────────────────────────────────────────────────── */
+@import "../../.cache/wal/colors-waybar.css";
+
+* {
+    font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
+    font-size: 12px;
+    color: @color6;
+    background: transparent;
+}
+
+window#waybar {
+    background: rgba(0, 0, 0, 0.6);
+    transition: background 0.3s ease-in-out;
+}
+window#waybar.sidebar-expanded { background: transparent; }
+window#waybar.sidebar-expanded.vertical { border-right: none; }
+
+window#waybar.vertical {
+    border-right: 2px solid @color2;
+    border-radius: 0px 10px 10px 0px;
+    padding: 10px 5px;
+}
+window#waybar.horizontal, window#waybar.top, window#waybar.bottom {
+    border-bottom: 2px solid @color2;
+    border-radius: 0px 0px 10px 10px;
+    padding: 5px 10px;
+}
+
+#cpu, #memory, #network, #clock, #custom-peripheral, #custom-power, #custom-notification, #tray, #workspaces {
+    background: alpha(@color0, 0.8);
+    border: 1px solid alpha(@color6, 0.25);
+    border-radius: 8px;
+    box-shadow: 0 0 8px alpha(@color6, 0.2);
+    animation: hudPulse 6s infinite ease-in-out;
+    padding: 10px 0px;
+    margin: 3px 0px;
+    min-width: 48px;
+}
+
+#workspaces { padding: 5px 0px; }
+#workspaces button { padding: 6px 0px; border-left: 2px solid transparent; }
+
+window#waybar.horizontal #cpu, window#waybar.top #cpu, window#waybar.bottom #cpu,
+window#waybar.horizontal #memory, window#waybar.top #memory, window#waybar.bottom #memory,
+window#waybar.horizontal #network, window#waybar.top #network, window#waybar.bottom #network,
+window#waybar.horizontal #clock, window#waybar.top #clock, window#waybar.bottom #clock,
+window#waybar.horizontal #custom-peripheral, window#waybar.top #custom-peripheral, window#waybar.bottom #custom-peripheral,
+window#waybar.horizontal #custom-power, window#waybar.top #custom-power, window#waybar.bottom #custom-power,
+window#waybar.horizontal #custom-notification, window#waybar.top #custom-notification, window#waybar.bottom #custom-notification,
+window#waybar.horizontal #tray, window#waybar.top #tray, window#waybar.bottom #tray,
+window#waybar.horizontal #workspaces, window#waybar.top #workspaces, window#waybar.bottom #workspaces {
+    padding: 0px 10px;
+    margin: 0px 3px;
+    min-width: 0px;
+    min-height: 48px;
+}
+
+window#waybar.horizontal #workspaces button, window#waybar.top #workspaces button, window#waybar.bottom #workspaces button {
+    padding: 0px 6px;
+    border-left: none;
+    border-bottom: 2px solid transparent;
+}
+
+#workspaces button.active {
+    color: @color6;
+    background: alpha(@color6, 0.15);
+    box-shadow: 0 0 10px alpha(@color6, 0.3);
+}
+window#waybar.vertical #workspaces button.active { border-left: 2px solid @color6; }
+window#waybar.horizontal #workspaces button.active { border-bottom: 2px solid @color6; }
+
+#workspaces button:hover {
+    background: alpha(@color6, 0.2);
+    color: @foreground;
+    box-shadow: 0 0 5px alpha(@color6, 0.2);
+}
+
+#workspaces button.urgent {
+    color: @color1;
+    animation: hudPulse 1s infinite;
+}
+window#waybar.vertical #workspaces button.urgent { border-left: 2px solid @color1; }
+window#waybar.horizontal #workspaces button.urgent { border-bottom: 2px solid @color1; }
+
+#cpu:hover, #memory:hover, #network:hover, #clock:hover, #custom-peripheral:hover {
+    border-color: @color4;
+    box-shadow: 0 0 12px alpha(@color4, 0.4);
+    background: alpha(@color0, 0.95);
+    transition: all 0.2s ease-in-out;
+}
+
+#custom-peripheral { color: @color6; }
+#custom-peripheral.charging { color: @color2; border-color: alpha(@color2, 0.4); }
+#custom-peripheral.critical { color: @color3; border-color: @color3; animation: hudPulse 1s infinite ease-in-out; }
+
+#custom-power { font-size: 16px; font-weight: bold; padding: 12px 0px; }
+#custom-power:hover {
+    background: alpha(@color1, 0.2);
+    border-color: @color1;
+    color: @color1;
+    box-shadow: 0 0 15px alpha(@color1, 0.6);
+    transition: all 0.2s ease-in-out;
+}
+
+#custom-notification { color: @color5; font-size: 15px; padding: 12px 0px; }
+#custom-notification.notification {
+    background-color: @color5;
+    color: @background;
+    box-shadow: 0 0 5px @color5;
+    animation: none;
+}
+
+@keyframes hudPulse {
+    0% { box-shadow: 0 0 4px alpha(@color6, 0.1); }
+    50% { box-shadow: 0 0 10px alpha(@color6, 0.4); }
+    100% { box-shadow: 0 0 4px alpha(@color6, 0.1); }
+}
+
+tooltip { background: alpha(@color0, 0.95); border: 1px solid @color4; border-radius: 8px; }
+tooltip label { color: @color6; font-family: "Orbitron", monospace; font-size: 13px; padding: 8px; text-shadow: 0 0 5px alpha(@color6, 0.3); }
+menu { background: alpha(@color0, 0.98); border: 1px solid alpha(@color6, 0.5); border-radius: 10px; }
+menuitem { color: @color6; padding: 5px 10px; }
+menuitem:hover { background: alpha(@color6, 0.1); color: @foreground; }

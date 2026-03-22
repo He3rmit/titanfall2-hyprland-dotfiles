@@ -1,0 +1,6 @@
+{
+  "include": ["~/.config/waybar/common.jsonc"],
+  "position": "left",
+  "modules-left": ["cpu", "memory", "network", "hyprland/workspaces"],
+  "modules-right": ["tray", "clock", "custom/notification", "custom/peripheral", "custom/power"]
+}

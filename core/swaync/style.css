@@ -4,10 +4,12 @@
    Fix: Forces the invisible icons inside the side ovals to manifest in Cyan.
    ────────────────────────────────────────────────────────────────────────── */
 
-@define-color titan-cyan #00e0ff;
-@define-color titan-dark #0a0f14;
-@define-color titan-panel rgba(16, 22, 28, 0.95);
-@define-color titan-border rgba(0, 224, 255, 0.5);
+@import "../../.cache/wal/colors-waybar.css";
+
+@define-color titan-cyan @color2;
+@define-color titan-dark alpha(@background, 0.95);
+@define-color titan-panel alpha(@background, 0.95);
+@define-color titan-border alpha(@color2, 0.5);
 
 * {
     font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
@@ -31,7 +33,7 @@
 .widget-volume,
 .widget-backlight {
     background: #05080a;
-    border: 1px solid rgba(0, 224, 255, 0.3);
+    border: 1px solid alpha(@titan-cyan, 0.3);
     border-radius: 6px;
     padding: 10px;
     margin-bottom: 8px;
@@ -201,7 +203,7 @@
 }
 
 .widget-volume list row:hover {
-    background: rgba(0, 224, 255, 0.2);
+    background: alpha(@titan-cyan, 0.2);
 }
 
 /* Expander Button */

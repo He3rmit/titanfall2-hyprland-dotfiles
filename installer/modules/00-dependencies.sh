@@ -54,6 +54,7 @@ CORE_PACKAGES=(
     "xdg-user-dirs"
     "imagemagick"             # Required by cliphist-rofi for image previews
     "wtype"                   # Required by cliphist-rofi for auto-typing
+    "python-pywal"            # Global Theming Engine (Extracts wallpaper colors)
     
     # --- SCREENSHOT & WALLPAPER ---
     "grim"

@@ -1,0 +1,102 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   CYBERPUNK GLITCH - WAYBAR STYLE (Pywal Integrated)
+   ────────────────────────────────────────────────────────────────────────── */
+@import "../../.cache/wal/colors-waybar.css";
+
+* {
+    font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: @color3;
+    background: transparent;
+}
+
+window#waybar {
+    background: rgba(10, 5, 20, 0.85);
+    border-right: 2px solid @color1;
+    border-radius: 0px;
+}
+
+window#waybar.sidebar-expanded {
+    background: transparent;
+    border-right: none;
+}
+
+window#waybar.horizontal, window#waybar.top, window#waybar.bottom {
+    border-right: none;
+    border-bottom: 2px solid @color1;
+}
+
+#cpu, #memory, #network, #clock, #custom-peripheral, #custom-power, #custom-notification, #workspaces, #tray {
+    background: transparent;
+    border: 1px solid @color1;
+    border-radius: 0px;
+    box-shadow: 2px 2px 0px @color1;
+    color: @color3;
+    padding: 6px 4px;
+    margin: 6px 8px;
+    min-width: 40px;
+}
+
+#workspaces { padding: 4px 0px; }
+#workspaces button { padding: 6px 0px; color: @color8; }
+
+window#waybar.horizontal #cpu, window#waybar.top #cpu, window#waybar.bottom #cpu,
+window#waybar.horizontal #memory, window#waybar.top #memory, window#waybar.bottom #memory,
+window#waybar.horizontal #network, window#waybar.top #network, window#waybar.bottom #network,
+window#waybar.horizontal #clock, window#waybar.top #clock, window#waybar.bottom #clock,
+window#waybar.horizontal #custom-peripheral, window#waybar.top #custom-peripheral, window#waybar.bottom #custom-peripheral,
+window#waybar.horizontal #custom-power, window#waybar.top #custom-power, window#waybar.bottom #custom-power,
+window#waybar.horizontal #custom-notification, window#waybar.top #custom-notification, window#waybar.bottom #custom-notification,
+window#waybar.horizontal #workspaces, window#waybar.top #workspaces, window#waybar.bottom #workspaces,
+window#waybar.horizontal #tray, window#waybar.top #tray, window#waybar.bottom #tray {
+    padding: 4px 16px;
+    margin: 8px 6px;
+    min-width: 0px;
+    min-height: 24px;
+}
+
+window#waybar.horizontal #workspaces, window#waybar.top #workspaces, window#waybar.bottom #workspaces { padding: 2px 5px; }
+window#waybar.horizontal #workspaces button, window#waybar.top #workspaces button, window#waybar.bottom #workspaces button { padding: 2px 14px; color: @color8; }
+
+#workspaces button.active {
+    color: @color0;
+    background: @color1;
+    box-shadow: 2px 2px 0px @color3;
+}
+
+#workspaces button:hover {
+    color: @color1;
+    background: @color3;
+}
+
+#workspaces button.urgent {
+    color: @color0;
+    background: @color1;
+    border: 2px dashed @color3;
+}
+
+#custom-power {
+    color: @color1;
+    border-color: @color1;
+}
+
+#custom-power:hover {
+    background: @color1;
+    color: @color0;
+}
+
+#custom-notification.notification {
+    color: @color0;
+    background: @color3;
+}
+
+tooltip {
+    background: @color0;
+    border: 2px solid @color1;
+    border-radius: 0px;
+}
+
+tooltip label {
+    color: @color3;
+}

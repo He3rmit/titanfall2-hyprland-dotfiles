@@ -2,18 +2,20 @@
  * Titanfall 2 Wallpaper Selector Theme - Grid Layout
  **/
 
+@import "~/.cache/wal/colors-rofi-dark.rasi"
+
 * {
     background-color: transparent;
-    text-color: #e0e0e0;
+    text-color: @foreground;
     border: 0px;
     font: "Orbitron 10"; 
 }
 
 window {
     transparency: "real";
-    background-color: rgba(10, 15, 20, 0.98);
+    background-color: @background;
     border: 2px;
-    border-color: rgba(0, 174, 239, 0.6);
+    border-color: @active-background;
     border-radius: 12px;
     padding: 20px;
     width: 1200px;
@@ -26,9 +28,9 @@ mainbox {
 }
 
 inputbar {
-    background-color: rgba(0, 20, 30, 0.9);
+    background-color: transparent;
     border: 1px;
-    border-color: rgba(0, 224, 255, 0.4);
+    border-color: @active-background;
     border-radius: 8px;
     padding: 10px 14px;
     margin: 0 0 10px 0;
@@ -36,14 +38,14 @@ inputbar {
 }
 
 prompt {
-    text-color: #00e0ff;
+    text-color: @active-background;
     padding: 0 10px 0 0;
 }
 
 entry {
     placeholder: "Search Wallpapers...";
-    placeholder-color: rgba(0, 224, 255, 0.3);
-    text-color: #00e0ff;
+    placeholder-color: @foreground;
+    text-color: @active-background;
 }
 
 listview {
@@ -57,25 +59,25 @@ listview {
 
 element {
     orientation: vertical;
-    background-color: rgba(20, 25, 30, 0.6);
+    background-color: transparent;
     border: 1px;
-    border-color: rgba(0, 255, 255, 0.1);
+    border-color: @active-background;
     border-radius: 8px;
     padding: 15px;
 }
 
 element selected {
-    background-color: rgba(0, 45, 60, 0.9);
+    background-color: @active-background;
     border: 1px;
-    border-color: #00e0ff;
-    text-color: #00e0ff;
+    border-color: @foreground;
+    text-color: @background;
 }
 
 element-text {
     vertical-align: 0.5;
     horizontal-align: 0.5;
     text-color: inherit;
-    highlight: bold #00e0ff;
+    highlight: @foreground;
     /* Limit text length visually since it's a grid */
     padding: 10px 0 0 0;
 }

@@ -1,0 +1,86 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   FLAT DYNAMIC - WAYBAR STYLE (Pywal Integrated)
+   ────────────────────────────────────────────────────────────────────────── */
+@import "../../.cache/wal/colors-waybar.css";
+
+* {
+    font-family: "Orbitron", "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    color: @foreground;
+    background: transparent;
+}
+
+window#waybar {
+    background: @background;
+    border-radius: 0px;
+    padding: 0px;
+}
+window#waybar.sidebar-expanded {
+    background: alpha(@background, 0.4);
+}
+
+#cpu, #memory, #network, #clock, #custom-peripheral, #custom-power, #custom-notification, #workspaces, #tray {
+    background: @color0;
+    border-radius: 6px;
+    padding: 4px 0px;
+    margin: 4px 5px;
+    min-width: 44px;
+}
+
+#workspaces { padding: 2px 0px; }
+#workspaces button { padding: 4px 0px; border-radius: 4px; color: @color7; }
+
+window#waybar.horizontal #cpu, window#waybar.top #cpu, window#waybar.bottom #cpu,
+window#waybar.horizontal #memory, window#waybar.top #memory, window#waybar.bottom #memory,
+window#waybar.horizontal #network, window#waybar.top #network, window#waybar.bottom #network,
+window#waybar.horizontal #clock, window#waybar.top #clock, window#waybar.bottom #clock,
+window#waybar.horizontal #custom-peripheral, window#waybar.top #custom-peripheral, window#waybar.bottom #custom-peripheral,
+window#waybar.horizontal #custom-power, window#waybar.top #custom-power, window#waybar.bottom #custom-power,
+window#waybar.horizontal #custom-notification, window#waybar.top #custom-notification, window#waybar.bottom #custom-notification,
+window#waybar.horizontal #workspaces, window#waybar.top #workspaces, window#waybar.bottom #workspaces,
+window#waybar.horizontal #tray, window#waybar.top #tray, window#waybar.bottom #tray {
+    padding: 4px 12px;
+    margin: 5px 4px;
+    min-width: 0px;
+    min-height: 24px;
+}
+
+window#waybar.horizontal #workspaces, window#waybar.top #workspaces, window#waybar.bottom #workspaces { padding: 2px 5px; }
+window#waybar.horizontal #workspaces button, window#waybar.top #workspaces button, window#waybar.bottom #workspaces button { padding: 2px 10px; color: @color7; }
+
+#workspaces button.active {
+    color: @background;
+    background: @color4;
+}
+
+#workspaces button:hover {
+    background: @color8;
+    color: @foreground;
+}
+
+#workspaces button.urgent {
+    color: @color1;
+}
+
+#custom-power {
+    color: @color1;
+}
+
+#custom-power:hover {
+    background: @color1;
+    color: @background;
+}
+
+#custom-notification.notification {
+    color: @color3;
+}
+
+tooltip {
+    background: @background;
+    border: 1px solid @color5;
+    border-radius: 6px;
+}
+
+tooltip label {
+    color: @foreground;
+}

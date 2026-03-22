@@ -8,6 +8,9 @@ MAIN_CLASS="discharging"
 HAS_CRITICAL=false
 IS_CHARGING=false
 
+SEPARATOR="\n"
+[[ "$1" == "--horizontal" ]] && SEPARATOR=" "
+
 # --- 1. UPOWER READ FOR LAPTOP BATTERY (THE FIX) ---
 # This uses upower to safely buffer battery reads and prevent blank/0% ghost reads
 BAT_DEVICE=$(upower -e | grep -m 1 'BAT')
@@ -19,7 +22,7 @@ if [ -n "$BAT_DEVICE" ]; then
     
     ICON="BAT"
     [[ "$BAT_STATE" == "charging" ]] && ICON="⚡"
-    LAPTOP_BAT="${ICON}\n${BAT_LEVEL}%"
+    LAPTOP_BAT="${ICON}${SEPARATOR}${BAT_LEVEL}%"
     
     if [[ "$BAT_STATE" == "charging" ]]; then IS_CHARGING=true; fi
     # Only flag critical if BAT_LEVEL is actually a number
@@ -57,9 +60,9 @@ while read -r DEV_PATH; do
     [[ "$STATE" == "charging" ]] && DEV_ICON="⚡$DEV_ICON"
     
     if [ -n "$PERIPH_BAT" ]; then
-        PERIPH_BAT+="\n"
+        PERIPH_BAT+="${SEPARATOR}"
     fi
-    PERIPH_BAT+="${DEV_ICON}\n${PERCENT}%"
+    PERIPH_BAT+="${DEV_ICON}${SEPARATOR}${PERCENT}%"
 done < <(upower -e)
 
 # --- 3. DETERMINE CLASS ---
@@ -70,7 +73,7 @@ PERIPH_BAT=$(echo -e "$PERIPH_BAT" | sed '/^$/d')
 
 if [ -n "$PERIPH_BAT" ] && [ -n "$LAPTOP_BAT" ]; then
     # Both exist: Put a separator between them
-    FINAL_TEXT="${PERIPH_BAT}\n${LAPTOP_BAT}"
+    FINAL_TEXT="${PERIPH_BAT}${SEPARATOR}${LAPTOP_BAT}"
 elif [ -n "$PERIPH_BAT" ]; then
     # Only peripherals exist (Desktop PC scenario)
     FINAL_TEXT="$PERIPH_BAT"

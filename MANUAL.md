@@ -161,7 +161,17 @@ Run `bash installer/install.sh` and select which modules to deploy.
 |---|---|
 | `00-dependencies` | Installs all required system packages via Pacman/AUR |
 | `01-stow-configs` | Symlinks all dotfiles into `~/.config` using GNU Stow |
-| `02-audio-rescue` | Deploys Wireplumber config and restarts the audio daemon |
+
+| `02-audio-rescue` | **[DEVICE SPECIFIC]** Fixes Intel Tiger Lake SST audio and mic priorities | 
+
+> 🧪 **Operational Insight: What is Audio-Rescue?**
+>
+> This module is a **Hardware-Specific Fix** for the Pilot's laptop (Intel Tiger Lake SST). It forces the system into `pro-audio` mode and gives the internal microphone a high-priority "lock." 
+>
+> **For other Pilot machines:**
+> - **Wait for glitches:** If your audio is working fine, **SKIP THIS.**
+> - **The "Cold Start" Trick:** Even on other hardware, running this performs a "Wireplumber Cold Start" (stops daemon -> wipes cache -> restarts), which can fix general crackling or switching bugs. Otherwise, do not use this if it doesn't help your audio stack.
+
 | `03-sddm-theme` | Installs the Astronaut login screen theme |
 
 ---

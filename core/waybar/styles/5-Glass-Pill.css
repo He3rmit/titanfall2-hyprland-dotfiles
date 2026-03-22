@@ -1,0 +1,88 @@
+/* ──────────────────────────────────────────────────────────────────────────
+   GLASS PILL - WAYBAR STYLE (Pywal Integrated)
+   ────────────────────────────────────────────────────────────────────────── */
+@import "../../.cache/wal/colors-waybar.css";
+
+* {
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 14px;
+    font-weight: 600;
+    color: @foreground;
+    background: transparent;
+}
+
+window#waybar {
+    background: transparent;
+}
+
+#cpu, #memory, #network, #clock, #custom-peripheral, #custom-power, #custom-notification, #workspaces, #tray {
+    background: alpha(@background, 0.65);
+    border: 1px solid alpha(@color4, 0.3);
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    color: @foreground;
+    padding: 8px 4px;
+    margin: 6px 8px;
+    min-width: 44px;
+}
+
+#workspaces { padding: 6px 0px; }
+#workspaces button { padding: 6px 0px; color: @color7; }
+
+window#waybar.horizontal #cpu, window#waybar.top #cpu, window#waybar.bottom #cpu,
+window#waybar.horizontal #memory, window#waybar.top #memory, window#waybar.bottom #memory,
+window#waybar.horizontal #network, window#waybar.top #network, window#waybar.bottom #network,
+window#waybar.horizontal #clock, window#waybar.top #clock, window#waybar.bottom #clock,
+window#waybar.horizontal #custom-peripheral, window#waybar.top #custom-peripheral, window#waybar.bottom #custom-peripheral,
+window#waybar.horizontal #custom-power, window#waybar.top #custom-power, window#waybar.bottom #custom-power,
+window#waybar.horizontal #custom-notification, window#waybar.top #custom-notification, window#waybar.bottom #custom-notification,
+window#waybar.horizontal #workspaces, window#waybar.top #workspaces, window#waybar.bottom #workspaces,
+window#waybar.horizontal #tray, window#waybar.top #tray, window#waybar.bottom #tray {
+    padding: 6px 18px;
+    margin: 8px 6px;
+    min-width: 0px;
+}
+
+window#waybar.horizontal #workspaces, window#waybar.top #workspaces, window#waybar.bottom #workspaces { padding: 4px 6px; }
+window#waybar.horizontal #workspaces button, window#waybar.top #workspaces button, window#waybar.bottom #workspaces button { padding: 2px 14px; color: @color7; }
+
+#workspaces button.active {
+    color: @background;
+    background: @color4;
+    border-radius: 12px;
+}
+
+#workspaces button:hover {
+    color: @foreground;
+    background: alpha(@color4, 0.4);
+    border-radius: 12px;
+}
+
+#workspaces button.urgent {
+    color: @color1;
+    background: alpha(@color1, 0.2);
+    border-radius: 12px;
+}
+
+#custom-power {
+    color: @color1;
+}
+
+#custom-power:hover {
+    background: @color1;
+    color: @background;
+}
+
+#custom-notification.notification {
+    color: @color5;
+}
+
+tooltip {
+    background: alpha(@background, 0.8);
+    border: 1px solid @color4;
+    border-radius: 12px;
+}
+
+tooltip label {
+    color: @foreground;
+}

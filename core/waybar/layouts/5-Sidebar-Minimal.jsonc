@@ -1,0 +1,20 @@
+{
+  "include": ["~/.config/waybar/common.jsonc"],
+  "name": "sidebar-minimal",
+  "position": "left",
+  "width": "auto",
+  "height": 45,
+  "margin": "10 0 10 10",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["cpu", "memory", "network"],
+  "modules-right": ["tray", "clock", "custom/notification", "custom/peripheral", "custom/power"],
+
+  "hyprland/workspaces": { "format": "{icon}" },
+  "cpu": { "format": "" },
+  "memory": { "format": "" },
+  "network": { "format-wifi": "", "format-ethernet": "󰈀", "format-disconnected": "⚠" },
+  "clock": { "format": "\n{:%H\n%M}" },
+  "custom/peripheral": {
+      "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh"
+  }
+}
