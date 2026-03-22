@@ -123,3 +123,54 @@ elif [[ "$MODE" == "Change Direction (Top/Bottom/Left/Right)" ]]; then
         fi
     fi
 fi
+
+# ==============================================================================
+# SWAYNC DYNAMIC ALIGNMENT
+# ==============================================================================
+sync_swaync_position() {
+    local wbb_config="$HOME/.config/waybar/config.jsonc"
+    local swaync_config="$HOME/.config/swaync/config.json"
+    
+    if [[ -f "$wbb_config" && -f "$swaync_config" ]]; then
+        local wb_pos=$(grep -Eo '"position": *"[a-zA-Z]+"' "$wbb_config" | cut -d'"' -f4 | head -n 1)
+        
+        # Determine the module block containing the notification/tray icon
+        local has_left=$(grep -E '"modules-left":.*("custom/notification"|"tray")' "$wbb_config")
+        local has_center=$(grep -E '"modules-center":.*("custom/notification"|"tray")' "$wbb_config")
+        local has_right=$(grep -E '"modules-right":.*("custom/notification"|"tray")' "$wbb_config")
+        
+        local target_x="right"
+        local target_y="top"
+        
+        if [[ "$wb_pos" == "left" || "$wb_pos" == "right" ]]; then
+            # Sidebar Mode (Vertical Flow)
+            # Panel X-Axis locked to Waybar position
+            target_x="$wb_pos"
+            
+            # Panel Y-Axis defined by internal structural modules (Left=Top, Center=Center, Right=Bottom)
+            if [[ -n "$has_left" ]]; then target_y="top"
+            elif [[ -n "$has_right" ]]; then target_y="bottom"
+            elif [[ -n "$has_center" ]]; then target_y="center"
+            fi
+        else
+            # Topbar/Bottombar Mode (Horizontal Flow)
+            # Panel Y-Axis locked to Waybar position
+            target_y="top"
+            [[ "$wb_pos" == "bottom" ]] && target_y="bottom"
+            
+            # Panel X-Axis defined by internal structural modules (Left=Left, Center=Center, Right=Right)
+            if [[ -n "$has_left" ]]; then target_x="left"
+            elif [[ -n "$has_right" ]]; then target_x="right"
+            elif [[ -n "$has_center" ]]; then target_x="center"
+            fi
+        fi
+        
+        sed -i -E 's/"positionX": *"[a-zA-Z]+"/"positionX": "'"$target_x"'"/' "$swaync_config"
+        sed -i -E 's/"positionY": *"[a-zA-Z]+"/"positionY": "'"$target_y"'"/' "$swaync_config"
+        
+        swaync-client -R >/dev/null 2>&1
+        swaync-client -rs >/dev/null 2>&1
+    fi
+}
+
+sync_swaync_position

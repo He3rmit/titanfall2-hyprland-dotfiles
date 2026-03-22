@@ -143,12 +143,12 @@
 /* Handle Disabled State (Single Player Mode) */
 .widget-mpris button:disabled {
     background: #0a0f14;
-    border-color: #005f6b;
+    border-color: alpha(@titan-cyan, 0.4);
     opacity: 1 !important;
 }
 
 .widget-mpris button:disabled > * {
-    color: #005f6b !important; /* Dim Cyan for inactive arrows */
+    color: alpha(@titan-cyan, 0.4) !important; /* Dim color for inactive arrows */
     opacity: 0.8 !important;
 }
 
@@ -243,6 +243,15 @@ scale slider {
     border: none;
     border-radius: 2px;
     box-shadow: 0 0 5px @titan-cyan;
+}
+
+scale slider:hover,
+scale slider:active,
+scale slider:focus {
+    background: @titan-cyan;
+    box-shadow: 0 0 10px @titan-cyan;
+    outline: none;
+    border: none;
 }
 
 /* 7. NOTIFICATIONS */
