@@ -63,6 +63,7 @@
 }
 
 .widget-dnd switch:checked {
+    background-image: none;
     background: @titan-cyan;
     border-color: #ffffff;
 }
@@ -92,6 +93,7 @@
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:checked {
+    background-image: none;
     background: @titan-cyan;
     border: 1px solid #ffffff;
     box-shadow: 0 0 15px @titan-cyan;
@@ -230,6 +232,7 @@ scale trough {
 }
 
 scale highlight {
+    background-image: none;
     background-color: @titan-cyan;
     border-radius: 2px;
     min-height: 12px;
@@ -248,10 +251,26 @@ scale slider {
 scale slider:hover,
 scale slider:active,
 scale slider:focus {
+    background-image: none;
     background: @titan-cyan;
     box-shadow: 0 0 10px @titan-cyan;
     outline: none;
     border: none;
+}
+
+/* Scrollbars Fix */
+scrollbar slider {
+    background-color: alpha(@titan-cyan, 0.4);
+    background-image: none;
+    border-radius: 4px;
+}
+scrollbar slider:hover {
+    background-color: alpha(@titan-cyan, 0.8);
+    background-image: none;
+}
+scrollbar slider:active {
+    background-color: @titan-cyan;
+    background-image: none;
 }
 
 /* 7. NOTIFICATIONS */
