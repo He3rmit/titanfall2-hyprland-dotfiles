@@ -13,28 +13,7 @@
         "active-only": false,
         "on-click": "activate",
         "show-special": true, // CRITICAL: Shows Niche/Work/Hobby/Gaming
-        "format": "{icon}\n<span font-size='10pt'>{windows}</span>",
-        "format-window-separator": "\n",
-        "window-rewrite": {
-            //BROWSER
-            "class<brave-browser>": "",
-            "class<librewolf>": "",
-            //GAMES
-            "class<steam>": "",
-            "class<heroic>": "󰊴",
-            "class<lutris>": "",
-            "class<bottles>": "",
-            //TOOLS
-            "class<protonvpn-app>": "󰗹",
-            "class<code>": "",
-            "class<org.kde.dolphin>": "",
-            "class<org.pulseaudio.pavucontrol>": "󰕾",
-            "class<kitty>": "",
-            //MEDIA
-            "class<mpv>": "󰕧",
-            "class<vlc>": "󰕼"
-        },
-        "window-rewrite-default": "",
+        "format": "{icon}",
         // Force 1-10 to always show (Titan Standard)
         "persistent-workspaces": {
             "*": 10

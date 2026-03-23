@@ -273,7 +273,37 @@ scrollbar slider:active {
     background-image: none;
 }
 
-/* 7. NOTIFICATIONS */
+/* 7. NOTIFICATIONS - POPUP STYLE */
+.notification {
+    background: #0a0f14;
+    border-left: 4px solid @titan-cyan;
+    border-right: 1px solid #334455;
+    border-top: 1px solid #334455;
+    border-bottom: 1px solid #334455;
+    border-radius: 4px;
+    padding: 16px;
+    min-width: 400px;
+    min-height: auto;
+    max-height: none;
+}
+
+.notification .summary {
+    color: #ffffff;
+    font-weight: 900;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.notification .body {
+    color: #a0a0a0;
+    font-size: 13px;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+    line-height: 1.4;
+}
+
+/* 7. NOTIFICATIONS - CONTROL CENTER HISTORY */
 .notification-row .notification {
     background: #0a0f14;
     border-left: 4px solid @titan-cyan;
@@ -282,6 +312,8 @@ scrollbar slider:active {
     border-bottom: 1px solid #334455;
     border-radius: 4px;
     margin: 6px 0;
+    padding: 12px;
+    min-height: auto;
 }
 
 .notification-row .notification .summary {
@@ -291,6 +323,9 @@ scrollbar slider:active {
 
 .notification-row .notification .body {
     color: #a0a0a0;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -306,6 +341,36 @@ scrollbar slider:active {
     0%   { box-shadow: 0 0 4px rgba(255, 130, 66, 0.2); }
     50%  { box-shadow: 0 0 20px rgba(255, 130, 66, 0.9); border-color: #ffffff; }
     100% { box-shadow: 0 0 4px rgba(255, 130, 66, 0.2); }
+}
+
+/* CRITICAL NOTIFICATIONS - POPUP STYLE */
+.notification.critical {
+    background: rgba(40, 10, 10, 0.95);  /* Deep Red Background */
+    border-left: 4px solid @titan-alert; /* Orange Left Bar */
+    border-right: 1px solid @titan-alert;
+    border-top: 1px solid @titan-alert;
+    border-bottom: 1px solid @titan-alert;
+    color: @titan-alert;
+    padding: 16px;
+    min-width: 400px;
+    min-height: auto;
+    max-height: none;
+    animation: criticalPulse 1s infinite ease-in-out; 
+}
+
+.notification.critical .summary {
+    color: #ffffff;       /* Title White */
+    text-shadow: 0 0 5px @titan-alert;
+    font-weight: 900;
+}
+
+.notification.critical .body {
+    color: @titan-alert;  /* Body Orange */
+    font-weight: bold;
+    word-wrap: break-word;
+    white-space: normal;
+    max-width: 100%;
+    line-height: 1.4;
 }
 
 /* 3. OVERRIDE THE NOTIFICATION BOX */
