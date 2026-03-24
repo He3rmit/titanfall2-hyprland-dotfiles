@@ -397,3 +397,60 @@ scrollbar slider:active {
     color: @titan-alert;  /* Body Orange */
     font-weight: bold;
 }
+/* ──────────────────────────────────────────────────────────────────────────
+   8. TACTICAL CALENDAR MODULE
+   ────────────────────────────────────────────────────────────────────────── */
+.widget-calendar {
+    background: alpha(@background, 0.4);
+    margin: 8px 10px;
+    padding: 15px;
+    border: 1px solid alpha(@color2, 0.3);
+    border-radius: 8px;
+}
+
+.widget-calendar .calendar {
+    background: transparent;
+    box-shadow: none;
+    border: none;
+}
+
+.widget-calendar .calendar header {
+    padding: 5px;
+}
+
+.widget-calendar .calendar header button {
+    color: @titan-cyan;
+    font-weight: bold;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.widget-calendar .calendar header label {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: @titan-cyan;
+}
+
+.widget-calendar .calendar button {
+    padding: 6px;
+    color: @foreground;
+    background: transparent;
+    border-radius: 4px;
+    border: none;
+    box-shadow: none;
+}
+
+.widget-calendar .calendar button:hover {
+    background: alpha(@titan-cyan, 0.2);
+}
+
+.widget-calendar .calendar button.today {
+    background: @titan-cyan;
+    color: @background;
+    font-weight: bold;
+}
+
+.widget-calendar .calendar button.today:hover {
+    background: alpha(@titan-cyan, 0.8);
+}
