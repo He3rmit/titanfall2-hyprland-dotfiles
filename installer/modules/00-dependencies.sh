@@ -81,6 +81,7 @@ CORE_PACKAGES=(
     "pipewire"
     "pipewire-pulse"
     "pavucontrol"
+    "gsimplecal"
     "easyeffects"
     "blueman"
     

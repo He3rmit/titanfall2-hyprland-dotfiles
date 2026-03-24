@@ -1,7 +1,20 @@
 {
   "include": ["~/.config/waybar/common.jsonc"],
-  
-  "modules-left": ["cpu", "memory", "network"], // Same as laptop
-  "modules-center": ["hyprland/workspaces"],    // Same as laptop
-  "modules-right": ["tray", "clock"]            // No Battery here
+  "name": "topbar-detailed",
+  "position": "top",
+  "width": "auto",
+  "margin": "10 10 0 10",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["cpu", "memory", "network", "tray", "custom/notification", "custom/power"],
+
+  "hyprland/workspaces": { "format": "{icon}" },
+  "cpu": { "format": "  CPU: {usage}%" },
+  "memory": { "format": "  RAM: {used:0.1f}G / {total:0.1f}G" },
+  "network": {
+      "format-wifi": "  WLAN: {signalStrength}%",
+      "format-ethernet": "󰈀  LAN: Connected",
+      "format-disconnected": "⚠  Network: Offline"
+  },
+  "clock": { "format": "  {:%A, %b %d - %H:%M}" }
 }

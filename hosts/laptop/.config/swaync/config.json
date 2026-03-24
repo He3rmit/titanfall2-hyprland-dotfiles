@@ -2,7 +2,8 @@
   "$schema": "/etc/xdg/swaync/configSchema.json",
   "positionX": "right",
   "positionY": "top",
-  "control-center-width": 400,
+  "control-center-width": 600,
+  "notification-window-width": 500,
   "fit-to-screen": false,
   "layer": "overlay",
   "control-center-layer": "overlay",
@@ -19,6 +20,7 @@
     "backlight",
     "volume",
     "mpris",
+    "calendar",
     "notifications"
   ],
   "widget-config": {
@@ -76,6 +78,21 @@
           "label": "󰄀",
           "command": "bash -c '~/.config/hypr/scripts/screenshot-swappy.sh'",
           "active": false
+        },
+        {
+          "label": "󰕾",
+          "command": "pavucontrol",
+          "active": false
+        },
+        {
+          "label": "󰄨",
+          "command": "kitty -e btop",
+          "active": false
+        },
+        {
+          "label": "",
+          "command": "env GDK_SCALE=2 gsimplecal",
+          "active": false
         }
       ]
     },
@@ -89,8 +106,7 @@
       "label": "󰃠"
     },
     "mpris": {
-      "image-size": 96,
-      "image-radius": 12
+      "image-size": 96
     }
   }
 }

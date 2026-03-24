@@ -39,6 +39,7 @@ safe_link "$DOTFILES_DIR/hosts/$TARGET/kitty-host.conf" "$HOME/.config/kitty/hos
 print_step ">> Initializing Waybar Protocol..."
 check_fonts
 safe_link "$DOTFILES_DIR/hosts/$TARGET/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
+safe_link "$DOTFILES_DIR/core/waybar/styles/5-Glass-Pill.css" "$HOME/.config/waybar/style.css"
 
 # Fix battery script permissions specifically
 chmod +x "$DOTFILES_DIR/core/waybar/scripts/"*.sh

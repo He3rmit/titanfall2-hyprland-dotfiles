@@ -1,9 +1,23 @@
 {
   "include": ["~/.config/waybar/common.jsonc"],
-  
-  "modules-left": ["cpu", "memory", "network", "hyprland/workspaces"],
-  //"modules-center": ["hyprland/workspaces"],
-  
-  // UPDATE: Removed "battery", kept only "custom/peripheral"
-  "modules-right": ["tray", "clock", "custom/notification", "custom/peripheral", "custom/power"]
+  "name": "topbar-detailed",
+  "position": "top",
+  "width": "auto",
+  "margin": "10 10 0 10",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": ["cpu", "memory", "network", "tray", "custom/peripheral", "custom/notification", "custom/power"],
+
+  "hyprland/workspaces": { "format": "{icon}" },
+  "cpu": { "format": "  CPU: {usage}%" },
+  "memory": { "format": "  RAM: {used:0.1f}G / {total:0.1f}G" },
+  "network": {
+      "format-wifi": "  WLAN: {signalStrength}%",
+      "format-ethernet": "󰈀  LAN: Connected",
+      "format-disconnected": "⚠  Network: Offline"
+  },
+  "clock": { "format": "  {:%A, %b %d - %H:%M}" },
+  "custom/peripheral": {
+      "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh --horizontal"
+  }
 }
