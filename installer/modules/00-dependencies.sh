@@ -40,6 +40,7 @@ CORE_PACKAGES=(
     "ffmpegthumbnailer"       # Rofi video thumbnails
     "baloo-widgets"           # Information panel
     "taglib"                  # File metadata
+    "alacritty"               # for some terminal commands
     
     # --- HYPRLAND DAEMONS & SYSTEM UTILS ---
     "hypridle"
