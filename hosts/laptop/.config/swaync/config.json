@@ -20,7 +20,6 @@
     "backlight",
     "volume",
     "mpris",
-    "calendar",
     "notifications"
   ],
   "widget-config": {
@@ -90,8 +89,8 @@
           "active": false
         },
         {
-          "label": "",
-          "command": "env GDK_SCALE=2 gsimplecal",
+          "label": "󱛄",
+          "command": "wihotspot-gui",
           "active": false
         }
       ]

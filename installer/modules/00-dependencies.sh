@@ -82,6 +82,7 @@ CORE_PACKAGES=(
     "pipewire-pulse"
     "pavucontrol"
     "gsimplecal"
+    "linux-wifi-hotspot"
     "easyeffects"
     "blueman"
     
