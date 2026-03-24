@@ -3,7 +3,7 @@
   "name": "topbar-detailed",
   "position": "top",
   "width": "auto",
-  "margin": "10 10 0 10",
+  "margin": "0 10 0 10",
   "modules-left": ["hyprland/workspaces"],
   "modules-center": ["clock"],
   "modules-right": ["cpu", "memory", "network", "tray", "custom/peripheral", "custom/notification", "custom/power"],

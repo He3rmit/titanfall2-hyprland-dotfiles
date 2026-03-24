@@ -92,15 +92,25 @@
     font-weight: bold;
 }
 
+/* Neutralize toggle :checked state — no persistent glow */
 .widget-buttons-grid > flowbox > flowboxchild > button:checked {
     background-image: none;
-    background: @titan-cyan;
-    border: 1px solid #ffffff;
-    box-shadow: 0 0 15px @titan-cyan;
+    background: #151a21;
+    border: 1px solid #334455;
+    box-shadow: 0 2px 0 #000;
 }
 
 .widget-buttons-grid > flowbox > flowboxchild > button:checked label {
-    color: #000000;
+    color: #556677;
+}
+
+/* UNIVERSAL CLICK FEEDBACK — subtle press dimming */
+.widget-buttons-grid button:active,
+.widget-mpris button:active,
+.widget-volume button:active,
+.widget-title button:active {
+    opacity: 0.6;
+    transition: all 0.08s ease;
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
