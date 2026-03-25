@@ -5,11 +5,14 @@
 ## Table of Contents
 1. [Installation](#installation)
 2. [Keybind Reference](#keybind-reference)
-3. [Rofi Launcher Guide](#rofi-launcher-guide)
-4. [Clipboard Manager](#clipboard-manager)
+3. [Waybar Switcher](#waybar-switcher)
+4. [Pilot HUD (SwayNC)](#pilot-hud-swaync)
 5. [Wallpaper System](#wallpaper-system)
-6. [Installer Modules](#installer-modules)
-7. [Updating & Stowing](#updating--stowing)
+6. [Rofi Launcher Guide](#rofi-launcher-guide)
+7. [Clipboard Manager](#clipboard-manager)
+8. [Host Modularity](#host-modularity)
+9. [Installer Modules](#installer-modules)
+10. [Updating & Stowing](#updating--stowing)
 
 ---
 
@@ -38,6 +41,8 @@ The installer will guide you through selecting a deployment target (`laptop` or 
 | `Super + R` | App Launcher (Rofi — Apps / Files / Win) |
 | `Super + Ctrl + R` | Raw Command Runner (Rofi — Executables) |
 | `Super + Alt + W` | Wallpaper Selector |
+| `Super + Alt + E` | Wallpaper Effects (ImageMagick filters) |
+| `Super + Alt + B` | Waybar Switcher (layout + style + direction) |
 
 ### Cluster 2 — The Buckets (Special Workspaces)
 
@@ -66,11 +71,12 @@ The installer will guide you through selecting a deployment target (`laptop` or 
 |---|---|
 | `Super + L` | Lock screen (Hyprlock) |
 | `Power Button` | Logout menu (Wlogout) |
-| `Super + N` | Toggle notification center (SwayNC) |
+| `Super + N` | Toggle Pilot HUD (SwayNC) |
 | `Super + B` | Cycle Waybar power profiles |
 | `Ctrl + Shift + S` | Screenshot → Annotate (Swappy) |
 | `Print` | Screenshot to clipboard |
 | `Super + Shift + V` | Clipboard Manager |
+| `Touchpad Toggle Key` | Toggle touchpad on/off |
 
 ### Media Keys
 
@@ -89,6 +95,95 @@ The installer will guide you through selecting a deployment target (`laptop` or 
 | `Super + F1-F12` | Switch to workspace 11-22 |
 | `Super + Shift + 1-0` | Move window to workspace |
 | `Super + Scroll` | Cycle workspaces |
+
+---
+
+## Waybar Switcher
+
+Open with `Super + Alt + B`. A Rofi menu lets you hot-swap between layouts, styles, and bar orientations without restarting Hyprland.
+
+### Layouts (Position & Module Density)
+
+| Layout | Position | Description |
+|---|---|---|
+| 1-Sidebar-Compact | Left/Right | Slim sidebar with icon-only modules |
+| 2-Topbar-Detailed | Top | Full labels (CPU: 8%, RAM: 3.3G, WLAN: 75%) |
+| 3-Topbar-Minimal | Top | Clean, minimal top bar |
+| 4-Bottom-Dock | Bottom | macOS-style dock at the bottom |
+| 5-Sidebar-Minimal | Left/Right | Ultra-minimal vertical strip |
+
+### Styles (CSS Themes)
+
+| Style | Description |
+|---|---|
+| 1-Titan-Glass | Glassmorphic panels with Pywal-tinted borders |
+| 2-Flat-Material | Solid background, material design |
+| 3-Neon-Border | Glowing neon outlines |
+| 4-Cyberpunk-Glitch | Edgy, high-contrast with gritty textures |
+| 5-Glass-Pill | Rounded translucent pills (floating modules) |
+
+All styles are dynamically themed via Pywal. Changing your wallpaper re-colors everything.
+
+### Change Direction
+The switcher also offers a **"Change Direction"** option to flip the current layout between horizontal (`top`/`bottom`) and vertical (`left`/`right`).
+
+---
+
+## Pilot HUD (SwayNC)
+
+The notification center is re-branded as the **Pilot HUD** — a glassmorphic control panel with quick actions, media controls, and notification history.
+
+Open with `Super + N`.
+
+### Quick Action Grid
+
+| Button | Action |
+|---|---|
+| 📶 WiFi | Toggle WiFi on/off |
+| 🔷 Bluetooth | Toggle Bluetooth on/off |
+| ⚡ Power Modes | Cycle between Balanced / Power Saver / Performance |
+| 🔊 Volume | Open PavuControl |
+| 📊 System Monitor | Open system monitor |
+| 📸 Screenshot | Take a screenshot |
+| 🔉 Audio Effects | Launch EasyEffects |
+| 📈 Resource Monitor | Launch BTOP |
+| 📡 WiFi Hotspot | Launch Linux WiFi Hotspot |
+
+### Interaction Design
+- **Click Feedback:** All buttons have a subtle opacity dim on press (`0.08s` snap-back) for immediate tactile confirmation.
+- **Notifications:** Toggling WiFi/Bluetooth/Power Modes sends a `notify-send` confirmation with the new state.
+- **Notification Behavior:** When the HUD is open, incoming notifications route directly into the history panel. When closed, they pop up normally as toast notifications.
+- **Calendar:** Click the Waybar clock module to open `gsimplecal`.
+
+### Glassmorphism
+The HUD panel uses a frosted glass effect via Hyprland's layer rules defined in `visuals.conf`. The blur and transparency are Pywal-aware.
+
+---
+
+## Wallpaper System
+
+### Wallpaper Selector — `Super + Alt + W`
+Opens a Rofi grid of all available wallpapers with thumbnail previews.
+
+- Wallpapers live in `~/.config/wallpapers/library/`
+- Supported formats: `.jpg`, `.png`, `.mp4`, `.webm`, `.mkv`
+
+| Type | Backend | Notes |
+|---|---|---|
+| Static (jpg/png) | `swaybg` | Zero CPU/GPU when idle |
+| Video (mp4/webm) | `mpvpaper` | Uses VA-API hardware decoding (~5% CPU) |
+
+The current wallpaper is remembered in `~/.config/wallpapers/.current_wallpaper` and restored automatically on login.
+
+> 💡 On battery, switch to a static wallpaper to save ~10-20% battery life by allowing the GPU to deep-sleep.
+
+### Wallpaper Effects — `Super + Alt + E`
+Opens a Rofi menu to apply ImageMagick filters to the currently active wallpaper:
+
+- Blur, Grayscale, Vignette, Sepia, and more
+- Effects are applied to a cached copy — your original wallpaper is never modified
+- The base wallpaper is always preserved for re-application or removal of effects
+- Pywal re-extracts colors after each effect change
 
 ---
 
@@ -135,21 +230,24 @@ Open with `Super + Shift + V`.
 
 ---
 
-## Wallpaper System
+## Host Modularity
 
-Open the selector with `Super + Alt + W`.
+The dotfiles support multiple machine profiles. Shared configs live in `core/`, while machine-specific overrides live in `hosts/{laptop,desktop}`.
 
-- Wallpapers live in `~/.config/wallpapers/library/`
-- Supported formats: `.jpg`, `.png`, `.mp4`, `.webm`, `.mkv`
+### What Each Host Overrides
 
-| Type | Backend | Notes |
+| Config | Laptop | Desktop |
 |---|---|---|
-| Static (jpg/png) | `swaybg` | Zero CPU/GPU when idle |
-| Video (mp4/webm) | `mpvpaper` | Uses VA-API hardware decoding (~5% CPU) |
+| Waybar `config.jsonc` | Includes battery, backlight | No battery or backlight modules |
+| SwayNC `config.json` | Backlight slider + touchpad toggle | No backlight, no touchpad |
+| Hyprland `host.conf` | Touchpad settings, lid switch | Monitor layout, no touchpad |
 
-The current wallpaper is remembered in `~/.config/wallpapers/.current_wallpaper` and restored automatically on login.
+### How It Works
+1. The installer asks for your deployment target (`laptop` or `desktop`).
+2. `01-stow-configs` symlinks **core/** first, then overlays the selected **host/** on top.
+3. Host-specific files override their core counterparts where they exist.
 
-> 💡 On battery, switch to a static wallpaper to save ~10-20% battery life by allowing the GPU to deep-sleep.
+> 💡 To add a new host (e.g., `htpc`), create a `hosts/htpc/` directory with only the files you need to override.
 
 ---
 
@@ -161,18 +259,16 @@ Run `bash installer/install.sh` and select which modules to deploy.
 |---|---|
 | `00-dependencies` | Installs all required system packages via Pacman/AUR |
 | `01-stow-configs` | Symlinks all dotfiles into `~/.config` using GNU Stow |
-
-| `02-audio-rescue` | **[DEVICE SPECIFIC]** Fixes Intel Tiger Lake SST audio and mic priorities | 
+| `02-audio-rescue` | **[DEVICE SPECIFIC]** Fixes Intel Tiger Lake SST audio and mic priorities |
+| `03-sddm-theme` | Installs the Astronaut login screen theme |
 
 > 🧪 **Operational Insight: What is Audio-Rescue?**
 >
-> This module is a **Hardware-Specific Fix** for the Pilot's laptop (Intel Tiger Lake SST). It forces the system into `pro-audio` mode and gives the internal microphone a high-priority "lock." 
+> This module is a **Hardware-Specific Fix** for the Pilot's laptop (Intel Tiger Lake SST). It forces the system into `pro-audio` mode and gives the internal microphone a high-priority "lock."
 >
 > **For other Pilot machines:**
 > - **Wait for glitches:** If your audio is working fine, **SKIP THIS.**
 > - **The "Cold Start" Trick:** Even on other hardware, running this performs a "Wireplumber Cold Start" (stops daemon -> wipes cache -> restarts), which can fix general crackling or switching bugs. Otherwise, do not use this if it doesn't help your audio stack.
-
-| `03-sddm-theme` | Installs the Astronaut login screen theme |
 
 ---
 
