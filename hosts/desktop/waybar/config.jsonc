@@ -14,7 +14,8 @@
   "network": {
       "format-wifi": "  WLAN: {signalStrength}%",
       "format-ethernet": "󰈀  LAN: Connected",
-      "format-disconnected": "⚠  Network: Offline"
+      "format-disconnected": "⚠  Network: Offline",
+      "format-disabled": "󰖪  WiFi: Off"
   },
   "clock": { "format": "  {:%A, %b %d - %H:%M}" }
 }

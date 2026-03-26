@@ -69,6 +69,7 @@
         "format-wifi": "NET\n{signalStrength}%",
         "format-ethernet": "LAN\nON",
         "format-disconnected": "OFF\nLINE",
+        "format-disabled": "WiFi\nOFF",
         "tooltip": false
     },
     "clock": {
