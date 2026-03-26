@@ -140,15 +140,15 @@
     min-height: 80px;              /* Tall */
     margin: 0 5px;
     padding: 0;
-    opacity: 1 !important;         /* Force Visible */
+    opacity: 1;                    /* Force Visible */
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 /* STEP 2: THE ICON RESURRECTION (New Code) */
 /* This targets whatever is inside the button (image or label) and Forces Cyan */
 .widget-mpris button > * {
-    color: @titan-cyan !important; /* FORCE CYAN COLOR */
-    opacity: 1 !important;         /* FORCE VISIBILITY */
+    color: @titan-cyan;            /* FORCE CYAN COLOR */
+    opacity: 1;                    /* FORCE VISIBILITY */
     -gtk-icon-shadow: 0 0 5px @titan-cyan; /* GLOW */
 }
 
@@ -156,12 +156,12 @@
 .widget-mpris button:disabled {
     background: #0a0f14;
     border-color: alpha(@titan-cyan, 0.4);
-    opacity: 1 !important;
+    opacity: 1;
 }
 
 .widget-mpris button:disabled > * {
-    color: alpha(@titan-cyan, 0.4) !important; /* Dim color for inactive arrows */
-    opacity: 0.8 !important;
+    color: alpha(@titan-cyan, 0.4); /* Dim color for inactive arrows */
+    opacity: 0.8;
 }
 
 /* STEP 3: RESET MIDDLE BUTTONS TO SQUARES */
@@ -183,7 +183,7 @@
 
 /* On hover, turn the icon black */
 .widget-mpris button:hover > * {
-    color: #000000 !important;
+    color: #000000;
     -gtk-icon-shadow: none;
 }
 
@@ -198,8 +198,8 @@
 
 /* Nuclear Transparency for Sink Label */
 .widget-volume > box > label {
-    background: transparent !important;
-    background-color: transparent !important;
+    background: transparent;
+    background-color: transparent;
     border: none;
     box-shadow: none;
 }
@@ -293,8 +293,7 @@ scrollbar slider:active {
     border-radius: 4px;
     padding: 16px;
     min-width: 400px;
-    min-height: auto;
-    max-height: none;
+    min-height: 0;
 }
 
 .notification .summary {
@@ -307,9 +306,7 @@ scrollbar slider:active {
 .notification .body {
     color: #a0a0a0;
     font-size: 13px;
-    word-wrap: break-word;
-    white-space: normal;
-    max-width: 100%;
+
     line-height: 1.4;
 }
 
@@ -323,7 +320,7 @@ scrollbar slider:active {
     border-radius: 4px;
     margin: 6px 0;
     padding: 12px;
-    min-height: auto;
+    min-height: 0;
 }
 
 .notification-row .notification .summary {
@@ -333,9 +330,7 @@ scrollbar slider:active {
 
 .notification-row .notification .body {
     color: #a0a0a0;
-    word-wrap: break-word;
-    white-space: normal;
-    max-width: 100%;
+
 }
 
 /* ──────────────────────────────────────────────────────────────────────────
@@ -363,8 +358,7 @@ scrollbar slider:active {
     color: @titan-alert;
     padding: 16px;
     min-width: 400px;
-    min-height: auto;
-    max-height: none;
+    min-height: 0;
     animation: criticalPulse 1s infinite ease-in-out; 
 }
 
@@ -377,9 +371,6 @@ scrollbar slider:active {
 .notification.critical .body {
     color: @titan-alert;  /* Body Orange */
     font-weight: bold;
-    word-wrap: break-word;
-    white-space: normal;
-    max-width: 100%;
     line-height: 1.4;
 }
 

@@ -102,6 +102,7 @@
     },
     "mpris": {
       "image-size": 96
-    }
+    },
+    "notifications": {}
   }
 }
