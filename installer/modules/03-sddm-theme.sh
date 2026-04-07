@@ -25,9 +25,21 @@ for dir in "${POSSIBLE_THEMES[@]}"; do
 done
 
 if [ -z "$THEME_DIR" ]; then
-    print_error "Astronaut SDDM Theme not found in system directories."
-    print_warning "Please ensure 'sddm-astronaut-theme' is installed via AUR."
-    exit 1
+    print_warning "Astronaut SDDM Theme not found in system directories. Attempting to install via AUR..."
+    aur_install "sddm-astronaut-theme"
+    
+    # Re-check possible paths after installation
+    for dir in "${POSSIBLE_THEMES[@]}"; do
+        if [ -d "$dir" ]; then
+            THEME_DIR="$dir"
+            break
+        fi
+    done
+    
+    if [ -z "$THEME_DIR" ]; then
+        print_error "Failed to install or locate Astronaut SDDM theme. Aborting."
+        exit 1
+    fi
 fi
 
 print_success "Theme located at: $THEME_DIR"
