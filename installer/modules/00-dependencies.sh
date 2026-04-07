@@ -23,6 +23,9 @@ CORE_PACKAGES=(
     "xwaylandvideobridge"     # Allows screen sharing for X11 apps like Discord
     "qt5-wayland"
     "qt6-wayland"
+    "qt5-graphicaleffects"    # Required for SDDM themes visuals
+    "qt5-quickcontrols2"     # Required for SDDM theme inputs
+    "qt5-svg"                # Required for icon rendering in themes
     "nwg-look"
     "nss-mdns"                # Required for local hostname resolution (.local)
     
