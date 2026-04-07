@@ -8,7 +8,7 @@ CACHE_DIR="/tmp/cliphist-thumbnails"
 mkdir -p "$CACHE_DIR"
 
 # Keybind cheat sheet shown at the bottom of the popup
-KEYBIND_HINTS="Enter: Paste  |  Alt+Del: Delete  |  Alt+Shift+Del: Wipe All  |  Alt+T: Type  |  Alt+O: Open URL  |  Alt+E: Edit  |  (Shift+Enter marks multiple)"
+KEYBIND_HINTS="Enter: Paste  |  Alt+P: Preview  |  Alt+Del: Delete  |  Alt+Shift+Del: Wipe  |  Alt+T: Type  |  Alt+O: URL  |  Alt+E: Edit"
 
 notify_pilot() {
     notify-send -u normal -a "Titanfall Systems" -i "terminal" "$1" "$2"
@@ -22,7 +22,9 @@ generate_list() {
         if [[ "$content" =~ binary.*data ]]; then
             preview_file="$CACHE_DIR/${id}.png"
             if [ ! -f "$preview_file" ]; then
-                cliphist decode "$id" | magick - -resize 64x64! "$preview_file" 2>/dev/null
+                # Run heavily blocking thumbnail generation in background, output redirected so bash substitute doesn't wait
+                # Generates a premium 64x64 center-cropped square instead of squished aspect ratios
+                (cliphist decode "$id" | magick - -resize '64x64^' -gravity center -extent 64x64 "$preview_file" >/dev/null 2>&1) &
             fi
             
             # Extract dimensions directly from cliphist output (e.g., "[[ binary data 198 KiB png 412x1010 ]]")
@@ -60,7 +62,8 @@ selection=$(generate_list | rofi -dmenu \
     -kb-custom-2 "Alt+Shift+Delete" \
     -kb-custom-3 "Alt+t" \
     -kb-custom-4 "Alt+o" \
-    -kb-custom-5 "Alt+e")
+    -kb-custom-5 "Alt+e" \
+    -kb-custom-6 "Alt+p")
 
 exit_code=$?
 [ -z "$selection" ] && exit 0
@@ -71,6 +74,13 @@ case $exit_code in
         first_id=$(echo "$clip_ids" | head -n 1)
         cliphist decode "$first_id" | wl-copy
         notify_pilot "Buffer Updated" "Data sequence ready."
+        ;;
+    15) # Alt+P — Preview Image (First item only)
+        first_id=$(echo "$clip_ids" | head -n 1)
+        tmp_img="$CACHE_DIR/preview_$first_id.png"
+        cliphist decode "$first_id" > "$tmp_img"
+        xdg-open "$tmp_img" &
+        notify_pilot "Visual Feed Active" "Opening image preview..."
         ;;
     10) # Alt+Delete — Delete Entry (Native bulk)
         cliphist delete <<< "$selection"
