@@ -1,6 +1,6 @@
 # Titanfall Pilot Desktop (Arch + Hyprland)
 
-This is a custom ricing project for Arch Linux and Hyprland, heavily inspired by a Titanfall "Pilot HUD" aesthetic. What started as an experimental first attempt at ricing using the [Hyprland Wiki](https://wiki.hypr.land) tutorials has evolved into a fully modular, multi-host desktop environment with dynamic theming, a Waybar layout/style switcher, and a glassmorphic notification center.
+This is a custom ricing project for Arch Linux and Hyprland, heavily inspired by a Titanfall "Pilot HUD" aesthetic. What started as a first attempt at ricing using the [Hyprland Wiki](https://wiki.hypr.land) tutorials has evolved into a stable, fully modular, multi-host desktop environment with dynamic theming, a Waybar layout/style switcher, and a glassmorphic notification center.
 
 ## Features
 - **Window Manager:** Hyprland (modular config split across `keybinds`, `visuals`, `windowrules`, `input`, `autostart`)

@@ -217,14 +217,17 @@ A slim drop-down bar for running raw system commands and executables directly.
 
 Open with `Super + Shift + V`.
 
-| Key | Action |
-|---|---|
-| `Enter` | Copy selected entry to clipboard |
-| `Alt + Delete` | Delete this single entry |
-| `Alt + Shift + Delete` | **Wipe entire history** |
-| `Alt + T` | Auto-type the entry (simulates keyboard input) |
-| `Alt + O` | Open the entry as a URL in your browser |
-| `Alt + E` | Edit the entry in a Kitty + nano popup |
+| Key | Action | With Multi-Select (`Shift + Enter`) |
+|---|---|---|
+| `Enter` | Copy selected entry to clipboard | Copies **first** checked item |
+| `Alt + P` | Preview image natively | Opens **first** checked image fullscreen |
+| `Alt + Delete` | Delete this single entry | Deletes **all** checked items |
+| `Alt + Shift + Delete` | Wipe entire history | Wipes entire history |
+| `Alt + T` | Auto-type the entry | Auto-types **all** checked items sequentially |
+| `Alt + O` | Open the entry as a URL | Opens **all** checked URLs in browser simultaneously |
+| `Alt + E` | Edit the entry in nano | Stitches **all** checked items into one editable file |
+
+**How to Bulk Select:** Use `Shift + Enter` to check multiple items before hitting an Alt action key.
 
 > 💡 **Auto-Type (`Alt + T`)** bypasses "Block Paste" fields on websites by simulating real keystrokes instead of pasting from clipboard.
 
