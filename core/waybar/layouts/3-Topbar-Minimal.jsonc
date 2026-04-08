@@ -1,6 +1,6 @@
 {
   "include": ["~/.config/waybar/common.jsonc"],
-  "position": "top",
+  "position": "bottom",
   "width": "auto",
   "height": 40,
   "margin": "10 20 0 20",

@@ -57,7 +57,9 @@ if [ -n "$CONFLICTS" ]; then
     print_warning "These may be overridden by our 00-theme.conf."
 fi
 
-sudo ln -sf "$DOTFILES_DIR/core/sddm/sddm.conf.d/00-theme.conf" "/etc/sddm.conf.d/00-theme.conf"
+# Use the new Global Master Control to engage the override
+# We do this so pilot-control acts as the true source of truth for the override state.
+"$HOME/.local/bin/pilot-control" sddm --engage
 
 # --- 3. THE VIDEO ---
 print_step ">> Copying Cinematic Title Screen..."

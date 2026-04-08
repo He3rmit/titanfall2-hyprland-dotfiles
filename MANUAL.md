@@ -233,6 +233,25 @@ Open with `Super + Shift + V`.
 
 ---
 
+## Master Utility Console (pilot-control)
+
+Because this repository can be deployed across a wide variety of Arch Linux systems (like Garuda or CachyOS), the environment uses a master utility script called `pilot-control` to manage system-level overrides. 
+
+You can run this command directly from anywhere in your terminal.
+
+### SDDM Cinematic Override
+The Titanfall SDDM Login screen uses a "High-Priority" configuration override to force the video to play, which can prevent standard KDE System Settings from changing the theme. 
+
+If you want to return control to standard KDE/Plasma menus, you can use `pilot-control` to disengage the Titanfall override.
+
+| Command | Action |
+|:---|:---|
+| `pilot-control sddm --status` | Checks if the Cinematic Priority Override is active. |
+| `pilot-control sddm --restore` | **Disengages** the override. The login screen will revert to system defaults (like Breeze or Garuda's native theme). |
+| `pilot-control sddm --engage` | **Engages** the override. Forces the Titanfall Cinematic video back to the login screen. |
+
+---
+
 ## Host Modularity
 
 The dotfiles support multiple machine profiles. Shared configs live in `core/`, while machine-specific overrides live in `hosts/{laptop,desktop}`.
