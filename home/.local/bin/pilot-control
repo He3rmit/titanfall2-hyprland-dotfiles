@@ -21,11 +21,16 @@ show_help() {
 
 case "$1" in
     sddm)
+        # Dynamically find the repo root relative to this script
+        # Since this script is in <REPO>/home/.local/bin/pilot-control
+        SCRIPT_PATH=$(readlink -f "$0")
+        REPO_DIR=$(dirname "$(dirname "$(dirname "$(dirname "$SCRIPT_PATH")")")")
+
         case "$2" in
             --engage)
                 echo ">> Engaging Cinematic Priority Override..."
                 sudo mkdir -p /etc/sddm.conf.d
-                sudo ln -sf "$HOME/dotfiles/core/sddm/sddm.conf.d/00-theme.conf" "/etc/sddm.conf.d/00-theme.conf"
+                sudo ln -sf "$REPO_DIR/core/sddm/sddm.conf.d/00-theme.conf" "/etc/sddm.conf.d/00-theme.conf"
                 echo -e "\033[1;32m✅ Protocol Active.\033[0m"
                 ;;
             --restore)

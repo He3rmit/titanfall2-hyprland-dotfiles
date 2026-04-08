@@ -44,8 +44,20 @@ safe_link "$DOTFILES_DIR/hosts/$TARGET/kitty-host.conf" "$HOME/.config/kitty/hos
 # 5. Waybar Deployment
 print_step ">> Initializing Waybar Protocol..."
 check_fonts
-safe_link "$DOTFILES_DIR/hosts/$TARGET/waybar/config.jsonc" "$HOME/.config/waybar/config.jsonc"
-safe_link "$DOTFILES_DIR/core/waybar/styles/5-Glass-Pill.css" "$HOME/.config/waybar/style.css"
+
+# Dynamically link the starting layout and style based on the Host Profile metadata
+if [[ -n "$WAYBAR_LAYOUT" && -f "$DOTFILES_DIR/core/waybar/layouts/${WAYBAR_LAYOUT}.jsonc" ]]; then
+    safe_link "$DOTFILES_DIR/core/waybar/layouts/${WAYBAR_LAYOUT}.jsonc" "$HOME/.config/waybar/config.jsonc"
+else
+    # Fallback if profile metadata is incomplete
+    safe_link "$DOTFILES_DIR/core/waybar/layouts/2-Topbar-Detailed.jsonc" "$HOME/.config/waybar/config.jsonc"
+fi
+
+if [[ -n "$WAYBAR_STYLE" && -f "$DOTFILES_DIR/core/waybar/styles/${WAYBAR_STYLE}.css" ]]; then
+    safe_link "$DOTFILES_DIR/core/waybar/styles/${WAYBAR_STYLE}.css" "$HOME/.config/waybar/style.css"
+else
+    safe_link "$DOTFILES_DIR/core/waybar/styles/5-Glass-Pill.css" "$HOME/.config/waybar/style.css"
+fi
 
 # Fix script permissions
 chmod +x "$DOTFILES_DIR/core/waybar/scripts/"*.sh
@@ -68,7 +80,7 @@ fi
 # which only exists after pywal runs at least once. Bootstrap it now.
 DEFAULT_WALL="$DOTFILES_DIR/core/wallpapers/library/Jack-Cooper-BT-7274.jpg"
 
-if [[ ! -d "$HOME/.cache/wal" ]] && command -v wal &>/dev/null; then
+if [[ ! -f "$HOME/.cache/wal/colors-hyprland.conf" ]] && command -v wal &>/dev/null; then
     print_step ">> Bootstrapping Pywal color scheme..."
     if [[ -f "$DEFAULT_WALL" ]]; then
         wal -q -n -i "$DEFAULT_WALL"
@@ -76,12 +88,23 @@ if [[ ! -d "$HOME/.cache/wal" ]] && command -v wal &>/dev/null; then
         if [[ -f "$HOME/.cache/wal/colors-hyprland.conf" ]]; then
             cp "$HOME/.cache/wal/colors-hyprland.conf" "$HOME/.config/hypr/modules/colors.conf"
         fi
+        
+        # Save explicit wallpaper state so init doesn't guess
+        mkdir -p "$HOME/.config/wallpapers"
+        echo "$DEFAULT_WALL" > "$HOME/.config/wallpapers/.current_wallpaper"
+        rm -f "$HOME/.config/wallpapers/.current_effect_image"
+        
         print_success "Pywal bootstrapped with default wallpaper."
     else
         print_warning "Default wallpaper not found. Pywal colors will be generated on first wallpaper selection."
     fi
-elif [[ ! -d "$HOME/.cache/wal" ]]; then
-    print_warning "pywal not installed. Color theming will not work until 'python-pywal' is installed."
+else
+    # Safeguard: Even if colors exist, ensure the state file exists for a fresh clone
+    if [[ ! -f "$HOME/.config/wallpapers/.current_wallpaper" ]]; then
+        mkdir -p "$HOME/.config/wallpapers"
+        echo "$DEFAULT_WALL" > "$HOME/.config/wallpapers/.current_wallpaper"
+    fi
+    print_success "Pywal cache already exists. Skipping bootstrap."
 fi
 
 # 8. SHELL PERSONALIZATION — Link host shell.local

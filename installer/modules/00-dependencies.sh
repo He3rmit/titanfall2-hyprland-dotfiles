@@ -35,6 +35,7 @@ CORE_PACKAGES=(
     "rofi"
     "kitty"
     "dolphin"
+    "gvfs"                    # File manager trash & mount support
     "ark"                     # Archives (unzip/zip from GUI)
     "kio-admin"               # Root access in Dolphin
     "kio-extras"              # Network protocols & extra thumbnails
@@ -44,6 +45,9 @@ CORE_PACKAGES=(
     "baloo-widgets"           # Information panel
     "taglib"                  # File metadata
     "alacritty"               # for some terminal commands
+    "mpv"                     # Video wallpaper playback
+    "ffmpeg"                  # General multimedia support
+    "btop"                    # System Monitor for SwayNC
     
     # --- HYPRLAND DAEMONS & SYSTEM UTILS ---
     "hypridle"
@@ -59,6 +63,7 @@ CORE_PACKAGES=(
     "imagemagick"             # Required by cliphist-rofi for image previews
     "wtype"                   # Required by cliphist-rofi for auto-typing
     "python-pywal"            # Global Theming Engine (Extracts wallpaper colors)
+    "xorg-xrdb"               # Required by Pywal (even on Wayland)
     
     # --- SHELL ---
     "zsh"
@@ -102,6 +107,8 @@ CORE_PACKAGES=(
     "ttf-orbitron"
     "noto-fonts-emoji"
     "obsidian-icon-theme"
+    "adwaita-icon-theme"
+    "breeze-icons"
     "starship"
     "fastfetch"
 )

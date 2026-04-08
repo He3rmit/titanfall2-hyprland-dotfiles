@@ -11,12 +11,11 @@ This is a custom ricing project for Arch Linux and Hyprland, heavily inspired by
 - **Global Theming:** Pywal — one wallpaper change re-themes Waybar, Rofi, SwayNC, and Kitty
 - **Terminal:** Kitty + Zsh + Starship
 - **Login Manager:** SDDM (Astronaut theme with custom cinematic video)
-- **Host Modularity:** Separate profiles for `laptop` and `desktop` with shared core configs
+- **Host Modularity:** Identity-based host profiles with templates for `laptop` and `desktop` machines.
 
 ---
 
-## Installation
-The installation process uses an interactive, `gum`-based TUI. It supports installing on either a "laptop" or "desktop", and intelligently detects if you're installing over a base Arch environment or alongside an existing KDE Plasma installation.
+The installation process uses an interactive, `gum`-based TUI. It supports creating custom named profiles from templates, and intelligently detects if you're installing over a base Arch environment or alongside an existing KDE Plasma installation.
 
 ```bash
 git clone https://github.com/He3rmit/dotfiles.git ~/dotfiles
@@ -46,9 +45,10 @@ dotfiles/
 │   ├── wallpapers/            # Library of static + video wallpapers
 │   └── ...                    # kitty, starship, fastfetch, wlogout, sddm
 ├── hosts/
-│   ├── laptop/                # Laptop-specific overrides (backlight, touchpad)
-│   └── desktop/               # Desktop-specific overrides (no battery, no backlight)
-├── hyprland/                  # Hyprland modules (keybinds, visuals, input, autostart)
+│   ├── vivobook-cachyos/  # He3rmit's laptop profile (example)
+│   ├── desktop-cachyos/   # He3rmit's desktop profile (example)
+│   └── _template/         # Starter templates for new pilots
+├── hyprland/              # Hyprland modules (keybinds, visuals, input, autostart)
 ├── home/                      # Shell configs (.zshrc, .bashrc)
 ├── installer/                 # gum-based TUI installer with modular deployment
 │   ├── install.sh
@@ -62,7 +62,14 @@ dotfiles/
 
 ## Milestones & Version History
 
-### [v2.5.0] - Host Modularity Rework (Current)
+### [v3.1.0] - Robust modularity and declarative confige (Current)
+- Restructured dotfiles. Seperated configs for old and new
+- Added missing dependencies and fixed bugs for fresh systems
+- Audits the whole dotfiles for new experience.
+- Custom profile for newer users. 
+- Added custom switcher for SDDM wallpaper (in case you want your own wallpaper)
+
+### [v2.5.0] - Host Modularity Rework
 - Completely restructured into `core/` + `hosts/{laptop,desktop}` architecture.
 - Host-specific overrides for Waybar, SwayNC, and Hyprland configs.
 - Desktop profile strips laptop-only hardware (backlight, battery, touchpad toggle).

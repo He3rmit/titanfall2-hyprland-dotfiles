@@ -262,14 +262,14 @@ hosts/
 ├── _template/               ← Starter kits for new machines
 │   ├── laptop/
 │   └── desktop/
-├── vivobook-cachyos/        ← Rex's ASUS Vivobook (example)
+├── vivobook-cachyos/        ← He3rmit's ASUS Vivobook (example)
 │   ├── profile.conf         ← Machine metadata
 │   ├── hypr-host.conf       ← Monitor, input, keybinds
 │   ├── kitty-host.conf      ← Font size
 │   ├── shell.local          ← Personal aliases
 │   ├── .config/swaync/      ← Notification panel config
 │   └── waybar/config.jsonc  ← Bar layout
-└── desktop-cachyos/         ← Rex's Desktop PC (example)
+└── desktop-cachyos/         ← He3rmit's Desktop PC (example)
 ```
 
 ### What Each Profile Contains

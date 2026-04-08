@@ -92,8 +92,11 @@ if [[ "$1" == "--init" ]]; then
         wall=$(cat "$CURRENT_WALLPAPER_FILE")
         apply_wallpaper "$wall"
     else
-        # Default fallback
-        wall=$(find "$WALL_DIR" -type f | head -n 1)
+        # Default fallback (Explicitly use static image to prevent pywal crashes)
+        wall="$WALL_DIR/Jack-Cooper-BT-7274.jpg"
+        if [[ ! -f "$wall" ]]; then
+            wall=$(find "$WALL_DIR" -type f | head -n 1)
+        fi
         apply_wallpaper "$wall"
     fi
     exit 0
