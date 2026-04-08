@@ -18,6 +18,6 @@
   },
   "clock": { "format": "  {:%A, %b %d - %H:%M}" },
   "custom/peripheral": {
-      "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh --horizontal"
+      "exec": "$HOME/.config/waybar/scripts/peripheral-monitor.sh --horizontal"
   }
 }

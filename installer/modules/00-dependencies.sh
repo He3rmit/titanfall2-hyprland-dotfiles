@@ -32,7 +32,7 @@ CORE_PACKAGES=(
     # --- GUI COMPONENTS ---
     "waybar"
     "swaync"
-    "rofi-wayland"
+    "rofi"
     "kitty"
     "dolphin"
     "ark"                     # Archives (unzip/zip from GUI)
@@ -59,6 +59,12 @@ CORE_PACKAGES=(
     "imagemagick"             # Required by cliphist-rofi for image previews
     "wtype"                   # Required by cliphist-rofi for auto-typing
     "python-pywal"            # Global Theming Engine (Extracts wallpaper colors)
+    
+    # --- SHELL ---
+    "zsh"
+    "zsh-autosuggestions"
+    "zsh-syntax-highlighting"
+    "zsh-history-substring-search"
     
     # --- SCREENSHOT & WALLPAPER ---
     "grim"
@@ -132,5 +138,9 @@ else
         install_pkg "$pkg"
     done
 fi
+
+# Rebuild font cache after installing all font packages
+print_step ">> Rebuilding font cache..."
+fc-cache -fv > /dev/null 2>&1
 
 print_success "Dependencies nominal. System is ready for deployment."

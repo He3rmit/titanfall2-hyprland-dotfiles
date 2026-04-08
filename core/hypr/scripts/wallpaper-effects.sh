@@ -26,7 +26,7 @@ if [[ -z "$selected_effect" ]]; then
 fi
 
 if [[ "$selected_effect" == "Original" ]]; then
-    ~/dotfiles/core/hypr/scripts/wallpaper-selector.sh --set "$selected_path"
+    ~/.config/hypr/scripts/wallpaper-selector.sh --set "$selected_path"
     exit 0
 fi
 
@@ -98,4 +98,4 @@ case "$selected_effect" in
 esac
 
 echo "$EFFECT_FILE" > "$HOME/.config/wallpapers/.current_effect_image"
-~/dotfiles/core/hypr/scripts/wallpaper-selector.sh --set "$EFFECT_FILE"
+~/.config/hypr/scripts/wallpaper-selector.sh --set "$EFFECT_FILE"

@@ -57,9 +57,15 @@ if [ -n "$CONFLICTS" ]; then
     print_warning "These may be overridden by our 00-theme.conf."
 fi
 
-# Use the new Global Master Control to engage the override
-# We do this so pilot-control acts as the true source of truth for the override state.
-"$HOME/.local/bin/pilot-control" sddm --engage
+# Use the Global Master Control to engage the override (with fallback)
+if [[ -x "$HOME/.local/bin/pilot-control" ]]; then
+    "$HOME/.local/bin/pilot-control" sddm --engage
+else
+    # Fallback: direct symlink if pilot-control isn't stowed yet
+    print_warning "pilot-control not found, using direct symlink..."
+    sudo mkdir -p /etc/sddm.conf.d
+    sudo ln -sf "$DOTFILES_DIR/core/sddm/sddm.conf.d/00-theme.conf" "/etc/sddm.conf.d/00-theme.conf"
+fi
 
 # --- 3. THE VIDEO ---
 print_step ">> Copying Cinematic Title Screen..."

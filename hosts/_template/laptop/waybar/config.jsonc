@@ -1,0 +1,22 @@
+{
+  "include": ["~/.config/waybar/common.jsonc"],
+  "name": "topbar-detailed",
+  "position": "top",
+  "width": "auto",
+  "margin": "0 10 0 10",
+  "modules-left": ["hyprland/workspaces"],
+  "modules-center": ["clock"],
+  "modules-right": [
+    "cpu", "memory", "network",
+    "custom/peripheral",
+    "tray",
+    "custom/notification", "custom/power"
+  ],
+  "cpu": { "format": "  {usage}%" },
+  "memory": { "format": "  {used:0.1f}G" },
+  "network": { "format-wifi": "  {signalStrength}%", "format-ethernet": "󰈀", "format-disconnected": "⚠" },
+  "clock": { "format": "  {:%A, %b %d - %H:%M}" },
+  "custom/peripheral": {
+      "exec": "$HOME/.config/waybar/scripts/peripheral-monitor.sh --horizontal"
+  }
+}

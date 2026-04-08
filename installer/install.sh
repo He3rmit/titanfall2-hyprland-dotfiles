@@ -45,17 +45,77 @@ echo ""
 gum style --foreground 214 --bold "[ PILOT AUTHORIZATION ]"
 keep_sudo_alive
 
-# ── 3. HOST SELECTION ──────────────────────────────────────────────────────────
+# ── 3. HOST PROFILE SELECTION ──────────────────────────────────────────────────
 echo ""
-gum style --foreground 51 --bold "Select Deployment Target:"
-TARGET=$(gum choose "laptop" "desktop")
+gum style --foreground 51 --bold "Select Deployment Profile:"
+
+# Build profile list dynamically from hosts/ (exclude _template)
+PROFILES=()
+for dir in "$DOTFILES_DIR"/hosts/*/; do
+    name=$(basename "$dir")
+    [[ "$name" == "_template" ]] && continue
+    # Read profile.conf for description if it exists
+    if [[ -f "$dir/profile.conf" ]]; then
+        source "$dir/profile.conf"
+        PROFILES+=("$name  ($HOST_TYPE)")
+    else
+        PROFILES+=("$name")
+    fi
+done
+PROFILES+=("+ Create New Profile")
+
+SELECTION=$(printf '%s\n' "${PROFILES[@]}" | gum choose)
+
+if [[ "$SELECTION" == "+ Create New Profile" ]]; then
+    echo ""
+    gum style --foreground 214 --bold "[ NEW PROFILE SETUP ]"
+    
+    PROFILE_TYPE=$(gum choose "laptop" "desktop")
+    PROFILE_NAME=$(gum input --placeholder "Enter a name for this profile (e.g., thinkpad-garuda)")
+    
+    if [[ -z "$PROFILE_NAME" ]]; then
+        print_error "Profile name cannot be empty."
+        exit 1
+    fi
+    
+    NEW_DIR="$DOTFILES_DIR/hosts/$PROFILE_NAME"
+    if [[ -d "$NEW_DIR" ]]; then
+        print_error "Profile '$PROFILE_NAME' already exists."
+        exit 1
+    fi
+    
+    cp -r "$DOTFILES_DIR/hosts/_template/$PROFILE_TYPE" "$NEW_DIR"
+    
+    # Rename .example files
+    for f in "$NEW_DIR"/*.example; do
+        [[ -f "$f" ]] && mv "$f" "${f%.example}"
+    done
+    
+    # Update the profile.conf with the user's name
+    sed -i "s/HOST_NAME=.*/HOST_NAME=\"$PROFILE_NAME\"/" "$NEW_DIR/profile.conf"
+    
+    print_success "Profile '$PROFILE_NAME' created from $PROFILE_TYPE template."
+    gum style --foreground 214 "You can customize files in: hosts/$PROFILE_NAME/"
+    TARGET="$PROFILE_NAME"
+else
+    # Extract just the profile name (strip the description)
+    TARGET=$(echo "$SELECTION" | awk '{print $1}')
+fi
+
 export TARGET
 
 if [ ! -d "$DOTFILES_DIR/hosts/$TARGET" ]; then
     print_error "Host configuration for '$TARGET' not found."
     exit 1
 fi
-print_success "Target locked: $TARGET"
+
+# Source profile metadata
+if [[ -f "$DOTFILES_DIR/hosts/$TARGET/profile.conf" ]]; then
+    source "$DOTFILES_DIR/hosts/$TARGET/profile.conf"
+    export HOST_TYPE HOST_NAME HAS_BATTERY HAS_BACKLIGHT HAS_TOUCHPAD
+fi
+
+print_success "Target locked: $TARGET ($HOST_TYPE)"
 
 # ── 4. MODULE SELECTION ────────────────────────────────────────────────────────
 echo ""

@@ -252,24 +252,62 @@ If you want to return control to standard KDE/Plasma menus, you can use `pilot-c
 
 ---
 
-## Host Modularity
+## Host Profiles
 
-The dotfiles support multiple machine profiles. Shared configs live in `core/`, while machine-specific overrides live in `hosts/{laptop,desktop}`.
+The dotfiles use **identity-based profiles** instead of generic "laptop" or "desktop" targets. Each machine gets its own named profile in `hosts/`.
 
-### What Each Host Overrides
+### Directory Structure
+```
+hosts/
+├── _template/               ← Starter kits for new machines
+│   ├── laptop/
+│   └── desktop/
+├── vivobook-cachyos/        ← Rex's ASUS Vivobook (example)
+│   ├── profile.conf         ← Machine metadata
+│   ├── hypr-host.conf       ← Monitor, input, keybinds
+│   ├── kitty-host.conf      ← Font size
+│   ├── shell.local          ← Personal aliases
+│   ├── .config/swaync/      ← Notification panel config
+│   └── waybar/config.jsonc  ← Bar layout
+└── desktop-cachyos/         ← Rex's Desktop PC (example)
+```
 
-| Config | Laptop | Desktop |
-|---|---|---|
-| Waybar `config.jsonc` | Includes battery, backlight | No battery or backlight modules |
-| SwayNC `config.json` | Backlight slider + touchpad toggle | No backlight, no touchpad |
-| Hyprland `host.conf` | Touchpad settings, lid switch | Monitor layout, no touchpad |
+### What Each Profile Contains
 
-### How It Works
-1. The installer asks for your deployment target (`laptop` or `desktop`).
-2. `01-stow-configs` symlinks **core/** first, then overlays the selected **host/** on top.
-3. Host-specific files override their core counterparts where they exist.
+| File | Purpose |
+|---|---|
+| `profile.conf` | Machine metadata (`HOST_TYPE`, `HAS_BATTERY`, `HAS_TOUCHPAD`, etc.) |
+| `hypr-host.conf` | Monitor resolution, input devices, laptop-specific keybinds |
+| `kitty-host.conf` | Font size tuning for your screen DPI |
+| `shell.local` | Personal aliases, distro-specific commands |
+| `.config/swaync/config.json` | Notification panel widgets (backlight slider, touchpad toggle) |
+| `waybar/config.jsonc` | Which modules to show (battery, backlight, etc.) |
 
-> 💡 To add a new host (e.g., `htpc`), create a `hosts/htpc/` directory with only the files you need to override.
+### Creating Your Own Profile
+
+1. Run `bash installer/install.sh`
+2. Select **"+ Create New Profile"**
+3. Choose `laptop` or `desktop` as your base template
+4. Enter a name (e.g., `thinkpad-garuda`)
+5. Customize the files in `hosts/your-profile-name/`
+
+Or manually:
+```bash
+cp -r hosts/_template/laptop hosts/my-machine
+# Edit hosts/my-machine/profile.conf, hypr-host.conf, etc.
+```
+
+### Personal Shell Overrides (`.local` Pattern)
+
+Your `.zshrc` automatically sources `~/.zshrc.local` if it exists. This is where you put **personal, machine-specific** aliases and exports:
+
+```bash
+# Example ~/.zshrc.local
+alias upgrade='paru -Syu'
+alias cachyos='rate-mirrors cachyos'
+```
+
+The installer links `hosts/your-profile/shell.local` → `~/.zshrc.local` automatically. This file is **never overwritten** by `git pull`.
 
 ---
 
@@ -280,17 +318,13 @@ Run `bash installer/install.sh` and select which modules to deploy.
 | Module | What it does |
 |---|---|
 | `00-dependencies` | Installs all required system packages via Pacman/AUR |
-| `01-stow-configs` | Symlinks all dotfiles into `~/.config` using GNU Stow |
-| `02-audio-rescue` | **[DEVICE SPECIFIC]** Fixes Intel Tiger Lake SST audio and mic priorities |
+| `01-stow-configs` | Symlinks all dotfiles, bootstraps pywal colors, links shell.local |
+| `02-audio-rescue` | Deploys Wireplumber config (runs host-specific fixes if present) |
 | `03-sddm-theme` | Installs the Astronaut login screen theme |
 
-> 🧪 **Operational Insight: What is Audio-Rescue?**
+> 🧪 **Operational Insight: Audio-Rescue**
 >
-> This module is a **Hardware-Specific Fix** for the Pilot's laptop (Intel Tiger Lake SST). It forces the system into `pro-audio` mode and gives the internal microphone a high-priority "lock."
->
-> **For other Pilot machines:**
-> - **Wait for glitches:** If your audio is working fine, **SKIP THIS.**
-> - **The "Cold Start" Trick:** Even on other hardware, running this performs a "Wireplumber Cold Start" (stops daemon -> wipes cache -> restarts), which can fix general crackling or switching bugs. Otherwise, do not use this if it doesn't help your audio stack.
+> This module deploys universal audio priorities from `core/wireplumber/`, then checks if your profile has a host-specific rescue file at `hosts/your-profile/wireplumber/51-host-rescue.conf`. If it does, it deploys that too. If your audio works fine, you can skip this module entirely.
 
 ---
 

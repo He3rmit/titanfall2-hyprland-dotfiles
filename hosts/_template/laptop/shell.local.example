@@ -1,0 +1,8 @@
+# === PERSONAL SHELL CONFIG ===
+# This file is sourced by .zshrc and is NOT committed to git.
+# Put your machine-specific aliases and exports here.
+#
+# Examples:
+# alias upgrade='paru -Syu'
+# alias myapp='flatpak run com.example.App'
+# export EDITOR=vim

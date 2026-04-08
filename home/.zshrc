@@ -7,7 +7,6 @@ eval "$(starship init zsh)"
 
 # 2. ⚡ Plugins (The "Fish Behavior")
 # These give you the grey ghost-text and red/green command highlighting.
-# (Make sure you ran: sudo pacman -S zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search)
 source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /usr/share/zsh/plugins/zsh-history-substring-search/zsh-history-substring-search.zsh
@@ -24,37 +23,26 @@ HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
 
-# 5. 📂 Environment & Secrets
-# Load private API keys/secrets from a local-only file (gitignored)
-if [ -f "$HOME/.secrets.sh" ]; then
-    source "$HOME/.secrets.sh"
-fi
-
+# 5. 📂 Environment
 export EDITOR=nvim
 export TERMINAL=kitty
 export BROWSER=firefox
 
 # Add your custom scripts to PATH so you can run them from anywhere
-export PATH=$HOME/.local/bin:$HOME/dotfiles/core/hypr/scripts:$PATH
+export PATH=$HOME/.local/bin:$HOME/.config/hypr/scripts:$PATH
 
-#openweather api
+# 6. 🔗 Universal Aliases (Safe on ALL Arch-based distros)
+alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
+alias wifi='nmtui'
+alias refresh='hyprctl reload && killall waybar; waybar & disown && killall swaync && rm -rf ~/.cache/swaync && swaync & disown'
+alias logout='hyprctl dispatch exit'
 
+# 7. 🔒 Secrets (gitignored, loaded if present)
+[[ -f ~/.secrets.sh ]] && source ~/.secrets.sh
 
-# 6. 🔗 Aliases
-# alias filelist='ls -alF' # long listing with file types
-# alias upgrade='paru -Syu --noconfirm && flatpak update -y --noninteractive && paru -Sc --noconfirm && paccache -r -u && flatpak remove --unused -y --noninteractive && paru -c --noconfirm && paru -Rns (pacman -Qdtq)$ --noconfirm' #Use with caution, as it will automatically update and remove packages without asking for confirmation. The & at the end runs the command in the background, allowing you to continue using the terminal while it updates.
-alias limeup='sudo limine-update' # change parameters depending on the type of boot loader used
-alias unlock='sudo rm /var/lib/pacman/db.lck' #when the pacman database is locked, use this to unlock it. Use with caution.
-alias battery='upower -i /org/freedesktop/UPower/devices/battery_BAT0' # check battery status
-alias wifi='nmtui' # Network Manager TUI, a terminal-based Wi-Fi manager
-alias refresh='hyprctl reload && killall waybar; waybar & disown && killall swaync && rm -rf ~/.cache/swaync && swaync & disown' # reload Hyprland, restart Waybar, and restart swaync (the status notifier daemon) to apply changes to your config without restarting your entire session. Use with caution, as it will kill all instances of Waybar and swaync, which may cause issues if you have multiple instances running.
-alias logout='hyprctl dispatch exit'  # log out of your session immediately, use with caution
-alias xampp='sudo /opt/lampp/manager-linux-x64.run' #runs xampp server
-alias music='yt-x'
-alias cachyos='rate-mirrors cachyos'
-alias arch='rate-mirrors arch'
-# Audio Refresh: Kills the WP "memory" and restarts it with your configs
-alias audiofix='systemctl --user stop wireplumber && rm -rf ~/.local/state/wireplumber/* && systemctl --user start wireplumber'
+# 8. 🎨 Personal Overrides (machine-specific, gitignored)
+# Put your aliases, distro-specific tools, and custom exports in ~/.zshrc.local
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
 
-# 7. 🎨 Optional Fetch
+# 9. 🖼️ Fetch on Terminal Open
 fastfetch

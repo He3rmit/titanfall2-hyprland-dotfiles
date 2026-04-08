@@ -87,7 +87,7 @@
     // -------------------------------------------------------------------------
     // Master Power Scout (Battery + Bluetooth Combined)
     "custom/peripheral": {
-        "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh",
+        "exec": "$HOME/.config/waybar/scripts/peripheral-monitor.sh",
         "interval": 5,
         "return-type": "json",
         "format": "{}",

@@ -15,6 +15,6 @@
   "network": { "format-wifi": "", "format-ethernet": "󰈀", "format-disconnected": "⚠" },
   "clock": { "format": "\n{:%H\n%M}" },
   "custom/peripheral": {
-      "exec": "$HOME/dotfiles/core/waybar/scripts/peripheral-monitor.sh"
+      "exec": "$HOME/.config/waybar/scripts/peripheral-monitor.sh"
   }
 }

@@ -8,8 +8,8 @@ CONFIG_FILE="$WAYBAR_DIR/config.jsonc"
 STYLE_FILE="$WAYBAR_DIR/style.css"
 
 # Look inside the dotfiles source to avoid Stow symlink issues
-LAYOUTS_DIR="$HOME/dotfiles/core/waybar/layouts"
-STYLES_DIR="$HOME/dotfiles/core/waybar/styles"
+LAYOUTS_DIR="$HOME/.config/waybar/layouts"
+STYLES_DIR="$HOME/.config/waybar/styles"
 ROFI_THEME="$HOME/.config/rofi/themes/runner.rasi"
 
 # Ensure origin directories exist just in case

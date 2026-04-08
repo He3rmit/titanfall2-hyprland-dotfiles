@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # ~/.config/swaync/scripts/brightness.sh
-DEVICE="intel_backlight"            
+DEVICE=$(ls /sys/class/backlight/ 2>/dev/null | head -n 1)
+if [ -z "$DEVICE" ]; then
+    notify-send -u critical "Brightness" "No backlight device found"
+    exit 1
+fi
 STEP="5%"                           
 ID_FILE="/tmp/brightness_notif_id"  
 BRCTL="/usr/bin/brightnessctl"
