@@ -15,9 +15,10 @@ notify_pilot() {
 }
 
 generate_list() {
-    cliphist list | while read -r line; do
-        id=$(echo "$line" | cut -d$'\t' -f1)
-        content=$(echo "$line" | cut -d$'\t' -f2-)
+    cliphist list | while IFS= read -r line; do
+        # Extract ID and Content instantaneously using bash native substring splitting
+        id="${line%%$'\t'*}"
+        content="${line#*$'\t'}"
         
         if [[ "$content" =~ binary.*data ]]; then
             preview_file="$CACHE_DIR/${id}.png"
