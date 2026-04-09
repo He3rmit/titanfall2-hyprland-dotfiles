@@ -101,6 +101,23 @@ if [[ "$SELECTION" == "+ Create New Profile" ]]; then
     sed -i "s/KB_LAYOUT=.*/KB_LAYOUT=\"$KB_LAYOUT\"/" "$NEW_DIR/profile.conf"
     sed -i "s/KB_VARIANT=.*/KB_VARIANT=\"$KB_VARIANT\"/" "$NEW_DIR/profile.conf"
     
+    # --- Monitor & Scaling Wizard ---
+    echo ""
+    gum style --foreground 214 --bold "Display Calibration:"
+    
+    # Try to detect monitor name
+    DETECTED_MONITOR=$(hyprctl monitors -j | jq -r '.[0].name' 2>/dev/null || echo "auto")
+    MONITOR_NAME=$(gum input --placeholder "Monitor Name (e.g. eDP-1, DP-1 or auto)" --value "$DETECTED_MONITOR")
+    
+    # Scaling factor
+    echo "Select Scaling Factor (1.0 = Default, 1.25+ = High DPI):"
+    SCALE=$(gum choose "1.0" "1.25" "1.5" "2.0")
+    
+    sed -i "s/MONITOR_NAME=.*/MONITOR_NAME=\"$MONITOR_NAME\"/" "$NEW_DIR/profile.conf"
+    sed -i "s/SCALE=.*/SCALE=\"$SCALE\"/" "$NEW_DIR/profile.conf"
+    
+    print_success "Display Profile configured: $MONITOR_NAME at ${SCALE}x scaling."
+    
     print_success "Profile '$PROFILE_NAME' created from $PROFILE_TYPE template."
     gum style --foreground 214 "You can customize files in: hosts/$PROFILE_NAME/"
     TARGET="$PROFILE_NAME"
@@ -116,10 +133,9 @@ if [ ! -d "$DOTFILES_DIR/hosts/$TARGET" ]; then
     exit 1
 fi
 
-# Source profile metadata
 if [[ -f "$DOTFILES_DIR/hosts/$TARGET/profile.conf" ]]; then
     source "$DOTFILES_DIR/hosts/$TARGET/profile.conf"
-    export HOST_TYPE HOST_NAME HAS_BATTERY HAS_BACKLIGHT HAS_TOUCHPAD KB_LAYOUT KB_VARIANT
+    export HOST_TYPE HOST_NAME HAS_BATTERY HAS_BACKLIGHT HAS_TOUCHPAD KB_LAYOUT KB_VARIANT MONITOR_NAME SCALE
 fi
 
 print_success "Target locked: $TARGET ($HOST_TYPE)"

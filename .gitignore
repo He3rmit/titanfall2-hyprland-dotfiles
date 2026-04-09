@@ -1,9 +1,7 @@
-# ==============================================================================
-# TITANFALL DOTFILES — .gitignore
-# ==============================================================================
+# --- TITANFALL DOTFILES IGNORE ---
+# Ignore system-specific state files that carry absolute paths
 
-# --- Generated Files (Created at Runtime) ---
-core/hypr/touchpad.conf
+# Wallpaper State
 core/wallpapers/.current_wallpaper
 core/wallpapers/.current_effect_image
 
@@ -13,3 +11,4 @@ home/.zshrc.local
 
 # --- Cache ---
 *.cache/
+.DS_Store

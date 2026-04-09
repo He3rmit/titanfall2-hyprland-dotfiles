@@ -85,6 +85,8 @@ CORE_PACKAGES=(
     "power-profiles-daemon"
     "playerctl"
     "networkmanager"
+    "network-manager-applet"
+    "nm-connection-editor"
     
     # --- CORE UTILITIES ---
     "unzip"
@@ -113,6 +115,7 @@ CORE_PACKAGES=(
     "breeze-icons"
     "starship"
     "fastfetch"
+    "kservice6"
 )
 
 # Fallback packages only needed if we are NOT running alongside KDE Plasma
