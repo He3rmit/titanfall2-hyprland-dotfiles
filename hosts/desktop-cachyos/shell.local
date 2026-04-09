@@ -1,8 +1,0 @@
-# Rex's CachyOS Desktop shell customizations
-# This file is sourced by .zshrc and is machine-specific.
-
-# --- ALIASES ---
-alias cachyos='rate-mirrors cachyos'
-alias arch='rate-mirrors arch'
-alias unlock='sudo rm /var/lib/pacman/db.lck'
-alias audiofix='systemctl --user stop wireplumber && rm -rf ~/.local/state/wireplumber/* && systemctl --user start wireplumber'

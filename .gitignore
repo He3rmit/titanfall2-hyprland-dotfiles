@@ -12,3 +12,9 @@ home/.zshrc.local
 # --- Cache ---
 *.cache/
 .DS_Store
+
+# --- Host Specific Protection ---
+# Ignore all personal host profiles to prevent accidental leaks
+# Only the template folder should be committed to the public repo.
+hosts/*/
+!hosts/_template/
