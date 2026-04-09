@@ -97,6 +97,8 @@ CORE_PACKAGES=(
     "pavucontrol"
     "gsimplecal"
     "linux-wifi-hotspot"
+    "bluez"                   # Bluetooth Engine
+    "bluez-utils"             # Bluetooth CLI (bluetoothctl)
     "easyeffects"
     "blueman"
     
