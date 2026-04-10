@@ -1,3 +1,6 @@
+
+# THIS PROJECT IS NOW DEPRECATED. USE THE NEWER IMPLEMENTATION IN A NEWER, UPDATED REPO https://gitlab.com/He3rmit/hyprland-dotfiles.git #
+
 # Titanfall Pilot Desktop (Arch + Hyprland) 🚀
 
 This is a fully declarative, hardware-agnostic ricing project for Arch Linux and Hyprland, heavily inspired by a Titanfall "Pilot HUD" aesthetic. It has evolved into a production-ready, multi-host desktop environment with dynamic display scaling, international layout support, and a glassmorphic notification center.
