@@ -59,7 +59,7 @@ dotfiles/
 
 ## 🏅 Release History
 
-### [v3.4.0] — The "Golden Release" (Current)
+### [v1.0.0] — The "Golden Release" (Current)
 - **Hardening**: Completely scrubbed absolute paths for total portability.
 - **Display Agnostic**: Implemented dynamic monitor detection and scaling factor wizard.
 - **Internationalization**: Switched to physical keycodes for layout-independent navigation.
