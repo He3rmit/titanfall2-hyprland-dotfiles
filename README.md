@@ -1,5 +1,5 @@
 
-# THIS PROJECT IS NOW DEPRECATED. USE THE NEWER IMPLEMENTATION IN A NEWER, UPDATED REPO https://gitlab.com/He3rmit/hyprland-dotfiles.git #
+# THIS PROJECT IS NOW DEPRECATED. USE THE NEWER IMPLEMENTATION IN A NEWER, UPDATED REPO https://github.com/He3rmit/hyprland-dotfiles.git #
 
 # Titanfall Pilot Desktop (Arch + Hyprland) 🚀
 
